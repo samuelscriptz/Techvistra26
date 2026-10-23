@@ -165,7 +165,6 @@ function useSectionReveal(ref: React.RefObject<HTMLElement | null>) {
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
-  const hasContent = !isPlaceholder(eventConfig.eventSummary);
 
   return (
     <section
