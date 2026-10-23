@@ -1,4 +1,5 @@
 import SiteHeader from "./components/SiteHeader/SiteHeader";
+import GoldenSealReveal from "./components/GoldenSealReveal/GoldenSealReveal";
 import Hero from "./components/Hero/Hero";
 import {
   AboutSection,
@@ -21,8 +22,10 @@ export default function App() {
       <SiteHeader />
 
       <main id="main-content">
-        {/* Hero page with video background and centered Techvistra logo */}
-        <Hero />
+        {/* Cinematic Golden Seal transition revealing the preserved Hero */}
+        <GoldenSealReveal>
+          <Hero />
+        </GoldenSealReveal>
 
         {/* 3–9. Content sections (placeholder-aware) */}
         <AboutSection />
