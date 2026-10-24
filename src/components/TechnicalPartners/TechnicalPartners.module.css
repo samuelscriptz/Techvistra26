@@ -1,0 +1,258 @@
+.section {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-opacity: 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: var(--space-2xl) 0;
+  background:
+    radial-gradient(ellipse at 18% 40%, rgba(20, 184, 166, 0.08), transparent 42%),
+    radial-gradient(ellipse at 82% 60%, rgba(245, 158, 11, 0.08), transparent 42%),
+    #090a0d;
+}
+
+.section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(
+    360px circle at var(--pointer-x) var(--pointer-y),
+    rgba(20, 184, 166, 0.2),
+    rgba(245, 158, 11, 0.09) 35%,
+    transparent 72%
+  );
+  content: "";
+  opacity: var(--pointer-opacity);
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto var(--space-xl);
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: var(--space-xs);
+  padding: 4px 12px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-full);
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--accent-primary);
+  font-family: var(--font-display);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-bottom: var(--space-sm);
+  background: linear-gradient(135deg, #fffdf5 0%, #fde047 100%);
+  background-clip: text;
+  color: transparent;
+  font-size: var(--fs-h2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.divider {
+  width: 64px;
+  height: 3px;
+  margin: 0 auto var(--space-lg);
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-gold-core), var(--color-teal-accent));
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.marquee {
+  position: relative;
+  z-index: 1;
+  width: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 10px 0 16px;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: partner-marquee 32s linear infinite;
+}
+
+.marquee:has(.partnerCard:hover) .track {
+  animation-play-state: paused;
+}
+
+.partnerGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+.partnerCard {
+  display: flex;
+  width: clamp(150px, 18vw, 220px);
+  height: 154px;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid rgba(245, 158, 11, 0.16);
+  border-radius: var(--radius-md);
+  background: rgba(21, 23, 30, 0.82);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    background var(--transition-base);
+}
+
+.logoViewport {
+  display: grid;
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.partnerCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(20, 184, 166, 0.65);
+  background: rgba(21, 23, 30, 0.96);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 24px rgba(20, 184, 166, 0.14),
+    0 0 24px rgba(245, 158, 11, 0.08);
+}
+
+.partnerName {
+  max-height: 0;
+  width: 100%;
+  overflow: hidden;
+  color: var(--color-gold-light);
+  font-family: var(--font-display);
+  font-size: clamp(0.7rem, 0.9vw, var(--fs-small));
+  font-weight: var(--fw-semibold);
+  line-height: 16px;
+  opacity: 0;
+  text-align: center;
+  text-wrap: balance;
+  transition: opacity var(--transition-fast);
+}
+
+.partnerCard:hover .partnerName {
+  max-height: 36px;
+  opacity: 1;
+}
+
+.partnerLogo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  object-fit: contain;
+}
+
+.partnerLogo[data-partner="AVNL"],
+.partnerLogo[data-partner="NLDI"] {
+  padding: 4px;
+}
+
+@keyframes partner-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
+  .inner {
+    margin-bottom: var(--space-lg);
+  }
+
+  .marquee {
+    width: 100%;
+  }
+
+  .partnerGroup {
+    gap: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+
+  .partnerCard {
+    width: 145px;
+    height: 144px;
+    padding: 8px;
+  }
+
+  .partnerName {
+    font-size: 0.7rem;
+    line-height: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow: visible;
+    mask-image: none;
+  }
+
+  .track {
+    display: block;
+    width: 100%;
+    animation: none;
+  }
+
+  .partnerGroup {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 220px));
+    justify-content: center;
+    padding: 0 var(--gutter);
+  }
+
+  .partnerGroup[aria-hidden="true"] {
+    display: none;
+  }
+
+  .partnerCard {
+    width: 100%;
+  }
+
+  .partnerName {
+    max-height: none;
+    opacity: 1;
+  }
+}

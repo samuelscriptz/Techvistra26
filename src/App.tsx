@@ -1,5 +1,6 @@
 import SiteHeader from "./components/SiteHeader/SiteHeader";
 import Hero from "./components/Hero/Hero";
+import TechnicalPartners from "./components/TechnicalPartners/TechnicalPartners";
 import {
   AboutSection,
   ProgramSection,
@@ -26,6 +27,7 @@ export default function App() {
 
         {/* 3–9. Content sections (placeholder-aware) */}
         <AboutSection />
+        <TechnicalPartners />
         <ProgramSection />
         <ScheduleSection />
         <VenueSection />
