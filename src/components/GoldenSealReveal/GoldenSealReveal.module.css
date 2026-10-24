@@ -7,6 +7,7 @@
   height: 100dvh;
   overflow: hidden;
   background: var(--bg-primary, #050507);
+  z-index: 120;
 }
 
 .heroSlot {
@@ -18,16 +19,14 @@
 }
 
 /* ============================================================
-   The Gold Seal Curtain Overlay (sits over Hero, under SiteHeader)
-   z-index: 60 ensures it fully covers the Hero (z-index: 4)
-   while keeping SiteHeader (z-index: 100) clean and accessible.
+   The Gold Seal Curtain Overlay (sits over Hero and covers nav on load)
    ============================================================ */
 .overlay {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 60;
+  z-index: 130;
   overflow: hidden;
   pointer-events: auto;
   user-select: none;

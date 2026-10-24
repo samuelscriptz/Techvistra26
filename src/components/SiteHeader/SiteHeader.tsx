@@ -7,12 +7,20 @@ const SECTION_IDS = ["home", "about", "program", "schedule", "venue", "faq", "re
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const [sealPassed, setSealPassed] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.scrollY > 400 || (window.location.hash !== "" && window.location.hash !== "#home");
+    }
+    return false;
+  });
   const [activeHref, setActiveHref] = useState("#home");
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
+      const isPast = window.scrollY > 400 || (window.location.hash !== "" && window.location.hash !== "#home");
+      setSealPassed(isPast);
 
       // Dynamically track active section for PillNav indicator
       const scrollPos = window.scrollY + 200;
@@ -34,36 +42,6 @@ export default function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Header entrance animation
-  useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-
-    let ctx: ReturnType<typeof import("gsap").default.context> | undefined;
-
-    const init = async () => {
-      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-      if (mq.matches) return;
-
-      const { default: gsap } = await import("gsap");
-
-      ctx = gsap.context(() => {
-        gsap.from(el, {
-          y: -20,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          delay: 0.5,
-        });
-      }, el);
-    };
-
-    init();
-    return () => {
-      ctx?.revert();
-    };
-  }, []);
-
   const regUrl = isPlaceholder(eventConfig.registrationUrl)
     ? undefined
     : eventConfig.registrationUrl;
@@ -81,7 +59,7 @@ export default function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${sealPassed ? styles.visible : styles.hiddenOnSeal}`}
       role="banner"
     >
       <div className={styles.inner}>

@@ -69,6 +69,16 @@ export default function GoldenSealReveal({ children }: GoldenSealRevealProps) {
         pointerEvents: "auto",
       });
 
+      gsap.set(pinWrapperRef.current, {
+        zIndex: 120,
+      });
+
+      // Initially hide header on golden seal
+      gsap.set("header[role='banner']", {
+        autoAlpha: 0,
+        y: -25,
+      });
+
       // Phase 1: Center seal crest dissolves as seam begins (progress 0.0 -> 0.12)
       if (crestRef.current) {
         tl.to(
@@ -178,6 +188,18 @@ export default function GoldenSealReveal({ children }: GoldenSealRevealProps) {
         0.5
       );
 
+      // Phase 4.5: Fade in navigation bar as the gold seal opens up
+      tl.to(
+        "header[role='banner']",
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.28,
+          ease: "power2.out",
+        },
+        0.65
+      );
+
       // Phase 5: Complete hand-off to normal page scrolling (progress 0.94 -> 1.0)
       tl.to(
         overlayRef.current,
@@ -185,6 +207,14 @@ export default function GoldenSealReveal({ children }: GoldenSealRevealProps) {
           autoAlpha: 0,
           duration: 0.06,
           pointerEvents: "none",
+        },
+        0.94
+      );
+
+      tl.set(
+        pinWrapperRef.current,
+        {
+          zIndex: 1,
         },
         0.94
       );
