@@ -8,6 +8,7 @@ import {
   VenueSection,
   FAQSection,
 } from "./components/sections/ContentSections";
+import GallerySection from "./components/sections/GallerySection";
 import RegistrationCTA from "./components/RegistrationCTA/RegistrationCTA";
 import SiteFooter from "./components/SiteFooter/SiteFooter";
 
@@ -29,6 +30,7 @@ export default function App() {
 
         {/* 3–9. Content sections (placeholder-aware) */}
         <AboutSection />
+        <GallerySection />
         <ProgramSection />
         <ScheduleSection />
         <VenueSection />
