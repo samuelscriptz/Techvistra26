@@ -1,4 +1,5 @@
 import SiteHeader from "./components/SiteHeader/SiteHeader";
+import GoldenSealReveal from "./components/GoldenSealReveal/GoldenSealReveal";
 import Hero from "./components/Hero/Hero";
 import TechnicalPartners from "./components/TechnicalPartners/TechnicalPartners";
 import {
@@ -8,6 +9,7 @@ import {
   VenueSection,
   FAQSection,
 } from "./components/sections/ContentSections";
+import GallerySection from "./components/sections/GallerySection";
 import RegistrationCTA from "./components/RegistrationCTA/RegistrationCTA";
 import SiteFooter from "./components/SiteFooter/SiteFooter";
 
@@ -22,12 +24,15 @@ export default function App() {
       <SiteHeader />
 
       <main id="main-content">
-        {/* Hero page with video background and centered Techvistra logo */}
-        <Hero />
+        {/* Cinematic Golden Seal transition revealing the preserved Hero */}
+        <GoldenSealReveal>
+          <Hero />
+        </GoldenSealReveal>
 
         {/* 3–9. Content sections (placeholder-aware) */}
         <AboutSection />
         <TechnicalPartners />
+        <GallerySection />
         <ProgramSection />
         <ScheduleSection />
         <VenueSection />
