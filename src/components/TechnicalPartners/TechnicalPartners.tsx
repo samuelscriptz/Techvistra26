@@ -6,7 +6,7 @@ const PARTNERS = [
   { name: "AWS", image: "/aws_logo.png" },
   { name: "Cisco", image: "/cisco_logo.png" },
   { name: "Red Hat", image: "/redhat_logo.png" },
-  { name: "National Digital Library of India", image: "/ndli_logo.png" },
+  { name: "National Digital Library of India", image: "/NDLI_Logo_Aligned.png" },
   { name: "Oracle", image: "/oracle_logo.png" },
   { name: "IBM", image: "/ibm_logo.png" },
 ];
@@ -38,7 +38,7 @@ export default function TechnicalPartners() {
       onPointerLeave={hidePointerGlow}
     >
       <div className={styles.inner}>
-        <span className={styles.label}>Our Collaborators</span>
+        
         <h2 id="technical-partners-title" className={styles.title}>
           Technical Partners
         </h2>
