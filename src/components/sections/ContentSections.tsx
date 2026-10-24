@@ -183,7 +183,6 @@ export function AboutSection() {
       aria-labelledby="about-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>About</span>
         <h2 id="about-title" className={styles.sectionTitle}>
           About the Event
         </h2>
