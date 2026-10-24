@@ -32,6 +32,7 @@
   box-shadow: var(--pn-shadow);
   -webkit-backdrop-filter: var(--pn-blur);
   backdrop-filter: var(--pn-blur);
+  border: 1px solid var(--pn-edge);
 }
 
 .pill-nav[data-layout='joined'][data-panel] {
@@ -154,8 +155,8 @@
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  font-weight: 500;
-  letter-spacing: -0.005em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -289,8 +290,8 @@
   gap: 0.45em;
   height: 100%;
   padding: 0 var(--pn-x);
-  font-weight: 500;
-  letter-spacing: -0.005em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   white-space: nowrap;
 }
 
@@ -304,11 +305,12 @@
   position: absolute;
   bottom: calc((var(--pn-inner) - var(--pn-font)) / 4 - 2px);
   left: 0;
-  width: 4px;
-  height: 4px;
-  margin-left: -2px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
   border-radius: 999px;
   background: var(--pn-dot);
+  box-shadow: 0 0 10px var(--pn-dot);
   opacity: 0;
   pointer-events: none;
   transition: background-color 0.3s ease;

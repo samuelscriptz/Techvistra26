@@ -42,22 +42,22 @@ export interface PillNavProps {
 
 const THEMES: Record<'dark' | 'light', Record<string, string>> = {
   dark: {
-    '--pn-surface': 'rgba(38, 35, 46, 0.66)',
-    '--pn-solid': '#26232e',
-    '--pn-edge': 'rgba(255, 255, 255, 0.08)',
-    '--pn-rim': 'rgba(255, 255, 255, 0.07)',
-    '--pn-shadow': '0 22px 44px -20px rgba(0, 0, 0, 0.8), 0 6px 16px -8px rgba(0, 0, 0, 0.5)',
-    '--pn-text': 'rgba(244, 244, 245, 0.64)',
-    '--pn-strong': '#f4f4f5',
-    '--pn-pill': 'linear-gradient(180deg, #ffffff 0%, #ebebf0 100%)',
-    '--pn-pill-ink': '#121016',
-    '--pn-pill-shadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 16px -6px rgba(0, 0, 0, 0.6)',
-    '--pn-dot': '#f4f4f5',
-    '--pn-ring': 'rgba(244, 244, 245, 0.55)',
-    '--pn-row-hover': 'rgba(255, 255, 255, 0.06)',
-    '--pn-tile': 'linear-gradient(180deg, #3a3644 0%, #27242f 100%)',
+    '--pn-surface': 'rgba(15, 13, 22, 0.92)',
+    '--pn-solid': '#14121c',
+    '--pn-edge': 'rgba(245, 158, 11, 0.42)',
+    '--pn-rim': 'rgba(255, 255, 255, 0.28)',
+    '--pn-shadow': '0 20px 48px -10px rgba(0, 0, 0, 0.9), 0 0 28px rgba(245, 158, 11, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+    '--pn-text': 'rgba(255, 255, 255, 0.92)',
+    '--pn-strong': '#ffffff',
+    '--pn-pill': 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
+    '--pn-pill-ink': '#09080c',
+    '--pn-pill-shadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 18px -4px rgba(245, 158, 11, 0.55)',
+    '--pn-dot': '#fbbf24',
+    '--pn-ring': 'rgba(245, 158, 11, 0.7)',
+    '--pn-row-hover': 'rgba(245, 158, 11, 0.15)',
+    '--pn-tile': 'linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%)',
     '--pn-tile-rim':
-      'inset 0 0 0 1px rgba(255, 255, 255, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 10px -4px rgba(0, 0, 0, 0.7)'
+      'inset 0 0 0 1px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 12px -3px rgba(0, 0, 0, 0.7)'
   },
   light: {
     '--pn-surface': 'rgba(240, 240, 243, 0.8)',
@@ -81,31 +81,31 @@ const THEMES: Record<'dark' | 'light', Record<string, string>> = {
 
 const SIZES: Record<'sm' | 'md' | 'lg', Record<string, string>> = {
   sm: {
-    '--pn-h': '36px',
-    '--pn-pad': '3px',
-    '--pn-inner': '30px',
-    '--pn-x': '12px',
+    '--pn-h': '40px',
+    '--pn-pad': '4px',
+    '--pn-inner': '32px',
+    '--pn-x': '14px',
     '--pn-font': '13px',
     '--pn-gap': '6px',
-    '--pn-mark': '18px'
+    '--pn-mark': '20px'
   },
   md: {
-    '--pn-h': '44px',
+    '--pn-h': '48px',
     '--pn-pad': '4px',
-    '--pn-inner': '36px',
-    '--pn-x': '16px',
+    '--pn-inner': '40px',
+    '--pn-x': '18px',
     '--pn-font': '14px',
     '--pn-gap': '8px',
-    '--pn-mark': '22px'
+    '--pn-mark': '24px'
   },
   lg: {
-    '--pn-h': '52px',
+    '--pn-h': '54px',
     '--pn-pad': '5px',
-    '--pn-inner': '42px',
-    '--pn-x': '20px',
+    '--pn-inner': '44px',
+    '--pn-x': '22px',
     '--pn-font': '15px',
     '--pn-gap': '10px',
-    '--pn-mark': '26px'
+    '--pn-mark': '28px'
   }
 };
 
@@ -267,7 +267,7 @@ export default function PillNav({
   }
   if (textColor) {
     vars['--pn-strong'] = textColor;
-    vars['--pn-text'] = `color-mix(in srgb, ${textColor} 64%, transparent)`;
+    vars['--pn-text'] = textColor;
   }
   if (highlightColor) {
     vars['--pn-pill'] = highlightColor;

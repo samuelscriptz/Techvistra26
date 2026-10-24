@@ -97,27 +97,31 @@ export default function SiteHeader() {
           />
         </a>
 
-        <PillNav
-          items={navItems}
-          activeHref={activeHref}
-          onItemClick={(item) => {
-            if (item.href) setActiveHref(item.href);
-          }}
-          theme="dark"
-          layout="split"
-          itemStyle="pill"
-          hoverEffect="fill"
-          indicator="dot"
-          surface="glass"
-          size="md"
-          barColor="rgba(18, 17, 24, 0.85)"
-          textColor="#ffffff"
-          highlightColor="#f59e0b"
-          highlightTextColor="#050507"
-          collapse="auto"
-          intro={false}
-          ariaLabel="Symposium navigation"
-        />
+        <div className={styles.navWrapper}>
+          <PillNav
+            items={navItems}
+            activeHref={activeHref}
+            onItemClick={(item) => {
+              if (item.href) setActiveHref(item.href);
+            }}
+            theme="dark"
+            layout="split"
+            itemStyle="pill"
+            hoverEffect="fill"
+            indicator="dot"
+            surface="glass"
+            size="lg"
+            barColor="rgba(14, 12, 22, 0.92)"
+            textColor="#ffffff"
+            highlightColor="#f59e0b"
+            highlightTextColor="#09080c"
+            collapse="auto"
+            intro={false}
+            ariaLabel="Symposium navigation"
+          />
+        </div>
+
+        <div className={styles.headerRight} aria-hidden="true" />
       </div>
     </header>
   );
