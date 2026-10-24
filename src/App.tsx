@@ -8,6 +8,7 @@ import {
   ScheduleSection,
   VenueSection,
   FAQSection,
+  ContactSection,
 } from "./components/sections/ContentSections";
 import GallerySection from "./components/sections/GallerySection";
 import RegistrationCTA from "./components/RegistrationCTA/RegistrationCTA";
@@ -37,6 +38,7 @@ export default function App() {
         <ScheduleSection />
         <VenueSection />
         <FAQSection />
+        <ContactSection />
 
         {/* 10. Final registration CTA */}
         <RegistrationCTA />

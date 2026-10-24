@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: "Schedule", href: "#schedule" },
   { label: "Venue", href: "#venue" },
   { label: "FAQ", href: "#faq" },
+  { label: "Contact", href: "#contact" },
   { label: "Register", href: "#register" },
 ];
 
