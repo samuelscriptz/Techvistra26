@@ -1,13 +1,16 @@
 import SiteHeader from "./components/SiteHeader/SiteHeader";
 import GoldenSealReveal from "./components/GoldenSealReveal/GoldenSealReveal";
 import Hero from "./components/Hero/Hero";
+import TechnicalPartners from "./components/TechnicalPartners/TechnicalPartners";
 import {
   AboutSection,
   ProgramSection,
   ScheduleSection,
   VenueSection,
   FAQSection,
+  ContactSection,
 } from "./components/sections/ContentSections";
+import GallerySection from "./components/sections/GallerySection";
 import RegistrationCTA from "./components/RegistrationCTA/RegistrationCTA";
 import SiteFooter from "./components/SiteFooter/SiteFooter";
 
@@ -29,10 +32,13 @@ export default function App() {
 
         {/* 3–9. Content sections (placeholder-aware) */}
         <AboutSection />
+        <TechnicalPartners />
+        <GallerySection />
         <ProgramSection />
         <ScheduleSection />
         <VenueSection />
         <FAQSection />
+        <ContactSection />
 
         {/* 10. Final registration CTA */}
         <RegistrationCTA />

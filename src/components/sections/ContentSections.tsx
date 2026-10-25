@@ -1,6 +1,15 @@
 import { useEffect, useRef } from "react";
+import { Phone, Mail, MapPin, Facebook, ExternalLink, ArrowUpRight } from "lucide-react";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
 import styles from "./Section.module.css";
+
+// ============================================================================
+// 🔗 FACEBOOK URL: PASTE YOUR FACEBOOK LINK HERE LATER
+// ============================================================================
+// When you have your Facebook URL, just paste it between the quotes "" below:
+// Example: export const FACEBOOK_PAGE_URL = "https://www.facebook.com/techvistra";
+export const FACEBOOK_PAGE_URL = "";
+// ============================================================================
 
 /**
  * Shared hook for GSAP ScrollTrigger reveal animations on sections.
@@ -168,7 +177,6 @@ export function AboutSection() {
       aria-labelledby="about-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>About</span>
         <h2 id="about-title" className={styles.sectionTitle}>
           About the Event
         </h2>
@@ -419,6 +427,196 @@ export function FAQSection() {
             </p>
           </div>
         )}
+      </div>
+    </section>
+  );
+}
+
+export function ContactSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
+
+  const coordinators = [
+    { name: "Monish P", phone: "+91 97909 49122", tel: "+919790949122" },
+    { name: "Dharshini mahalakshmi B", phone: "+91 70925 01895", tel: "+917092501895" },
+    { name: "Narmadha S", phone: "+91 80150 05125", tel: "+918015005125" },
+    { name: "Naveed Ahamed H", phone: "+91 89460 56229", tel: "+918946056229" },
+  ];
+
+  const mapEmbedUrl =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.442881273934!2d80.17538227485455!3d13.069377987255146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261504145fe7d%3A0x58810f43c3a748ae!2sDr.%20M.G.R.%20Educational%20And%20Research%20Institute!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin";
+  const directionsUrl =
+    "https://www.google.com/maps/place/Dr.+M.G.R.+Educational+And+Research+Institute/@13.0708594,80.176078,19z/data=!4m6!3m5!1s0x3a5261504145fe7d:0x58810f43c3a748ae!8m2!3d13.069378!4d80.1779609!16s%2Fm%2F05q5w0l";
+
+  const effectiveFacebookUrl =
+    FACEBOOK_PAGE_URL.trim() || eventConfig.facebookUrl?.trim() || "";
+
+  return (
+    <section
+      ref={sectionRef}
+      id="contact"
+      className={styles.contactSection}
+      aria-labelledby="contact-title"
+    >
+      <div className={styles.inner}>
+        <span className={styles.sectionLabel}>Connect</span>
+        <h2 id="contact-title" className={styles.sectionTitle}>
+          Get in Touch // Coordination Desk
+        </h2>
+        <div className={styles.divider} />
+        <p className={styles.sectionSubtitle}>
+          Have inquiries regarding tracks, team registrations, or campus access?
+          Reach out to our symposium student coordinators and event desk directly.
+        </p>
+
+        {/* Desktop 2-column layout: Left = Google Map (45%), Right = ONE single contact card (55%) */}
+        <div className={styles.contactLayout}>
+          {/* LEFT COLUMN: Working Google Map with exact campus location */}
+          <div className={styles.mapColumn}>
+            <div className={styles.mapWrapper}>
+              <iframe
+                src={mapEmbedUrl}
+                width="100%"
+                height="100%"
+                className={styles.mapIframe}
+                loading="lazy"
+                title="Google Maps location of Dr. M.G.R. Educational and Research Institute"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              {/* Fallback & quick-access link for verified campus location */}
+              <div className={styles.mapFooterBar}>
+                <div className={styles.mapFooterText}>
+                  <MapPin size={14} className={styles.goldIcon} aria-hidden="true" />
+                  <span>Dr. M.G.R. Campus (13.069378, 80.1779609)</span>
+                </div>
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mapDirectLink}
+                  aria-label="Open location directly in Google Maps"
+                >
+                  <span>Open in Google Maps</span>
+                  <ExternalLink size={12} aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: ONE SINGLE CONTACT BOX containing all 4 sections separated by thin lines */}
+          <div className={styles.singleContactCard}>
+            {/* SECTION A: Event Coordinators & Contact */}
+            <div className={styles.cardSection}>
+              <h3 className={styles.sectionHeading}>
+                <Phone size={16} className={styles.goldIcon} aria-hidden="true" />
+                <span>Event Coordinators &amp; Contact</span>
+              </h3>
+              <div className={styles.coordinatorsList}>
+                {coordinators.map((coordinator, idx) => (
+                  <div key={idx} className={styles.coordinatorRow}>
+                    <span className={styles.coordinatorName}>{coordinator.name}</span>
+                    <a
+                      href={`tel:${coordinator.tel}`}
+                      className={styles.phoneLink}
+                      aria-label={`Call coordinator ${coordinator.name} at ${coordinator.phone}`}
+                    >
+                      <Phone size={12} className={styles.goldIcon} aria-hidden="true" />
+                      <span>{coordinator.phone}</span>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Thin subtle gold divider line */}
+            <div className={styles.sectionDivider} />
+
+            {/* SECTION B: Email */}
+            <div className={styles.cardSection}>
+              <h3 className={styles.sectionHeading}>
+                <Mail size={16} className={styles.goldIcon} aria-hidden="true" />
+                <span>Email</span>
+              </h3>
+              <a
+                href="mailto:techvistra@drmgrdu.ac.in"
+                className={styles.emailTextLink}
+                aria-label="Send email to techvistra@drmgrdu.ac.in"
+              >
+                <span>techvistra@drmgrdu.ac.in</span>
+                <ArrowUpRight size={14} className={styles.linkArrow} aria-hidden="true" />
+              </a>
+            </div>
+
+            {/* Thin subtle gold divider line */}
+            <div className={styles.sectionDivider} />
+
+            {/* SECTION C: Address */}
+            <div className={styles.cardSection}>
+              <h3 className={styles.sectionHeading}>
+                <MapPin size={16} className={styles.goldIcon} aria-hidden="true" />
+                <span>Address</span>
+              </h3>
+              <address className={styles.addressBlock}>
+                <strong className={styles.institutionName}>
+                  Dr. MGR Educational and Research Institute
+                </strong>
+                <span className={styles.addressLine}>
+                  Poonamallee High Rd, Vishwas Nagar, Maduravoyal, Chennai
+                </span>
+                <span className={styles.addressLine}>Tamil Nadu - 600095</span>
+              </address>
+              <a
+                href={directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.mapTextLink}
+                aria-label="Open Dr. M.G.R. Educational and Research Institute in Google Maps"
+              >
+                <span>Open in Google Maps</span>
+                <ExternalLink size={13} aria-hidden="true" />
+              </a>
+            </div>
+
+            {/* Thin subtle gold divider line */}
+            <div className={styles.sectionDivider} />
+
+            {/* SECTION D: Follow Us */}
+            <div className={styles.cardSection}>
+              <h3 className={styles.sectionHeading}>
+                <span>Follow Us</span>
+              </h3>
+              <a
+                href={effectiveFacebookUrl || "#"}
+                target={effectiveFacebookUrl ? "_blank" : undefined}
+                rel={effectiveFacebookUrl ? "noopener noreferrer" : undefined}
+                onClick={!effectiveFacebookUrl ? (e) => e.preventDefault() : undefined}
+                className={styles.facebookRow}
+                aria-label="Follow Techvistra on Facebook"
+                title={
+                  effectiveFacebookUrl
+                    ? "Visit Techvistra on Facebook"
+                    : "Paste Facebook URL in FACEBOOK_PAGE_URL at top of ContentSections.tsx"
+                }
+              >
+                <div className={styles.facebookCircle}>
+                  <Facebook size={16} aria-hidden="true" />
+                </div>
+                <div className={styles.facebookMeta}>
+                  <span className={styles.facebookName}>Facebook</span>
+                  <span className={styles.facebookStatus}>
+                    {effectiveFacebookUrl
+                      ? "Visit Official Page"
+                      : "Official link can be added here"}
+                  </span>
+                </div>
+                {effectiveFacebookUrl && (
+                  <ExternalLink size={13} className={styles.linkArrow} aria-hidden="true" />
+                )}
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

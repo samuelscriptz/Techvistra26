@@ -16,6 +16,7 @@ export interface EventConfig {
   venue: string;
   contactEmail: string;
   contactPhone: string;
+  facebookUrl?: string;
   socialLinks: { platform: string; url: string; label: string }[];
   eventSummary: string;
   faq: { question: string; answer: string }[];
@@ -46,9 +47,12 @@ export const eventConfig: EventConfig = {
   registrationState: "not_confirmed",
   registrationOpenDate: "[REGISTRATION_OPEN_DATE]",
   eventDates: "[EVENT DATES TBC]",
-  venue: "Campus Auditorium & High-Performance Computing Labs [TBC]",
-  contactEmail: "[CONTACT_EMAIL_TBC]",
-  contactPhone: "[CONTACT_PHONE_TBC]",
+  venue:
+    "Dr. MGR Educational and Research Institute, Poonamallee High Rd, Vishwas Nagar, Maduravoyal, Chennai, Tamil Nadu - 600095",
+  contactEmail: "techvistra@drmgrdu.ac.in",
+  contactPhone: "+91 97909 49122",
+  // 🔗 PASTE FACEBOOK URL HERE (OR IN ContentSections.tsx):
+  facebookUrl: "",
   socialLinks: [],
   eventSummary:
     "At the intersection of computational power, high-dimensional data, and human purpose. TECHVISTRA '26 brings together leading student engineers, researchers, and algorithmic pioneers from institutions across the nation to explore the quantum horizon of intelligent systems.",

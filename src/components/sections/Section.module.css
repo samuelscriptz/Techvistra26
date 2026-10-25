@@ -191,3 +191,455 @@
     padding: var(--space-2xl) var(--gutter);
   }
 }
+
+/* ============================================================
+   Contact Section Redesign (Q-Vortex Architectural Theme)
+   Strictly 2 Columns: Map on Left (45%), ONE Single Card on Right (55%)
+   ============================================================ */
+
+.contactSection {
+  position: relative;
+  padding: var(--space-3xl) var(--gutter);
+  overflow: hidden;
+  background-color: #06060a;
+  background-image: 
+    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.08) 0%, transparent 55%),
+    radial-gradient(circle at 10% 85%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+    linear-gradient(to right, rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+}
+
+.contactLayout {
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: stretch;
+  margin-top: var(--space-lg);
+}
+
+/* Map Column (Left: strictly 45% on desktop) */
+.mapColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  border-radius: 18px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 
+    0 0 25px rgba(245, 158, 11, 0.15),
+    0 0 50px rgba(168, 85, 247, 0.12),
+    0 20px 45px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  background: rgba(14, 12, 22, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.mapWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.8) 50%, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mapWrapper:hover {
+  border-color: rgba(245, 158, 11, 0.55);
+  box-shadow: 
+    0 0 35px rgba(245, 158, 11, 0.22),
+    0 0 65px rgba(168, 85, 247, 0.18),
+    0 25px 50px rgba(0, 0, 0, 0.8);
+}
+
+.mapIframe {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 600px;
+  border: none;
+  display: block;
+}
+
+/* Fallback & Verified Pin info bar */
+.mapFooterBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 9, 16, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(245, 158, 11, 0.22);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  z-index: 5;
+}
+
+.mapFooterText {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mapDirectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 5px 12px;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--radius-sm);
+  color: #fde047;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.mapDirectLink:hover {
+  background: rgba(245, 158, 11, 0.26);
+  border-color: rgba(245, 158, 11, 0.7);
+  color: #fffdf5;
+}
+
+.mapDirectLink:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* RIGHT SIDE: ONE SINGLE CONTACT BOX */
+.singleContactCard {
+  background: rgba(14, 12, 22, 0.88);
+  border: 1px solid rgba(245, 158, 11, 0.26);
+  border-radius: 18px;
+  padding: 26px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(245, 158, 11, 0.12),
+    0 0 45px rgba(168, 85, 247, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.singleContactCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 158, 11, 0.7) 50%,
+    transparent 100%
+  );
+  opacity: 0.7;
+}
+
+.singleContactCard:hover {
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 
+    0 14px 36px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(245, 158, 11, 0.16),
+    0 0 50px rgba(168, 85, 247, 0.12);
+}
+
+/* Sections inside the single card */
+.cardSection {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Thin horizontal gold dividers between sections */
+.sectionDivider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.3) 0%,
+    rgba(245, 158, 11, 0.15) 70%,
+    transparent 100%
+  );
+  margin: 1.15rem 0;
+  border: none;
+}
+
+/* Common Section Heading */
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: var(--fw-semibold);
+  color: #fde047;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+.goldIcon {
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+/* Section A: Coordinators (Single Vertical Column) */
+.coordinatorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.coordinatorRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.coordinatorName {
+  font-size: 0.95rem;
+  font-weight: var(--fw-semibold);
+  color: #fffdf5;
+  line-height: 1.35;
+}
+
+.phoneLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: var(--fw-medium);
+  color: #f59e0b;
+  width: fit-content;
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.phoneLink:hover {
+  color: #fde047;
+  transform: translateX(2px);
+}
+
+.phoneLink:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Section B: Email (Simple text-style link) */
+.emailTextLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: var(--fw-medium);
+  width: fit-content;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.emailTextLink:hover {
+  color: #fde047;
+}
+
+.emailTextLink:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+.linkArrow {
+  opacity: 0.75;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.emailTextLink:hover .linkArrow,
+.facebookRow:hover .linkArrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+/* Section C: Address */
+.addressBlock {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.institutionName {
+  color: #fffdf5;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.addressLine {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mapTextLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #f59e0b;
+  font-size: 0.88rem;
+  font-weight: var(--fw-semibold);
+  margin-top: 0.65rem;
+  width: fit-content;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.mapTextLink:hover {
+  color: #fde047;
+}
+
+.mapTextLink:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Section D: Follow Us (Small circular dark-gold background) */
+.facebookRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  width: fit-content;
+  transition: opacity var(--transition-fast);
+}
+
+.facebookCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.facebookRow:hover .facebookCircle {
+  background: rgba(245, 158, 11, 0.26);
+  border-color: rgba(245, 158, 11, 0.6);
+  color: #fde047;
+  transform: scale(1.06);
+}
+
+.facebookRow:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+.facebookMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.facebookName {
+  font-size: 0.92rem;
+  font-weight: var(--fw-semibold);
+  color: #fffdf5;
+}
+
+.facebookStatus {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+/* ============================================================
+   Responsive Breakpoints for Contact Section
+   ============================================================ */
+
+/* Tablet (1024px and below) */
+@media (max-width: 1024px) {
+  .contactLayout {
+    grid-template-columns: 45fr 55fr;
+    gap: 1.5rem;
+  }
+
+  .mapWrapper,
+  .mapIframe {
+    min-height: 520px;
+  }
+
+  .singleContactCard {
+    padding: 22px;
+  }
+}
+
+/* Mobile & Small Tablets (768px and below) */
+@media (max-width: 768px) {
+  .contactLayout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Map remains stacked FIRST on mobile */
+  .mapColumn {
+    order: 1;
+  }
+
+  /* Single contact card stacked below map */
+  .singleContactCard {
+    order: 2;
+    padding: 20px;
+  }
+
+  .mapWrapper,
+  .mapIframe {
+    min-height: 380px;
+    height: 380px;
+  }
+
+  .phoneLink,
+  .emailTextLink,
+  .mapTextLink {
+    min-height: 44px; /* Ensure 44px touch targets on mobile */
+  }
+
+  .mapFooterBar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 12px;
+    gap: 0.4rem;
+  }
+
+  .mapFooterText {
+    font-size: 0.76rem;
+  }
+}
