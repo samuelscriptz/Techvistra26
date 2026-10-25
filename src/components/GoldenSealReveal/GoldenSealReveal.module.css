@@ -1,4 +1,4 @@
-/* GoldenSealReveal.module.css — Cinematic Gold Seal Opening Transition */
+/* GoldenSealReveal.module.css — Luxury Aerospace Gold Seal & Rocket Launch Reveal */
 
 .pinWrapper {
   position: relative;
@@ -6,8 +6,8 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: var(--bg-primary, #050507);
-  z-index: 120;
+  background: var(--bg-primary, #e8e3dd);
+  z-index: 1;
 }
 
 .heroSlot {
@@ -15,18 +15,18 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* ============================================================
-   The Gold Seal Curtain Overlay (sits over Hero and covers nav on load)
+   The Gold Seal Curtain Overlay
    ============================================================ */
 .overlay {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 130;
+  z-index: 20;
   overflow: hidden;
   pointer-events: auto;
   user-select: none;
@@ -34,8 +34,9 @@
 
 /* ============================================================
    Split Panels (Left & Right)
-   50.3% width gives a reliable subpixel overlap so there is
-   zero gap when closed.
+   50.3% width gives subpixel overlap preventing any center gap.
+   Zero mix-blend-mode: pure hardware-accelerated transforms for 60fps.
+   Luxury alloy gradient incorporating #e8e3dd, #a5a098, #5f5b55, #cdac68, #1d1f21.
    ============================================================ */
 .panelLeft,
 .panelRight {
@@ -48,192 +49,360 @@
   will-change: transform;
   transform: translate3d(0, 0, 0);
   z-index: 10;
-  /* Radiant, unmistakably metallic gold gradient */
-  background: linear-gradient(
-    135deg,
-    #78350f 0%,
-    #92400e 12%,
-    #b45309 25%,
-    #d97706 38%,
-    #f59e0b 46%,
-    #fef08a 50%,
-    #ffffff 52%,
-    #fef08a 54%,
-    #f59e0b 62%,
-    #d97706 75%,
-    #b45309 88%,
-    #78350f 100%
-  );
+  background: 
+    radial-gradient(ellipse 90% 60% at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 75%),
+    linear-gradient(
+      135deg,
+      #1d1f21 0%,
+      #5f5b55 8%,
+      #a5a098 18%,
+      #cdac68 32%,
+      #e8e3dd 45%,
+      #ffffff 52%,
+      #e8e3dd 58%,
+      #cdac68 70%,
+      #a5a098 84%,
+      #5f5b55 94%,
+      #1d1f21 100%
+    );
 }
 
-/* Brushed metal micro-texture overlay on both panels */
-.panelLeft::before,
-.panelRight::before {
-  content: "";
+.panelLeft {
+  left: 0;
+  border-right: 2px solid #cdac68;
+  box-shadow: 15px 0 45px rgba(29, 31, 33, 0.35),
+    inset -8px 0 24px rgba(255, 255, 255, 0.6);
+}
+
+.panelRight {
+  right: 0;
+  border-left: 2px solid #cdac68;
+  box-shadow: -15px 0 45px rgba(29, 31, 33, 0.35),
+    inset 8px 0 24px rgba(255, 255, 255, 0.6);
+}
+
+/* Precision Quantum Circuit Line Etchings (Zero blend mode, subtle opacity) */
+.circuitGrid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(205, 172, 104, 0.22) 56%, transparent 58%),
+    radial-gradient(circle at 50% 50%, transparent 75%, rgba(255, 255, 255, 0.2) 76%, transparent 77.5%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 54px 54px, 54px 54px;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Micro-Brushed Damascus Grain Texture */
+.brushedSheen {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
-    115deg,
+    125deg,
     rgba(255, 255, 255, 0.08) 0px,
     rgba(255, 255, 255, 0.08) 1px,
     transparent 1px,
     transparent 4px
   );
-  mix-blend-mode: overlay;
+  opacity: 0.8;
   pointer-events: none;
 }
 
-/* Specular radial highlight overlay on both panels */
-.panelLeft::after,
-.panelRight::after {
-  content: "";
+/* Dynamic Molten Gold Shimmer Wave */
+.moltenGoldWave {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    ellipse 90% 70% at 50% 50%,
-    rgba(255, 255, 255, 0.35) 0%,
-    rgba(254, 240, 138, 0.25) 30%,
-    rgba(217, 119, 6, 0.15) 60%,
-    transparent 85%
-  );
+  background: 
+    radial-gradient(ellipse 90% 60% at 50% 30%, rgba(255, 255, 255, 0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 75% 65% at 30% 70%, rgba(205, 172, 104, 0.2) 0%, transparent 65%),
+    linear-gradient(
+      125deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 30%,
+      rgba(232, 227, 221, 0.25) 45%,
+      rgba(205, 172, 104, 0.2) 55%,
+      transparent 75%
+    );
+  background-size: 200% 200%;
+  animation: moltenSheen 10s infinite ease-in-out alternate;
   pointer-events: none;
+  z-index: 2;
 }
 
-.panelLeft {
-  left: 0;
-  border-right: 3px solid #ffffff;
-  box-shadow: 18px 0 50px rgba(0, 0, 0, 0.8),
-    inset -8px 0 25px rgba(254, 240, 138, 0.7);
-}
-
-.panelRight {
-  right: 0;
-  border-left: 3px solid #ffffff;
-  box-shadow: -18px 0 50px rgba(0, 0, 0, 0.8),
-    inset 8px 0 25px rgba(254, 240, 138, 0.7);
+@keyframes moltenSheen {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 50% 100%;
+  }
 }
 
 /* ============================================================
-   Luminous Vertical Seam System (Thick, bright, radiant)
+   Luminous Vertical Seam System & Rocket Craft
    ============================================================ */
 .seamContainer {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 28px;
+  width: 40px;
   height: 100%;
-  z-index: 100;
+  z-index: 30;
   pointer-events: none;
   transform: translateX(-50%);
   overflow: visible;
 }
 
-.seamGlow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 100px;
-  height: 100%;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(245, 158, 11, 0.5) 25%,
-    rgba(255, 255, 255, 0.98) 50%,
-    rgba(245, 158, 11, 0.5) 75%,
-    transparent 100%
-  );
-  filter: blur(15px);
-  transform-origin: top center;
-  will-change: transform, opacity;
-}
-
+/* Incision Laser Seam trailing upward from the rocket */
 .seamLine {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 50%;
-  width: 10px;
+  width: 5px;
   height: 100%;
   transform: translateX(-50%);
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #fef08a 15%,
-    #ffffff 50%,
-    #fef08a 85%,
+    #e8e3dd 25%,
+    #cdac68 60%,
     #ffffff 100%
   );
-  box-shadow: 0 0 20px 6px #ffffff, 0 0 40px 10px #f59e0b,
-    0 0 80px 20px rgba(217, 119, 6, 0.95);
-  transform-origin: top center;
+  box-shadow: 0 0 14px 3px #ffffff, 0 0 28px 6px #cdac68,
+    0 0 50px 12px rgba(205, 172, 104, 0.7);
+  transform-origin: bottom center;
   will-change: transform;
 }
 
-/* Cutting tip spark / laser head */
-.seamSpark {
+/* Wide Gold Atmospheric Glow (uses pure gradient aura for zero blur cost) */
+.seamGlow {
   position: absolute;
+  bottom: 0;
   left: 50%;
-  top: 0;
-  width: 32px;
-  height: 32px;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle,
-    #ffffff 35%,
-    #fef08a 65%,
-    #f59e0b 90%,
+  width: 70px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(205, 172, 104, 0.35) 25%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(205, 172, 104, 0.35) 75%,
     transparent 100%
   );
-  border-radius: 50%;
-  box-shadow: 0 0 25px 10px #ffffff, 0 0 55px 18px #f59e0b,
-    0 0 100px 28px rgba(217, 119, 6, 1);
-  will-change: top, transform, opacity;
-  z-index: 110;
+  transform-origin: bottom center;
+  will-change: transform, opacity;
 }
 
-.seamSpark::after {
-  content: "";
+/* Shock diamonds & trailing particles wake */
+.shockTrail {
   position: absolute;
-  inset: -10px;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 20px #f59e0b;
-  animation: sparkPulse 1.2s infinite ease-in-out;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    180deg,
+    #ffffff 0px,
+    #ffffff 8px,
+    transparent 8px,
+    transparent 20px
+  );
+  opacity: 0.75;
+  transform-origin: bottom center;
 }
 
-@keyframes sparkPulse {
-  0%, 100% {
-    transform: scale(0.9);
-    opacity: 0.75;
+/* ============================================================
+   The Aerospace Rocket Entity
+   Docked firmly at bottom (bottom: 12px), travels upward with GSAP 'y'
+   ============================================================ */
+.rocketContainer {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 72px;
+  height: 110px;
+  transform: translateX(-50%);
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform, opacity;
+  box-shadow: 0 0 30px rgba(205, 172, 104, 0.7);
+  border-radius: 999px;
+}
+
+/* Nose cone incision laser dot */
+.noseConeGlow {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 14px 5px #ffffff, 0 0 25px 8px #cdac68;
+  animation: nosePulse 1s infinite alternate ease-in-out;
+}
+
+@keyframes nosePulse {
+  0% {
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0.85;
   }
-  50% {
-    transform: scale(1.4);
+  100% {
+    transform: translateX(-50%) scale(1.3);
     opacity: 1;
   }
 }
 
+.rocketSvg {
+  width: 58px;
+  height: 86px;
+  display: block;
+}
+
 /* ============================================================
-   Center Seal Emblem / Medallion
+   Ion Thruster Plasma Plume (trailing down behind rocket)
+   ============================================================ */
+.thrusterPlume {
+  position: absolute;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Intense white-hot inner thrust core */
+.plasmaCore {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 48px;
+  border-radius: 50% 50% 80% 80%;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #e8e3dd 30%,
+    #cdac68 70%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px 3px #ffffff, 0 0 20px 5px #cdac68;
+  animation: coreFlicker 0.15s infinite alternate ease-in-out;
+}
+
+/* Outer golden envelope */
+.plasmaEnvelope {
+  position: absolute;
+  top: 2px;
+  width: 24px;
+  height: 65px;
+  border-radius: 40% 40% 80% 80%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(232, 227, 221, 0.8) 25%,
+    rgba(205, 172, 104, 0.6) 60%,
+    transparent 100%
+  );
+  animation: plumeSpread 0.2s infinite alternate ease-in-out;
+}
+
+@keyframes coreFlicker {
+  0% {
+    transform: scaleY(0.92) scaleX(0.96);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scaleY(1.08) scaleX(1.04);
+    opacity: 1;
+  }
+}
+
+@keyframes plumeSpread {
+  0% {
+    transform: scaleY(0.9) scaleX(0.95);
+  }
+  100% {
+    transform: scaleY(1.12) scaleX(1.08);
+  }
+}
+
+/* ============================================================
+   Apogee Severance Burst at Top Apex
+   Fires when rocket reaches top before panels split
+   ============================================================ */
+.apogeeBurst {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.burstRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 30px #ffffff, 0 0 60px #cdac68, 0 0 90px rgba(205, 172, 104, 0.6);
+}
+
+.burstFlare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ffffff 50%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 25px 6px #ffffff;
+}
+
+/* ============================================================
+   Center Seal Emblem / Medallion (Palette & Bright Theme)
    ============================================================ */
 .crest {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  z-index: 80;
+  z-index: 25;
   pointer-events: none;
   will-change: transform, opacity;
 }
 
 .crestMedallion {
   position: relative;
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -241,73 +410,148 @@
   background: radial-gradient(
     circle at 35% 35%,
     #ffffff 0%,
-    #fef08a 25%,
-    #f59e0b 55%,
-    #b45309 80%,
-    #78350f 100%
+    #e8e3dd 25%,
+    #cdac68 60%,
+    #a5a098 85%,
+    #5f5b55 100%
   );
-  border: 4px solid #ffffff;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.75), 0 0 50px rgba(254, 240, 138, 0.9),
-    inset 0 3px 8px #ffffff;
+  border: 3.5px solid #ffffff;
+  box-shadow: 0 14px 40px rgba(29, 31, 33, 0.35),
+    0 0 50px rgba(205, 172, 104, 0.7),
+    inset 0 3px 8px #ffffff,
+    inset 0 -5px 10px rgba(95, 91, 85, 0.6);
+}
+
+.starBorderRing {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(205, 172, 104, 0.8);
+  animation: orbitRotate 22s infinite linear;
+}
+
+@keyframes orbitRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .crestInnerRing {
-  width: 98px;
-  height: 98px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
-  border: 2px dashed rgba(255, 255, 255, 0.85);
+  border: 2px solid #cdac68;
+  background: radial-gradient(
+    circle at 50% 50%,
+    #ffffff 0%,
+    #e8e3dd 85%,
+    #ded8cf 100%
+  );
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0 2px 6px rgba(29, 31, 33, 0.08), 0 0 14px rgba(205, 172, 104, 0.4);
+  padding: 6px;
+}
+
+.quantumGlyph {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+  width: 100%;
+}
+
+.glyphTop {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #cdac68;
+  display: block;
 }
 
 .crestCore {
   font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 2rem;
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #1d1f21;
+  text-shadow: 0 0 15px rgba(205, 172, 104, 0.6);
+  display: block;
+}
+
+.glyphBottom {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 0.55rem;
   font-weight: 800;
-  letter-spacing: 0.05em;
-  color: #050507;
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.26em;
+  color: #cdac68;
+  display: block;
 }
 
 .crestPrompt {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #ffffff;
-  background: rgba(120, 53, 15, 0.9);
-  padding: 10px 26px;
+  background: rgba(232, 227, 221, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 24px;
   border-radius: 9999px;
-  border: 1.5px solid #fef08a;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 158, 11, 0.5);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-  animation: promptPulse 2s infinite ease-in-out;
+  border: 1.5px solid #cdac68;
+  box-shadow: 0 10px 30px rgba(29, 31, 33, 0.14), 0 0 25px rgba(205, 172, 104, 0.35);
+  animation: promptFloat 2.4s infinite ease-in-out;
 }
 
-@keyframes promptPulse {
+.launchIcon {
+  color: #cdac68;
+  font-size: 0.8rem;
+  animation: launchArrow 1.2s infinite ease-in-out;
+}
+
+@keyframes launchArrow {
   0%, 100% {
-    opacity: 0.9;
     transform: translateY(0);
   }
   50% {
-    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes promptFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
     transform: translateY(4px);
   }
 }
 
 /* ============================================================
-   Reduced Motion Accessibility (Softens continuous pulse animations)
+   Reduced Motion Accessibility
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .crestPrompt {
     animation: none;
   }
-  .seamSpark::after {
+  .starBorderRing {
+    animation: none;
+  }
+  .plasmaCore {
+    animation: none;
+  }
+  .plasmaEnvelope {
     animation: none;
   }
 }
@@ -317,29 +561,37 @@
    ============================================================ */
 @media (max-width: 768px) {
   .crestMedallion {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
   }
   .crestInnerRing {
-    width: 76px;
-    height: 76px;
+    width: 82px;
+    height: 82px;
   }
   .crestCore {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+  }
+  .glyphTop, .glyphBottom {
+    font-size: 0.44rem;
   }
   .crestPrompt {
-    font-size: 0.76rem;
-    padding: 7px 18px;
-    letter-spacing: 0.18em;
+    font-size: 0.74rem;
+    padding: 8px 18px;
+    letter-spacing: 0.12em;
+  }
+  .rocketContainer {
+    width: 56px;
+    height: 85px;
+    bottom: 8px;
+  }
+  .rocketSvg {
+    width: 44px;
+    height: 66px;
   }
   .seamGlow {
-    width: 70px;
+    width: 50px;
   }
   .seamLine {
-    width: 7px;
-  }
-  .seamSpark {
-    width: 24px;
-    height: 24px;
+    width: 4px;
   }
 }

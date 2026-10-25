@@ -1,0 +1,147 @@
+/* StarBorderButton.css — React Bits StarBorder & Shimmer Animation */
+
+.star-border-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5px;
+  border-radius: 9999px;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  border: none;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.star-border-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px rgba(205, 172, 104, 0.5), 0 8px 24px rgba(29, 31, 33, 0.25);
+}
+
+.star-border-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.star-border-btn:focus-visible {
+  outline: 2px solid var(--color-gold, #cdac68);
+  outline-offset: 3px;
+}
+
+/* Traveling rotating glow starburst layers */
+.star-border-glow {
+  position: absolute;
+  width: 320%;
+  height: 70%;
+  opacity: 0.95;
+  border-radius: 50%;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.star-border-glow-top {
+  top: -35%;
+  left: -110%;
+  animation: star-border-rotate 4s linear infinite;
+}
+
+.star-border-glow-bottom {
+  bottom: -35%;
+  right: -110%;
+  animation: star-border-rotate-reverse 4s linear infinite;
+}
+
+@keyframes star-border-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes star-border-rotate-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Inner capsule body */
+.star-border-inner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 2.8rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #cdac68 0%, #b89650 100%);
+  color: #ffffff;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 3px rgba(29, 31, 33, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 6px 20px rgba(205, 172, 104, 0.4);
+  overflow: hidden;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.star-border-btn:hover .star-border-inner {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: linear-gradient(135deg, #dbba74 0%, #c4a159 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 25px rgba(205, 172, 104, 0.6);
+}
+
+/* Shimmer sweep effect across button face */
+.star-border-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: star-border-shimmer 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes star-border-shimmer {
+  0%,
+  35% {
+    left: -120%;
+  }
+  60%,
+  100% {
+    left: 200%;
+  }
+}
+
+.star-border-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold-accent, #f59e0b);
+  transition: transform 0.25s ease;
+}
+
+.star-border-btn:hover .star-border-icon {
+  transform: translateY(2px);
+}

@@ -5,9 +5,10 @@
   padding: var(--space-3xl) var(--gutter);
   text-align: center;
   overflow: hidden;
+  background: var(--bg-surface-alt);
 }
 
-/* Dual ambient glow behind the CTA */
+/* Subtle ambient gold glow behind the CTA */
 .section::before {
   content: "";
   position: absolute;
@@ -18,25 +19,8 @@
   height: 600px;
   background: radial-gradient(
     circle,
-    rgba(245, 158, 11, 0.12) 0%,
-    transparent 60%
-  );
-  pointer-events: none;
-  opacity: var(--glow-opacity, 0.3);
-}
-
-.section::after {
-  content: "";
-  position: absolute;
-  top: 30%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(
-    circle,
-    rgba(20, 184, 166, 0.08) 0%,
-    transparent 70%
+    rgba(205, 172, 104, 0.1) 0%,
+    transparent 65%
   );
   pointer-events: none;
 }
@@ -55,21 +39,23 @@
   font-weight: var(--fw-semibold);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: var(--color-dark-grey);
   margin-bottom: var(--space-xs);
   padding: 4px 14px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: rgba(205, 172, 104, 0.18);
+  border: 1px solid rgba(205, 172, 104, 0.45);
   border-radius: var(--radius-full);
 }
 
 .title {
   font-size: var(--fs-h2);
   margin-bottom: var(--space-sm);
-  background: linear-gradient(135deg, #fffdf5 0%, #fde047 100%);
+  color: var(--color-dark-grey);
+  background: linear-gradient(135deg, #1d1f21 0%, #5f5b55 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-weight: var(--fw-bold);
 }
 
 .subtitle {
@@ -93,42 +79,20 @@
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: var(--fw-bold);
   padding: 1rem 2.5rem;
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #050507;
+  background: linear-gradient(135deg, #cdac68 0%, #b89650 100%);
+  color: #ffffff;
   border-radius: var(--radius-full);
   text-decoration: none;
-  box-shadow: 0 4px 25px rgba(245, 158, 11, 0.4);
-  transition: box-shadow var(--transition-base), transform var(--transition-fast);
+  box-shadow: 0 4px 20px rgba(205, 172, 104, 0.4);
+  transition: box-shadow var(--transition-base), transform var(--transition-fast), filter var(--transition-fast);
   position: relative;
-}
-
-/* Shimmer effect on CTA button */
-.cta::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(
-    135deg,
-    rgba(253, 224, 71, 0.6) 0%,
-    rgba(245, 158, 11, 0.2) 50%,
-    rgba(217, 119, 6, 0.5) 100%
-  );
-  z-index: -1;
-  filter: blur(8px);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.cta:hover::before,
-.cta:focus-visible::before {
-  opacity: 1;
 }
 
 .cta:hover,
 .cta:focus-visible {
-  box-shadow: var(--glow-violet), var(--glow-gold);
+  box-shadow: 0 8px 30px rgba(205, 172, 104, 0.6);
   transform: translateY(-3px);
+  filter: brightness(1.05);
 }
 
 .note {
@@ -150,21 +114,21 @@
 
 .statusOpen {
   composes: statusBadge;
-  background: rgba(110, 53, 255, 0.15);
-  color: var(--accent-secondary);
-  border: 1px solid rgba(110, 53, 255, 0.3);
+  background: rgba(205, 172, 104, 0.18);
+  color: var(--color-dark-grey);
+  border: 1px solid rgba(205, 172, 104, 0.5);
 }
 
 .statusClosed {
   composes: statusBadge;
-  background: rgba(255, 100, 100, 0.1);
-  color: #ff8888;
-  border: 1px solid rgba(255, 100, 100, 0.2);
+  background: rgba(165, 160, 152, 0.2);
+  color: var(--color-grey-dark);
+  border: 1px solid rgba(165, 160, 152, 0.4);
 }
 
 .statusPending {
   composes: statusBadge;
-  background: rgba(170, 165, 189, 0.1);
-  color: var(--color-mist);
-  border: 1px solid rgba(170, 165, 189, 0.2);
+  background: rgba(165, 160, 152, 0.18);
+  color: var(--color-grey-dark);
+  border: 1px solid rgba(165, 160, 152, 0.4);
 }

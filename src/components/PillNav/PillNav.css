@@ -115,9 +115,9 @@
   padding: var(--pn-pad, 5px);
   border-radius: 999px;
   box-sizing: border-box;
-  background: var(--pn-surface, rgba(14, 12, 22, 0.94));
-  border: 1.5px solid var(--pn-edge, rgba(245, 158, 11, 0.55));
-  box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.9), 0 0 30px rgba(245, 158, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: var(--pn-surface, rgba(255, 255, 255, 0.94));
+  border: 1.5px solid var(--pn-edge, rgba(205, 172, 104, 0.45));
+  box-shadow: 0 12px 36px -8px rgba(29, 31, 33, 0.12), 0 0 20px rgba(205, 172, 104, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px) saturate(1.8);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
 }

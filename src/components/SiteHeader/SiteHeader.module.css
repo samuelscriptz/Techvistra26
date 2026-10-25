@@ -7,29 +7,15 @@
   right: 0;
   z-index: var(--z-header);
   padding: 16px var(--gutter);
-  transition: opacity 0.35s ease, transform 0.35s ease, background var(--transition-base), box-shadow var(--transition-base), padding var(--transition-base);
+  transition: background var(--transition-base), box-shadow var(--transition-base), padding var(--transition-base);
   pointer-events: none;
-}
-
-.header.hiddenOnSeal {
-  opacity: 0;
-  transform: translateY(-25px);
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.header.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  visibility: visible;
 }
 
 .header.scrolled {
-  background: rgba(10, 9, 14, 0.94);
+  background: rgba(232, 227, 221, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(245, 158, 11, 0.25);
+  box-shadow: 0 4px 20px rgba(29, 31, 33, 0.08), 0 1px 0 rgba(205, 172, 104, 0.4);
   padding: 10px var(--gutter);
   pointer-events: auto;
 }
@@ -66,7 +52,7 @@
   width: auto;
   max-width: 170px;
   object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.5));
+  filter: drop-shadow(0 2px 8px rgba(205, 172, 104, 0.4));
 }
 
 .navWrapper {

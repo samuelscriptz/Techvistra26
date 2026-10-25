@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
-import { eventConfig, isPlaceholder, themeWords } from "../../config/eventConfig";
+import StarBorderButton from "../ReactBits/StarBorderButton";
+import { eventConfig, isPlaceholder } from "../../config/eventConfig";
 import styles from "./Hero.module.css";
 
 const VIDEO_SRC = "/hero-bg.mp4";
@@ -93,13 +94,6 @@ export default function Hero() {
 
       {/* Foreground Content */}
       <div ref={contentRef} className={styles.content}>
-        {/* Edition Tag */}
-        <div className={styles.editionBadge}>
-          <span className={styles.editionDot} />
-          <span>{eventConfig.edition}</span>
-          <span className={styles.editionDot} />
-        </div>
-
         {/* Hidden semantic H1 for SEO/Accessibility */}
         <h1 id="hero-title" className={styles.srOnly}>
           {eventConfig.name} — {eventConfig.descriptor} — {eventConfig.organizer}
@@ -114,97 +108,27 @@ export default function Hero() {
           />
         </div>
 
-        {/* Event Sub-descriptors */}
-        <p className={styles.descriptor}>{eventConfig.descriptor}</p>
-        <p className={styles.organizer}>{eventConfig.organizer}</p>
-
-        {/* Event Facts Strip */}
-        <div className={styles.factsStrip} role="list" aria-label="Symposium facts">
-          <div className={styles.factItem} role="listitem">
-            <span className={styles.factLabel}>Date</span>
-            <span
-              className={`${styles.factValue} ${
-                isPlaceholder(eventConfig.eventDates) ? styles.placeholder : ""
-              }`}
-            >
-              {isPlaceholder(eventConfig.eventDates)
-                ? "Coming Soon"
-                : eventConfig.eventDates}
-            </span>
-          </div>
-
-          <div className={styles.factDivider} aria-hidden="true" />
-
-          <div className={styles.factItem} role="listitem">
-            <span className={styles.factLabel}>Venue</span>
-            <span
-              className={`${styles.factValue} ${
-                isPlaceholder(eventConfig.venue) ? styles.placeholder : ""
-              }`}
-            >
-              {isPlaceholder(eventConfig.venue)
-                ? "To be announced"
-                : eventConfig.venue}
-            </span>
-          </div>
-
-          <div className={styles.factDivider} aria-hidden="true" />
-
-          <div className={styles.factItem} role="listitem">
-            <span className={styles.factLabel}>Registration</span>
-            <span className={`${styles.factValue} ${styles.placeholder}`}>
-              {eventConfig.registrationState === "open"
-                ? "Open Now"
-                : eventConfig.registrationState === "closed"
-                ? "Closed"
-                : "Coming Soon"}
-            </span>
-          </div>
-        </div>
-
-        {/* CTA Group */}
-        <div className={styles.ctaGroup}>
-          <a
+        {/* Lifted Animated ReactBits CTA Button */}
+        <div className={styles.liftedCta}>
+          <StarBorderButton
             href={regUrl ?? "#register"}
-            className={styles.ctaBtn}
+            color="#f59e0b"
+            speed="4.5s"
+            icon={
+              regUrl ? (
+                <ExternalLink size={18} aria-hidden="true" />
+              ) : (
+                <ChevronDown size={18} aria-hidden="true" />
+              )
+            }
             {...(regUrl
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
           >
-            <span>Register Now</span>
-            {regUrl ? (
-              <ExternalLink size={16} aria-hidden="true" />
-            ) : (
-              <ChevronDown size={16} aria-hidden="true" />
-            )}
-          </a>
-          <span className={styles.ctaNote}>
-            {regUrl
-              ? "Registration continues on the official external portal"
-              : "Registration portal details will be announced soon"}
-          </span>
-        </div>
-
-        {/* Acrostic Theme Keywords */}
-        <div className={styles.themeWords} aria-label="Theme keywords">
-          {themeWords.map((word) => (
-            <span key={word} className={styles.themeWord}>
-              <span className={styles.highlight}>{word[0]}</span>
-              {word.slice(1)}
-            </span>
-          ))}
+            Register Now
+          </StarBorderButton>
         </div>
       </div>
-
-      {/* Scroll down indicator */}
-      <a
-        href="#about"
-        className={styles.scrollIndicator}
-        aria-label="Scroll to About section"
-      >
-        <span>Scroll to Explore</span>
-        <ChevronDown size={18} />
-      </a>
     </section>
   );
 }

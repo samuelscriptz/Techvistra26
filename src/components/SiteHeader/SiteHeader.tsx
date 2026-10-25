@@ -7,20 +7,12 @@ const SECTION_IDS = ["home", "about", "program", "schedule", "venue", "faq", "re
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
-  const [sealPassed, setSealPassed] = useState(() => {
-    if (typeof window !== "undefined") {
-      return window.scrollY > 400 || (window.location.hash !== "" && window.location.hash !== "#home");
-    }
-    return false;
-  });
   const [activeHref, setActiveHref] = useState("#home");
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-      const isPast = window.scrollY > 400 || (window.location.hash !== "" && window.location.hash !== "#home");
-      setSealPassed(isPast);
 
       // Dynamically track active section for PillNav indicator
       const scrollPos = window.scrollY + 200;
@@ -59,7 +51,7 @@ export default function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${sealPassed ? styles.visible : styles.hiddenOnSeal}`}
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}
       role="banner"
     >
       <div className={styles.inner}>
@@ -82,17 +74,17 @@ export default function SiteHeader() {
             onItemClick={(item) => {
               if (item.href) setActiveHref(item.href);
             }}
-            theme="dark"
+            theme="light"
             layout="split"
             itemStyle="pill"
             hoverEffect="fill"
             indicator="dot"
             surface="glass"
             size="lg"
-            barColor="rgba(14, 12, 22, 0.92)"
-            textColor="#ffffff"
-            highlightColor="#f59e0b"
-            highlightTextColor="#09080c"
+            barColor="rgba(255, 255, 255, 0.94)"
+            textColor="#1d1f21"
+            highlightColor="#cdac68"
+            highlightTextColor="#ffffff"
             collapse="auto"
             intro={false}
             ariaLabel="Symposium navigation"

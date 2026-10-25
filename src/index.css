@@ -4,30 +4,33 @@
    ============================================================ */
 
 :root {
-  /* —— Color tokens (Native Gold & Architectural Charcoal system) —— */
-  --color-void: #050507;
-  --color-deep-space: #0d0e12;
-  --color-charcoal-surface: #15171e;
-  --color-gold-core: #f59e0b;
-  --color-gold-light: #ffc837;
-  --color-amber-glow: #d97706;
-  --color-yellow-light: #fde047;
-  --color-teal-accent: #14b8a6;
-  --color-teal-cyan: #06b6d4;
-  --color-starlight: #fffdf5;
-  --color-mist: #94a3b8;
-  --color-gold-accent: #f59e0b;
-  --color-charcoal-border: rgba(245, 158, 11, 0.18);
+  /* —— Color tokens (Reference Palette) —— */
+  --color-light-orange: #e8e3dd;      /* Warm light orange / champagne base */
+  --color-grey-light: #a5a098;        /* Soft mid-light grey for borders and badges */
+  --color-grey-dark: #5f5b55;         /* Mid-dark grey for readable secondary text */
+  --color-gold: #cdac68;              /* Radiant luxury gold for accents & highlights */
+  --color-gold-hover: #b89650;        /* Hover gold */
+  --color-dark-grey: #1d1f21;         /* Dark grey for primary headings and crisp text */
+  --color-white: #ffffff;             /* Crisp pure white for cards */
 
-  /* —— Semantic aliases —— */
-  --bg-primary: var(--color-void);
-  --bg-surface: var(--color-deep-space);
-  --text-primary: var(--color-starlight);
-  --text-secondary: var(--color-mist);
-  --accent-primary: var(--color-gold-core);
-  --accent-secondary: var(--color-amber-glow);
-  --accent-glow: var(--color-yellow-light);
-  --accent-teal: var(--color-teal-accent);
+  /* —— Semantic aliases (Bright experience) —— */
+  --bg-primary: #e8e3dd;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #ded8cf;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-hover: #ffffff;
+
+  --text-primary: #1d1f21;
+  --text-secondary: #5f5b55;
+  --text-muted: #a5a098;
+
+  --accent-primary: #cdac68;
+  --accent-secondary: #5f5b55;
+  --accent-glow: rgba(205, 172, 104, 0.35);
+
+  --border-light: rgba(165, 160, 152, 0.45);
+  --border-gold: rgba(205, 172, 104, 0.6);
+  --border-gold-solid: #cdac68;
 
   /* —— Typography —— */
   --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
@@ -71,17 +74,17 @@
   --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* —— Shadows & glow —— */
-  --glow-amber: 0 0 35px rgba(245, 158, 11, 0.35),
-    0 0 70px rgba(217, 119, 6, 0.15);
-  --glow-gold: 0 0 30px rgba(245, 158, 11, 0.3);
-  --glow-teal: 0 0 25px rgba(20, 184, 166, 0.25);
+  --shadow-card: 0 4px 20px rgba(29, 31, 33, 0.06), 0 1px 3px rgba(29, 31, 33, 0.04);
+  --shadow-card-hover: 0 12px 32px rgba(29, 31, 33, 0.09), 0 0 20px rgba(205, 172, 104, 0.18);
+  --shadow-button: 0 4px 18px rgba(205, 172, 104, 0.35);
+  --glow-gold: 0 0 25px rgba(205, 172, 104, 0.4);
 
   /* —— Z-index layers —— */
   --z-base: 1;
   --z-video: 5;
-  --z-header: 100;
-  --z-overlay: 200;
-  --z-modal: 500;
+  --z-header: 1000;
+  --z-overlay: 1200;
+  --z-modal: 2000;
 }
 
 /* ============================================================
@@ -211,7 +214,7 @@ ol {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-deep-space);
+  background: var(--color-grey-light);
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
