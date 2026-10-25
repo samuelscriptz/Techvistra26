@@ -6,10 +6,7 @@
   overflow: hidden;
   isolation: isolate;
   padding: var(--space-2xl) 0;
-  background:
-    radial-gradient(ellipse at 18% 40%, rgba(20, 184, 166, 0.08), transparent 42%),
-    radial-gradient(ellipse at 82% 60%, rgba(245, 158, 11, 0.08), transparent 42%),
-    #090a0d;
+  background: var(--bg-surface-alt);
 }
 
 .section::before {
@@ -18,8 +15,8 @@
   inset: 0;
   background: radial-gradient(
     360px circle at var(--pointer-x) var(--pointer-y),
-    rgba(20, 184, 166, 0.2),
-    rgba(245, 158, 11, 0.09) 35%,
+    rgba(205, 172, 104, 0.15),
+    rgba(165, 160, 152, 0.08) 35%,
     transparent 72%
   );
   content: "";
@@ -40,11 +37,11 @@
 .label {
   display: inline-block;
   margin-bottom: var(--space-xs);
-  padding: 4px 12px;
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  padding: 4px 14px;
+  border: 1px solid rgba(205, 172, 104, 0.45);
   border-radius: var(--radius-full);
-  background: rgba(245, 158, 11, 0.08);
-  color: var(--accent-primary);
+  background: rgba(205, 172, 104, 0.18);
+  color: var(--color-dark-grey);
   font-family: var(--font-display);
   font-size: var(--fs-caption);
   font-weight: var(--fw-semibold);
@@ -54,9 +51,9 @@
 
 .title {
   margin-bottom: var(--space-sm);
-  background: linear-gradient(135deg, #fffdf5 0%, #fde047 100%);
+  background: linear-gradient(135deg, #1d1f21 0%, #5f5b55 100%);
   background-clip: text;
-  color: transparent;
+  color: var(--color-dark-grey);
   font-size: var(--fs-h2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -67,7 +64,7 @@
   height: 3px;
   margin: 0 auto var(--space-lg);
   border-radius: var(--radius-full);
-  background: linear-gradient(90deg, var(--color-gold-core), var(--color-teal-accent));
+  background: linear-gradient(90deg, #cdac68, #a5a098);
 }
 
 .subtitle {
@@ -116,8 +113,13 @@
   flex: 0 0 auto;
   align-items: center;
   flex-direction: column;
-  gap: 6px;
-  transition: transform var(--transition-base);
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(165, 160, 152, 0.35);
+  border-radius: 18px;
+  box-shadow: var(--shadow-card);
+  padding: 12px;
+  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .logoViewport {
@@ -130,13 +132,15 @@
 
 .partnerCard:hover {
   transform: translateY(-5px);
+  border-color: #cdac68;
+  box-shadow: var(--shadow-card-hover);
 }
 
 .partnerName {
   max-height: 0;
   width: 100%;
   overflow: hidden;
-  color: white;
+  color: var(--color-dark-grey);
   font-family: var(--font-display);
   font-size: clamp(0.85rem, 1.1vw, var(--fs-body));
   font-weight: var(--fw-semibold);
