@@ -160,6 +160,32 @@ function useSectionReveal(ref: React.RefObject<HTMLElement | null>) {
             }
           );
         }
+
+        // About highlight cards reveal on scroll
+        const aboutHighlights = el.querySelectorAll(`.${styles.aboutHighlight}`);
+        if (aboutHighlights.length > 0) {
+          gsap.set(aboutHighlights, {
+            x: 40,
+            opacity: 0,
+          });
+
+          const highlightTween = gsap.to(aboutHighlights, {
+            x: 0,
+            opacity: 1,
+            duration: 1.4,
+            stagger: 0.18,
+            ease: "power3.out",
+            paused: true,
+          });
+
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top 75%",
+            end: "bottom 20%",
+            onEnter: () => highlightTween.restart(),
+            onEnterBack: () => highlightTween.restart(),
+          });
+        }
       }, el);
 
       ScrollTrigger.refresh();
@@ -191,43 +217,43 @@ export function AboutSection() {
         <div className={styles.divider} />
         <p className={styles.sectionSubtitle}>{eventConfig.eventSummary}</p>
 
-        <div className={styles.cardGrid} style={{ marginTop: "var(--space-lg)" }}>
-          <div className={styles.card}>
-            <span style={{ color: "var(--accent-primary)", fontSize: "1.75rem", fontWeight: 700, fontFamily: "var(--font-display)" }}>
+        <div className={styles.aboutHighlights}>
+          <div className={styles.aboutHighlight}>
+            <span className={styles.aboutHighlightStat}>
               2nd Edition
             </span>
-            <h4 style={{ marginTop: "4px", fontSize: "1.1rem", color: "var(--color-dark-grey)" }}>National Level Symposium</h4>
-            <p className={styles.cardDesc}>
+            <h4 className={styles.aboutHighlightTitle}>National Level Symposium</h4>
+            <p className={styles.aboutHighlightDesc}>
               Following the success of TechVistra '25, expanding national participation across Indian universities.
             </p>
           </div>
 
-          <div className={styles.card}>
-            <span style={{ color: "var(--accent-primary)", fontSize: "1.75rem", fontWeight: 700, fontFamily: "var(--font-display)" }}>
+          <div className={styles.aboutHighlight}>
+            <span className={styles.aboutHighlightStat}>
               6+ Tracks
             </span>
-            <h4 style={{ marginTop: "4px", fontSize: "1.1rem", color: "var(--color-dark-grey)" }}>Competitive Arenas</h4>
-            <p className={styles.cardDesc}>
+            <h4 className={styles.aboutHighlightTitle}>Competitive Arenas</h4>
+            <p className={styles.aboutHighlightDesc}>
               Spanning AI Hackathons, Competitive Coding, Quantum Research Colloquiums, and Web3 Architectures.
             </p>
           </div>
 
-          <div className={styles.card}>
-            <span style={{ color: "var(--accent-primary)", fontSize: "1.75rem", fontWeight: 700, fontFamily: "var(--font-display)" }}>
+          <div className={styles.aboutHighlight}>
+            <span className={styles.aboutHighlightStat}>
               Grand Awards
             </span>
-            <h4 style={{ marginTop: "4px", fontSize: "1.1rem", color: "var(--color-dark-grey)" }}>Cash Prizes &amp; Trophies</h4>
-            <p className={styles.cardDesc}>
+            <h4 className={styles.aboutHighlightTitle}>Cash Prizes &amp; Trophies</h4>
+            <p className={styles.aboutHighlightDesc}>
               Exciting cash prizes and merit awards for winning teams, with verified participation certificates for all.
             </p>
           </div>
 
-          <div className={styles.card}>
-            <span style={{ color: "var(--color-grey-dark)", fontSize: "1.75rem", fontWeight: 700, fontFamily: "var(--font-display)" }}>
+          <div className={styles.aboutHighlight}>
+            <span className={styles.aboutHighlightHost}>
               Dept. of Data Science
             </span>
-            <h4 style={{ marginTop: "4px", fontSize: "1.1rem", color: "var(--color-dark-grey)" }}>Host &amp; Organizer</h4>
-            <p className={styles.cardDesc}>
+            <h4 className={styles.aboutHighlightTitle}>Host &amp; Organizer</h4>
+            <p className={styles.aboutHighlightDesc}>
               Organized with pride by the faculty, researchers, and student innovators of the Department of Data Science.
             </p>
           </div>
