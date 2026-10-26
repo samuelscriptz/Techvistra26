@@ -1,5 +1,13 @@
 import { useEffect, useRef } from "react";
-import { Phone, Mail, MapPin, Facebook, ExternalLink, ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  ExternalLink,
+  Mail,
+  MapPin,
+  Phone,
+  UserRound,
+  Users,
+} from "lucide-react";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
 import styles from "./Section.module.css";
 
@@ -433,8 +441,85 @@ export function FAQSection() {
 }
 
 export function ContactSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useSectionReveal(sectionRef);
+  const revealStageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const stage = revealStageRef.current;
+    if (!stage) return;
+
+    let media: ReturnType<typeof import("gsap").default.matchMedia> | undefined;
+    let cancelled = false;
+
+    const init = async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prompt = stage.querySelector(`.${styles.revealPrompt}`);
+      const hero = stage.querySelector(`.${styles.revealHero}`);
+      if (!prompt || !hero) return;
+
+      media = gsap.matchMedia(stage);
+      media.add(
+        "(min-width: 769px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const animation = gsap.context(() => {
+            const reveal = gsap.timeline({
+              scrollTrigger: {
+                trigger: stage,
+                start: "top top",
+                end: "+=100%",
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            reveal
+              .to(
+                prompt,
+                {
+                  yPercent: -35,
+                  autoAlpha: 0,
+                  filter: "blur(8px)",
+                  ease: "none",
+                  duration: 0.45,
+                },
+                0
+              )
+              .fromTo(
+                hero,
+                {
+                  yPercent: 12,
+                  clipPath: "inset(100% 0 0 0)",
+                  autoAlpha: 0,
+                },
+                {
+                  yPercent: 0,
+                  clipPath: "inset(0% 0 0 0)",
+                  autoAlpha: 1,
+                  ease: "none",
+                  duration: 0.65,
+                },
+                0.2
+              );
+          }, stage);
+
+          return () => animation.revert();
+        }
+      );
+
+      ScrollTrigger.refresh();
+    };
+
+    init();
+    return () => {
+      cancelled = true;
+      media?.revert();
+    };
+  }, []);
 
   const coordinators = [
     { name: "Monish P", phone: "+91 97909 49122", tel: "+919790949122" },
@@ -442,180 +527,140 @@ export function ContactSection() {
     { name: "Narmadha S", phone: "+91 80150 05125", tel: "+918015005125" },
     { name: "Naveed Ahamed H", phone: "+91 89460 56229", tel: "+918946056229" },
   ];
-
   const mapEmbedUrl =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.442881273934!2d80.17538227485455!3d13.069377987255146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261504145fe7d%3A0x58810f43c3a748ae!2sDr.%20M.G.R.%20Educational%20And%20Research%20Institute!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin";
   const directionsUrl =
     "https://www.google.com/maps/place/Dr.+M.G.R.+Educational+And+Research+Institute/@13.0708594,80.176078,19z/data=!4m6!3m5!1s0x3a5261504145fe7d:0x58810f43c3a748ae!8m2!3d13.069378!4d80.1779609!16s%2Fm%2F05q5w0l";
-
-  const effectiveFacebookUrl =
+  const facebookUrl =
     FACEBOOK_PAGE_URL.trim() || eventConfig.facebookUrl?.trim() || "";
 
   return (
     <section
-      ref={sectionRef}
       id="contact"
       className={styles.contactSection}
       aria-labelledby="contact-title"
     >
-      <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Connect</span>
-        <h2 id="contact-title" className={styles.sectionTitle}>
-          Get in Touch // Coordination Desk
-        </h2>
-        <div className={styles.divider} />
-        <p className={styles.sectionSubtitle}>
-          Have inquiries regarding tracks, team registrations, or campus access?
-          Reach out to our symposium student coordinators and event desk directly.
-        </p>
+      <div ref={revealStageRef} className={styles.contactRevealStage}>
+        <div className={styles.revealPrompt}>
+          {/* <span className={styles.revealPromptText}>Scroll down to reveal</span> */}
+          <span className={styles.revealLine} aria-hidden="true">
+            <span className={styles.revealLineIndicator} />
+          </span>
+        </div>
+        <div className={styles.revealHero}>
+          <p className={styles.revealEyebrow}>
+            {eventConfig.edition} <span aria-hidden="true">/</span> Q-Vortex
+          </p>
+          <h2 id="contact-title" className={styles.contactHeroTitle}>
+            Ready to Connect?
+          </h2>
+          <p className={styles.revealDescription}>
+            Be part of TechVistra Q-Vortex. Reach out to our event coordinators
+            for symposium and campus information.
+          </p>
+          {!isPlaceholder(eventConfig.contactEmail) && (
+            <a
+              href={`mailto:${eventConfig.contactEmail}`}
+              className={styles.revealCta}
+            >
+              Contact the organizers
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          )}
+        </div>
+      </div>
 
-        {/* Desktop 2-column layout: Left = Google Map (45%), Right = ONE single contact card (55%) */}
-        <div className={styles.contactLayout}>
-          {/* LEFT COLUMN: Working Google Map with exact campus location */}
-          <div className={styles.mapColumn}>
-            <div className={styles.mapWrapper}>
-              <iframe
-                src={mapEmbedUrl}
-                width="100%"
-                height="100%"
-                className={styles.mapIframe}
-                loading="lazy"
-                title="Google Maps location of Dr. M.G.R. Educational and Research Institute"
-                allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-              {/* Fallback & quick-access link for verified campus location */}
-              <div className={styles.mapFooterBar}>
-                <div className={styles.mapFooterText}>
-                  <MapPin size={14} className={styles.goldIcon} aria-hidden="true" />
-                  <span>Dr. M.G.R. Campus (13.069378, 80.1779609)</span>
-                </div>
+      <div className={styles.contactDetails}>
+        <div className={styles.contactDetailColumn}>
+          <h3 className={styles.contactColumnHeading}>
+            <span className={styles.contactHeadingIcon}>
+              <MapPin size={15} aria-hidden="true" />
+            </span>
+            <span>Find Us</span>
+          </h3>
+          <div className={styles.contactMap}>
+            <iframe
+              src={mapEmbedUrl}
+              title="Map showing Dr. M.G.R. Educational and Research Institute"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+          <address className={styles.contactAddress}>
+            <strong>Dr. M.G.R. Educational and Research Institute, Chennai</strong>
+            <span>Poonamallee High Rd, Vishwas Nagar, Maduravoyal, Chennai</span>
+            <span>Tamil Nadu - 600095</span>
+          </address>
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.contactMapLink}
+          >
+            Open in Google Maps
+            <ExternalLink size={13} aria-hidden="true" />
+          </a>
+        </div>
+
+        <div className={styles.contactDetailColumn}>
+          <h3 className={styles.contactColumnHeading}>
+            <span className={styles.contactHeadingIcon}>
+              <Users size={15} aria-hidden="true" />
+            </span>
+            <span>Contact the Team</span>
+          </h3>
+          <div className={styles.contactTeamList}>
+            {coordinators.map((coordinator) => (
+              <div className={styles.contactTeamRow} key={coordinator.tel}>
+                <span className={styles.contactPersonIcon}>
+                  <UserRound size={15} aria-hidden="true" />
+                </span>
+                <span className={styles.contactPersonName}>{coordinator.name}</span>
                 <a
-                  href={directionsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.mapDirectLink}
-                  aria-label="Open location directly in Google Maps"
+                  href={`tel:${coordinator.tel}`}
+                  className={styles.contactPhoneLink}
+                  aria-label={`Call ${coordinator.name} at ${coordinator.phone}`}
                 >
-                  <span>Open in Google Maps</span>
-                  <ExternalLink size={12} aria-hidden="true" />
+                  <Phone size={14} aria-hidden="true" />
+                  <span>{coordinator.phone}</span>
                 </a>
               </div>
-            </div>
+            ))}
           </div>
-
-          {/* RIGHT COLUMN: ONE SINGLE CONTACT BOX containing all 4 sections separated by thin lines */}
-          <div className={styles.singleContactCard}>
-            {/* SECTION A: Event Coordinators & Contact */}
-            <div className={styles.cardSection}>
-              <h3 className={styles.sectionHeading}>
-                <Phone size={16} className={styles.goldIcon} aria-hidden="true" />
-                <span>Event Coordinators &amp; Contact</span>
-              </h3>
-              <div className={styles.coordinatorsList}>
-                {coordinators.map((coordinator, idx) => (
-                  <div key={idx} className={styles.coordinatorRow}>
-                    <span className={styles.coordinatorName}>{coordinator.name}</span>
-                    <a
-                      href={`tel:${coordinator.tel}`}
-                      className={styles.phoneLink}
-                      aria-label={`Call coordinator ${coordinator.name} at ${coordinator.phone}`}
-                    >
-                      <Phone size={12} className={styles.goldIcon} aria-hidden="true" />
-                      <span>{coordinator.phone}</span>
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Thin subtle gold divider line */}
-            <div className={styles.sectionDivider} />
-
-            {/* SECTION B: Email */}
-            <div className={styles.cardSection}>
-              <h3 className={styles.sectionHeading}>
-                <Mail size={16} className={styles.goldIcon} aria-hidden="true" />
-                <span>Email</span>
-              </h3>
-              <a
-                href="mailto:techvistra@drmgrdu.ac.in"
-                className={styles.emailTextLink}
-                aria-label="Send email to techvistra@drmgrdu.ac.in"
-              >
-                <span>techvistra@drmgrdu.ac.in</span>
-                <ArrowUpRight size={14} className={styles.linkArrow} aria-hidden="true" />
-              </a>
-            </div>
-
-            {/* Thin subtle gold divider line */}
-            <div className={styles.sectionDivider} />
-
-            {/* SECTION C: Address */}
-            <div className={styles.cardSection}>
-              <h3 className={styles.sectionHeading}>
-                <MapPin size={16} className={styles.goldIcon} aria-hidden="true" />
-                <span>Address</span>
-              </h3>
-              <address className={styles.addressBlock}>
-                <strong className={styles.institutionName}>
-                  Dr. MGR Educational and Research Institute
-                </strong>
-                <span className={styles.addressLine}>
-                  Poonamallee High Rd, Vishwas Nagar, Maduravoyal, Chennai
-                </span>
-                <span className={styles.addressLine}>Tamil Nadu - 600095</span>
-              </address>
-              <a
-                href={directionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.mapTextLink}
-                aria-label="Open Dr. M.G.R. Educational and Research Institute in Google Maps"
-              >
-                <span>Open in Google Maps</span>
-                <ExternalLink size={13} aria-hidden="true" />
-              </a>
-            </div>
-
-            {/* Thin subtle gold divider line */}
-            <div className={styles.sectionDivider} />
-
-            {/* SECTION D: Follow Us */}
-            <div className={styles.cardSection}>
-              <h3 className={styles.sectionHeading}>
-                <span>Follow Us</span>
-              </h3>
-              <a
-                href={effectiveFacebookUrl || "#"}
-                target={effectiveFacebookUrl ? "_blank" : undefined}
-                rel={effectiveFacebookUrl ? "noopener noreferrer" : undefined}
-                onClick={!effectiveFacebookUrl ? (e) => e.preventDefault() : undefined}
-                className={styles.facebookRow}
-                aria-label="Follow Techvistra on Facebook"
-                title={
-                  effectiveFacebookUrl
-                    ? "Visit Techvistra on Facebook"
-                    : "Paste Facebook URL in FACEBOOK_PAGE_URL at top of ContentSections.tsx"
-                }
-              >
-                <div className={styles.facebookCircle}>
-                  <Facebook size={16} aria-hidden="true" />
-                </div>
-                <div className={styles.facebookMeta}>
-                  <span className={styles.facebookName}>Facebook</span>
-                  <span className={styles.facebookStatus}>
-                    {effectiveFacebookUrl
-                      ? "Visit Official Page"
-                      : "Official link can be added here"}
-                  </span>
-                </div>
-                {effectiveFacebookUrl && (
-                  <ExternalLink size={13} className={styles.linkArrow} aria-hidden="true" />
-                )}
-              </a>
-            </div>
-          </div>
+          {!isPlaceholder(eventConfig.contactEmail) && (
+            <a
+              href={`mailto:${eventConfig.contactEmail}`}
+              className={styles.contactEmailLink}
+            >
+              <Mail size={16} aria-hidden="true" />
+              <span>{eventConfig.contactEmail}</span>
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+          )}
+          {eventConfig.socialLinks.map((link) => (
+            <a
+              key={link.platform}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.contactSocialLink}
+            >
+              {link.label}
+              <ExternalLink size={13} aria-hidden="true" />
+            </a>
+          ))}
+          {facebookUrl && (
+            <a
+              href={facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.contactSocialLink}
+            >
+              Facebook
+              <ExternalLink size={13} aria-hidden="true" />
+            </a>
+          )}
         </div>
       </div>
     </section>

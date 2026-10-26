@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import PillNav, { type PillNavItem } from "../PillNav/PillNav";
-import { eventConfig, isPlaceholder } from "../../config/eventConfig";
 import styles from "./SiteHeader.module.css";
 
-const SECTION_IDS = ["home", "about", "gallery", "program", "schedule", "venue", "faq", "contact", "register"];
+const SECTION_IDS = ["home", "about", "gallery", "program", "schedule", "venue", "faq", "contact"];
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,10 +33,6 @@ export default function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const regUrl = isPlaceholder(eventConfig.registrationUrl)
-    ? undefined
-    : eventConfig.registrationUrl;
-
   const navItems: PillNavItem[] = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
@@ -47,7 +42,6 @@ export default function SiteHeader() {
     { label: "Venue", href: "#venue" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#contact" },
-    { label: "Register", href: regUrl ?? "#register" },
   ];
 
   return (

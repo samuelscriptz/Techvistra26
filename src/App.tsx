@@ -11,8 +11,6 @@ import {
   ContactSection,
 } from "./components/sections/ContentSections";
 import GallerySection from "./components/sections/GallerySection";
-import RegistrationCTA from "./components/RegistrationCTA/RegistrationCTA";
-import SiteFooter from "./components/SiteFooter/SiteFooter";
 
 export default function App() {
   return (
@@ -38,14 +36,10 @@ export default function App() {
         <ScheduleSection />
         <VenueSection />
         <FAQSection />
+
+        {/* 10. Contact reveal and event contact details */}
         <ContactSection />
-
-        {/* 10. Final registration CTA */}
-        <RegistrationCTA />
       </main>
-
-      {/* 11. Footer */}
-      <SiteFooter />
     </>
   );
 }

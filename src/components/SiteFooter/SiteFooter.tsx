@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { eventConfig, isPlaceholder } from "../../config/eventConfig";
+import { eventConfig } from "../../config/eventConfig";
 import styles from "./SiteFooter.module.css";
 
 const NAV_ITEMS = [
@@ -9,7 +9,6 @@ const NAV_ITEMS = [
   { label: "Venue", href: "#venue" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
-  { label: "Register", href: "#register" },
 ];
 
 export default function SiteFooter() {
@@ -59,10 +58,11 @@ export default function SiteFooter() {
 
   return (
     <footer ref={footerRef} className={styles.footer} role="contentinfo">
+      <div className={styles.aurora} aria-hidden="true" />
       <div className={styles.inner}>
-        {/* Brand column */}
-        <div>
-          <div className={styles.brand} style={{ marginBottom: "12px" }}>
+        <div className={styles.brandColumn}>
+          <div className={styles.brandPill}>Techvistra</div>
+          <div className={styles.brand}>
             <img
               src="/logo.png"
               alt="Techvistra Q-Vortex"
@@ -85,9 +85,8 @@ export default function SiteFooter() {
           </p>
         </div>
 
-        {/* Navigation column */}
-        <div>
-          <h3 className={styles.colTitle}>Navigation</h3>
+        <div className={styles.navColumn}>
+          <p className={styles.kicker}>Explore</p>
           <nav className={styles.linkList} aria-label="Footer navigation">
             {NAV_ITEMS.map((item) => (
               <a key={item.href} href={item.href} className={styles.link}>
@@ -95,38 +94,9 @@ export default function SiteFooter() {
               </a>
             ))}
           </nav>
-        </div>
-
-        {/* Contact column */}
-        <div>
-          <h3 className={styles.colTitle}>Contact</h3>
-          <div className={styles.linkList}>
-            {!isPlaceholder(eventConfig.contactEmail) ? (
-              <a
-                href={`mailto:${eventConfig.contactEmail}`}
-                className={styles.link}
-              >
-                {eventConfig.contactEmail}
-              </a>
-            ) : (
-              <span className={styles.placeholder}>
-                Contact email to be announced
-              </span>
-            )}
-            {!isPlaceholder(eventConfig.contactPhone) ? (
-              <a
-                href={`tel:${eventConfig.contactPhone}`}
-                className={styles.link}
-              >
-                {eventConfig.contactPhone}
-              </a>
-            ) : (
-              <span className={styles.placeholder}>
-                Contact phone to be announced
-              </span>
-            )}
-            {eventConfig.socialLinks.length > 0 ? (
-              eventConfig.socialLinks.map((link, i) => (
+          {eventConfig.socialLinks.length > 0 ? (
+            <div className={styles.socialList}>
+              {eventConfig.socialLinks.map((link, i) => (
                 <a
                   key={i}
                   href={link.url}
@@ -136,13 +106,11 @@ export default function SiteFooter() {
                 >
                   {link.label}
                 </a>
-              ))
-            ) : (
-              <span className={styles.placeholder}>
-                Social links to be announced
-              </span>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <span className={styles.placeholder}>Social links to be announced</span>
+          )}
         </div>
       </div>
 
@@ -152,24 +120,9 @@ export default function SiteFooter() {
           reserved.
         </span>
         <div className={styles.legalLinks}>
-          <span
-            className={styles.legalLink}
-            style={{ cursor: "default", opacity: 0.5 }}
-          >
-            Privacy Policy
-          </span>
-          <span
-            className={styles.legalLink}
-            style={{ cursor: "default", opacity: 0.5 }}
-          >
-            Terms
-          </span>
-          <span
-            className={styles.legalLink}
-            style={{ cursor: "default", opacity: 0.5 }}
-          >
-            Accessibility
-          </span>
+          <span className={styles.legalLink}>Privacy Policy</span>
+          <span className={styles.legalLink}>Terms</span>
+          <span className={styles.legalLink}>Accessibility</span>
         </div>
       </div>
     </footer>
