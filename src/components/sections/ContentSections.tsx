@@ -9,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
+import AboutEvent from "../AboutEvent/AboutEvent";
 import styles from "./Section.module.css";
 
 // ============================================================================
@@ -200,67 +201,7 @@ function useSectionReveal(ref: React.RefObject<HTMLElement | null>) {
 }
 
 export function AboutSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useSectionReveal(sectionRef);
-
-  return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className={styles.sectionAlt}
-      aria-labelledby="about-title"
-    >
-      <div className={styles.inner}>
-        <h2 id="about-title" className={styles.sectionTitle}>
-          About the Event
-        </h2>
-        <div className={styles.divider} />
-        <p className={styles.sectionSubtitle}>{eventConfig.eventSummary}</p>
-
-        <div className={styles.aboutHighlights}>
-          <div className={styles.aboutHighlight}>
-            <span className={styles.aboutHighlightStat}>
-              2nd Edition
-            </span>
-            <h4 className={styles.aboutHighlightTitle}>National Level Symposium</h4>
-            <p className={styles.aboutHighlightDesc}>
-              Following the success of TechVistra '25, expanding national participation across Indian universities.
-            </p>
-          </div>
-
-          <div className={styles.aboutHighlight}>
-            <span className={styles.aboutHighlightStat}>
-              6+ Tracks
-            </span>
-            <h4 className={styles.aboutHighlightTitle}>Competitive Arenas</h4>
-            <p className={styles.aboutHighlightDesc}>
-              Spanning AI Hackathons, Competitive Coding, Quantum Research Colloquiums, and Web3 Architectures.
-            </p>
-          </div>
-
-          <div className={styles.aboutHighlight}>
-            <span className={styles.aboutHighlightStat}>
-              Grand Awards
-            </span>
-            <h4 className={styles.aboutHighlightTitle}>Cash Prizes &amp; Trophies</h4>
-            <p className={styles.aboutHighlightDesc}>
-              Exciting cash prizes and merit awards for winning teams, with verified participation certificates for all.
-            </p>
-          </div>
-
-          <div className={styles.aboutHighlight}>
-            <span className={styles.aboutHighlightHost}>
-              Dept. of Data Science
-            </span>
-            <h4 className={styles.aboutHighlightTitle}>Host &amp; Organizer</h4>
-            <p className={styles.aboutHighlightDesc}>
-              Organized with pride by the faculty, researchers, and student innovators of the Department of Data Science.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <AboutEvent />;
 }
 
 export function ProgramSection() {

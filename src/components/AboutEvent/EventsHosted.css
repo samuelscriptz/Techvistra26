@@ -1,0 +1,254 @@
+/* Fonts: add in index.html →
+   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"> */
+
+.events {
+  --navy-dark: #020d1d;
+  --navy: #08265a;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative; /* tall: its height is set inline from the item count */
+  font-family: "Manrope", system-ui, sans-serif;
+  background: #fff;
+  color: #050b1a;
+}
+
+/* pinned while the cards appear one by one */
+.events__sticky {
+  position: sticky;
+  top: 0;
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vh, 40px);
+  padding: 72px 20px 32px;
+}
+
+/* scroll-driven reveal: --r (0 → 1) is written by useScrollSequence */
+[data-reveal] {
+  --r: 0;
+  opacity: var(--r);
+  transform: translateY(calc((1 - var(--r)) * 56px)) scale(calc(0.9 + 0.1 * var(--r)));
+  pointer-events: none;
+}
+[data-reveal][data-ready="true"] { pointer-events: auto; }
+.events__heading {
+  margin: 0;
+  font-size: clamp(2.1rem, 4vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.events__intro {
+  margin: -8px 0 0;
+  max-width: 66ch;
+  text-align: center;
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  line-height: 1.55;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #1d2433;
+}
+
+/* ---------- Bento grid ---------- */
+.events__grid {
+  width: min(820px, 100%);
+  display: grid;
+  grid-template-columns: 1.18fr 1fr;
+  grid-template-rows: repeat(5, clamp(54px, min(8.4vw, 10.5vh), 98px));
+  gap: 14px;
+}
+.event-slot--tech      { grid-column: 1; grid-row: 1 / span 3; }
+.event-slot--workshops { grid-column: 2; grid-row: 1 / span 2; }
+.event-slot--hack      { grid-column: 1; grid-row: 4 / span 2; }
+.event-slot--dept      { grid-column: 2; grid-row: 3 / span 3; }
+
+/* Entrance is scroll-driven — see [data-reveal] above. */
+
+/* ---------- Card ---------- */
+.event-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --s: 1;
+  --mx: 50%;
+  --my: 50%;
+
+  position: relative;
+  height: 100%;
+  border-radius: 18px;
+  color: #fff;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
+  will-change: transform;
+  box-shadow: 0 10px 24px -14px rgba(2, 13, 29, 0.35);
+  transition: box-shadow 0.4s ease;
+}
+.event-card[data-hover="true"] {
+  box-shadow: 0 30px 50px -18px rgba(2, 13, 29, 0.55);
+}
+.event-card--dark { background: var(--navy-dark); }
+.event-card--navy { background: var(--navy); }
+
+.event-card__bg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* soft light that follows the cursor */
+.event-card__spotlight {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    rgba(120, 170, 255, 0.16),
+    transparent 70%
+  );
+  transition: opacity 0.4s ease;
+}
+.event-card[data-hover="true"] .event-card__spotlight { opacity: 1; }
+
+/* floating particles */
+.event-card__dot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: rgba(170, 200, 255, 0.55);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.event-card[data-hover="true"] .event-card__dot {
+  opacity: 0.7;
+  animation: event-dot-float var(--dur) ease-in-out var(--delay) infinite alternate;
+}
+@keyframes event-dot-float {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(10px, -14px, 0); }
+}
+
+.event-card__number {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.35);
+  transform: translateZ(24px);
+}
+
+/* text floats above the card → parallax when tilting */
+.event-card__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 28px 18px 18px;
+  transform: translateZ(36px);
+  transition: transform 0.4s var(--ease-out);
+}
+.event-card[data-hover="true"] .event-card__content {
+  transform: translateZ(48px) translateY(-2px);
+}
+.event-card__eyebrow {
+  display: block;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 6px;
+}
+.event-card__title {
+  margin: 0 0 6px;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #f8fbff;
+}
+.event-card__desc {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 44ch;
+  font-weight: 500;
+}
+
+@media (max-width: 720px) {
+  .events__sticky {
+    height: auto;
+    min-height: 100vh;
+    padding: 56px 16px 40px;
+    gap: 16px;
+  }
+
+  .events__heading {
+    font-size: clamp(2.3rem, 12vw, 3.5rem);
+    line-height: 0.98;
+  }
+
+  .events__intro {
+    margin-top: 0;
+    font-size: 1rem;
+  }
+
+  .events__grid {
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 14px;
+  }
+
+  .event-slot--tech,
+  .event-slot--workshops,
+  .event-slot--hack,
+  .event-slot--dept {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .event-card {
+    min-height: 200px;
+  }
+
+  .event-card__content {
+    left: 16px;
+    right: 16px;
+    bottom: 14px;
+  }
+
+  .event-card__eyebrow {
+    letter-spacing: 0.16em;
+    font-size: 0.5rem;
+  }
+
+  .event-card__title {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+
+  .event-card__desc {
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .events { height: auto !important; }
+  .events__sticky { position: static; height: auto; padding: 96px 20px 80px; }
+  [data-reveal] { opacity: 1; transform: none; pointer-events: auto; }
+  .event-card { transform: none; }
+  .event-card__dot { animation: none !important; }
+}
