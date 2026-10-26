@@ -412,7 +412,8 @@ export function ContactSection() {
 
   useEffect(() => {
     const stage = revealStageRef.current;
-    if (!stage) return;
+    const section = stage?.parentElement;
+    if (!stage || !section) return;
 
     let media: ReturnType<typeof import("gsap").default.matchMedia> | undefined;
     let cancelled = false;
@@ -427,7 +428,7 @@ export function ContactSection() {
       const hero = stage.querySelector(`.${styles.revealHero}`);
       if (!prompt || !hero) return;
 
-      media = gsap.matchMedia(stage);
+      media = gsap.matchMedia(section);
       media.add(
         "(min-width: 769px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -435,11 +436,9 @@ export function ContactSection() {
             const reveal = gsap.timeline({
               scrollTrigger: {
                 trigger: stage,
-                start: "top top",
-                end: "+=100%",
-                pin: true,
+                start: "top 80%",
+                end: "top 20%",
                 scrub: 1,
-                anticipatePin: 1,
                 invalidateOnRefresh: true,
               },
             });
@@ -472,7 +471,7 @@ export function ContactSection() {
                 },
                 0.2
               );
-          }, stage);
+          }, section);
 
           return () => animation.revert();
         }
@@ -509,7 +508,7 @@ export function ContactSection() {
     >
       <div ref={revealStageRef} className={styles.contactRevealStage}>
         <div className={styles.revealPrompt}>
-          {/* <span className={styles.revealPromptText}>Scroll down to reveal</span> */}
+          <span className={styles.revealPromptText}>Scroll down to reveal</span>
           <span className={styles.revealLine} aria-hidden="true">
             <span className={styles.revealLineIndicator} />
           </span>
