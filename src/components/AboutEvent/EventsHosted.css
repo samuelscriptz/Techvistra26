@@ -8,8 +8,13 @@
 
   position: relative; /* tall: its height is set inline from the item count */
   font-family: "Manrope", system-ui, sans-serif;
-  background: #fff;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(205, 172, 104, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 76%, rgba(8, 38, 90, 0.12), transparent 28%),
+    linear-gradient(180deg, #f7f2ec 0%, #efe7dd 100%);
   color: #050b1a;
+  border-top: 1px solid rgba(104, 90, 70, 0.12);
+  border-bottom: 1px solid rgba(104, 90, 70, 0.12);
 }
 
 /* pinned while the cards appear one by one */

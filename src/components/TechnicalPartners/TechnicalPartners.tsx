@@ -1,4 +1,3 @@
-import type { PointerEvent } from "react";
 import styles from "./TechnicalPartners.module.css";
 
 const PARTNERS = [
@@ -12,30 +11,11 @@ const PARTNERS = [
 ];
 
 export default function TechnicalPartners() {
-  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty(
-      "--pointer-x",
-      `${event.clientX - bounds.left}px`
-    );
-    event.currentTarget.style.setProperty(
-      "--pointer-y",
-      `${event.clientY - bounds.top}px`
-    );
-    event.currentTarget.style.setProperty("--pointer-opacity", "1");
-  };
-
-  const hidePointerGlow = (event: PointerEvent<HTMLElement>) => {
-    event.currentTarget.style.setProperty("--pointer-opacity", "0");
-  };
-
   return (
     <section
       id="technical-partners"
       className={styles.section}
       aria-labelledby="technical-partners-title"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={hidePointerGlow}
     >
       <div className={styles.inner}>
         
