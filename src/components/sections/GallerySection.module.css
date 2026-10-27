@@ -2,7 +2,7 @@
   position: relative;
   overflow: clip;
   padding: var(--space-3xl) var(--gutter) 0;
-  background: var(--bg-primary);
+  background: transparent;
 }
 
 .inner {
@@ -14,13 +14,19 @@
 }
 
 .sectionTitle {
-  margin-bottom: var(--space-sm);
-  background: linear-gradient(135deg, #1d1f21 0%, #5f5b55 100%);
-  background-clip: text;
-  color: var(--color-dark-grey);
-  font-size: var(--fs-h2);
+  margin: 0 auto clamp(24px, 4vw, 48px);
+  text-align: center;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(64px, 11vw, 168px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.08) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .sectionSubtitle {

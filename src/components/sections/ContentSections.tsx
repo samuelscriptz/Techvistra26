@@ -264,11 +264,9 @@ export function ScheduleSection() {
       aria-labelledby="schedule-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Schedule</span>
         <h2 id="schedule-title" className={styles.sectionTitle}>
-          Event Schedule
+          Schedule
         </h2>
-        <div className={styles.divider} />
         {hasSchedule ? (
           <div>
             {eventConfig.schedule.map((day, i) => (
@@ -324,11 +322,9 @@ export function VenueSection() {
       aria-labelledby="venue-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Venue</span>
         <h2 id="venue-title" className={styles.sectionTitle}>
-          Location &amp; Venue
+          Venue
         </h2>
-        <div className={styles.divider} />
         {hasVenue ? (
           <div className={styles.card}>
             <p className={styles.cardDesc}>{eventConfig.venue}</p>
@@ -360,11 +356,9 @@ export function FAQSection() {
       aria-labelledby="faq-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>FAQ</span>
         <h2 id="faq-title" className={styles.sectionTitle}>
-          Frequently Asked Questions
+          FAQ
         </h2>
-        <div className={styles.divider} />
         {hasFaq ? (
           <div
             style={{
@@ -412,7 +406,8 @@ export function ContactSection() {
 
   useEffect(() => {
     const stage = revealStageRef.current;
-    if (!stage) return;
+    const section = stage?.parentElement;
+    if (!stage || !section) return;
 
     let media: ReturnType<typeof import("gsap").default.matchMedia> | undefined;
     let cancelled = false;
@@ -427,7 +422,7 @@ export function ContactSection() {
       const hero = stage.querySelector(`.${styles.revealHero}`);
       if (!prompt || !hero) return;
 
-      media = gsap.matchMedia(stage);
+      media = gsap.matchMedia(section);
       media.add(
         "(min-width: 769px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -435,11 +430,9 @@ export function ContactSection() {
             const reveal = gsap.timeline({
               scrollTrigger: {
                 trigger: stage,
-                start: "top top",
-                end: "+=100%",
-                pin: true,
+                start: "top 80%",
+                end: "top 20%",
                 scrub: 1,
-                anticipatePin: 1,
                 invalidateOnRefresh: true,
               },
             });
@@ -472,7 +465,7 @@ export function ContactSection() {
                 },
                 0.2
               );
-          }, stage);
+          }, section);
 
           return () => animation.revert();
         }
@@ -509,7 +502,7 @@ export function ContactSection() {
     >
       <div ref={revealStageRef} className={styles.contactRevealStage}>
         <div className={styles.revealPrompt}>
-          {/* <span className={styles.revealPromptText}>Scroll down to reveal</span> */}
+          <span className={styles.revealPromptText}>Scroll down to reveal</span>
           <span className={styles.revealLine} aria-hidden="true">
             <span className={styles.revealLineIndicator} />
           </span>

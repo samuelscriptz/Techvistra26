@@ -6,6 +6,22 @@
   background: transparent;
 }
 
+.section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(
+    360px circle at var(--pointer-x) var(--pointer-y),
+    rgba(205, 172, 104, 0.15),
+    rgba(165, 160, 152, 0.08) 35%,
+    transparent 72%
+  );
+  content: "";
+  opacity: var(--pointer-opacity);
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
 .inner {
   position: relative;
   z-index: 1;
@@ -38,7 +54,9 @@
   color: transparent;
   font-size: var(--fs-h2);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .divider {
