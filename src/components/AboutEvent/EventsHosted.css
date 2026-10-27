@@ -8,13 +8,8 @@
 
   position: relative; /* tall: its height is set inline from the item count */
   font-family: "Manrope", system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 15% 15%, rgba(205, 172, 104, 0.18), transparent 28%),
-    radial-gradient(circle at 80% 76%, rgba(8, 38, 90, 0.12), transparent 28%),
-    linear-gradient(180deg, #f7f2ec 0%, #efe7dd 100%);
+  background: transparent;
   color: #050b1a;
-  border-top: 1px solid rgba(104, 90, 70, 0.12);
-  border-bottom: 1px solid rgba(104, 90, 70, 0.12);
 }
 
 /* pinned while the cards appear one by one */
@@ -41,10 +36,17 @@
 [data-reveal][data-ready="true"] { pointer-events: auto; }
 .events__heading {
   margin: 0;
-  font-size: clamp(2.1rem, 4vw, 3.6rem);
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 1;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.45) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .events__intro {
@@ -208,7 +210,7 @@
   }
 
   .events__heading {
-    font-size: clamp(2.3rem, 12vw, 3.5rem);
+    font-size: clamp(2.3rem, 10vw, 3.5rem);
     line-height: 0.98;
   }
 
