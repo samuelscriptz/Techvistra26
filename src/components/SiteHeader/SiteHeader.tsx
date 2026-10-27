@@ -2,7 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import PillNav, { type PillNavItem } from "../PillNav/PillNav";
 import styles from "./SiteHeader.module.css";
 
-const SECTION_IDS = ["home", "about", "gallery", "program", "schedule", "venue", "faq", "contact"];
+const SECTION_IDS = [
+  "home",
+  "about",
+  "gallery",
+  "program",
+  "events",
+  "schedule",
+  "venue",
+  "faq",
+  "contact",
+  "register",
+];
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -38,6 +49,7 @@ export default function SiteHeader() {
     { label: "About", href: "#about" },
     { label: "Gallery", href: "#gallery" },
     { label: "Program", href: "#program" },
+    { label: "Events", href: "#events" },
     { label: "Schedule", href: "#schedule" },
     { label: "Venue", href: "#venue" },
     { label: "FAQ", href: "#faq" },

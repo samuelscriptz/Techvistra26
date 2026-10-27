@@ -10,7 +10,10 @@ import {
   FAQSection,
   ContactSection,
 } from "./components/sections/ContentSections";
+import EventSection from "./components/sections/EventSection";
 import GallerySection from "./components/sections/GallerySection";
+import WaveMesh from "./components/WaveMesh/WaveMesh";
+import styles from "./App.module.css";
 
 export default function App() {
   return (
@@ -28,17 +31,28 @@ export default function App() {
           <Hero />
         </GoldenSealReveal>
 
-        {/* 3–9. Content sections (placeholder-aware) */}
-        <AboutSection />
-        <TechnicalPartners />
-        <GallerySection />
-        <ProgramSection />
-        <ScheduleSection />
-        <VenueSection />
-        <FAQSection />
+        {/* Content sections with continuous, seamless WaveMesh background */}
+        <div className={styles.contentWrap}>
+          <div className={styles.waveBackground} aria-hidden="true">
+            <WaveMesh
+              colors={["#d4d6cc", "#1d1f21", "#cdac68"]}
+              crests={true}
+              className={styles.waveCanvas}
+            />
+          </div>
 
-        {/* 10. Contact reveal and event contact details */}
-        <ContactSection />
+          <div className={styles.contentInner}>
+            <AboutSection />
+            <TechnicalPartners />
+            <GallerySection />
+            <ProgramSection />
+            <EventSection />
+            <ScheduleSection />
+            <VenueSection />
+            <FAQSection />
+            <ContactSection />
+          </div>
+        </div>
       </main>
     </>
   );

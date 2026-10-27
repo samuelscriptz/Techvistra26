@@ -264,11 +264,9 @@ export function ScheduleSection() {
       aria-labelledby="schedule-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Schedule</span>
         <h2 id="schedule-title" className={styles.sectionTitle}>
-          Event Schedule
+          Schedule
         </h2>
-        <div className={styles.divider} />
         {hasSchedule ? (
           <div>
             {eventConfig.schedule.map((day, i) => (
@@ -324,11 +322,9 @@ export function VenueSection() {
       aria-labelledby="venue-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Venue</span>
         <h2 id="venue-title" className={styles.sectionTitle}>
-          Location &amp; Venue
+          Venue
         </h2>
-        <div className={styles.divider} />
         {hasVenue ? (
           <div className={styles.card}>
             <p className={styles.cardDesc}>{eventConfig.venue}</p>
@@ -360,11 +356,9 @@ export function FAQSection() {
       aria-labelledby="faq-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>FAQ</span>
         <h2 id="faq-title" className={styles.sectionTitle}>
-          Frequently Asked Questions
+          FAQ
         </h2>
-        <div className={styles.divider} />
         {hasFaq ? (
           <div
             style={{

@@ -1,0 +1,200 @@
+/* EventSection.module.css */
+
+/* Tall wrapper = the scroll distance the carousel is pinned for.
+   (Don't put overflow:hidden on this element or sticky will stop working.) */
+.wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100vh + var(--scroll, 280vh));
+  height: calc(100svh + var(--scroll, 280vh));
+}
+
+/* Stays fixed on screen while the cards advance, then scrolls away normally. */
+.sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Title + tabs block. Sits below your navbar: set --events-nav-offset to your navbar height. */
+.top {
+  position: absolute;
+  top: var(--events-nav-offset, 76px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.heading {
+  position: relative;
+  z-index: 0;
+  /* behind the 3D cards */
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 96px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  /* top-to-bottom gradient fill */
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.08) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tabs {
+  position: relative;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 
+    0 16px 40px -8px rgba(0, 0, 0, 0.14),
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  pointer-events: auto;
+  max-width: min(95vw, 920px);
+}
+
+.tab {
+  position: relative;
+  font-family: var(--font-display, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: clamp(14px, 1.15vw, 17px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: clamp(12px, 1.5vh, 16px) clamp(22px, 2.2vw, 34px);
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: #838c99;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tab:hover {
+  color: #1c1c18;
+}
+
+.tab.tabActive {
+  background: #141413;
+  color: #ffffff;
+  box-shadow: 
+    0 5px 16px rgba(0, 0, 0, 0.38),
+    0 2px 4px rgba(0, 0, 0, 0.22);
+}
+
+.tab.tabActive:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    padding: 6px 8px;
+    gap: 6px;
+    max-width: 96vw;
+  }
+  .tab {
+    font-size: 13.5px;
+    padding: 11px 18px;
+  }
+}
+
+@media (max-width: 580px) {
+  .tabs {
+    padding: 5px;
+    gap: 4px;
+    overflow-x: auto;
+    max-width: 95vw;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    font-size: 12.5px;
+    padding: 9px 14px;
+  }
+}
+
+.stage {
+  position: absolute;
+  inset: calc(var(--events-nav-offset, 76px) + 125px) 0 0 0;
+  /* leaves room for title + large segmented pill */
+  z-index: 1;
+  perspective: 1300px;
+  perspective-origin: 50% 50%;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.stage.drag {
+  cursor: grabbing;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--w) * 1.3);
+  height: calc(var(--h) * 1.3);
+  margin: calc(var(--h) * -0.65) 0 0 calc(var(--w) * -0.65);
+  border-radius: 14px;
+  overflow: hidden;
+  will-change: transform, opacity;
+  box-shadow: 0 24px 40px -12px rgba(40, 40, 30, 0.35);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.reg {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font: 600 calc(11px * var(--u, 1)) / 1 system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.02em;
+  padding: calc(9px * var(--u, 1)) calc(18px * var(--u, 1));
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1c1c18;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.reg:hover {
+  background: #fff;
+  transform: translateX(-50%) scale(1.06);
+}
