@@ -178,10 +178,8 @@ export function AboutSection() {
     >
       <div className={styles.inner}>
         <h2 id="about-title" className={styles.sectionTitle}>
-          About the Event
+          About
         </h2>
-        <div className={styles.divider} />
-        <p className={styles.sectionSubtitle}>{eventConfig.eventSummary}</p>
 
         <div className={styles.cardGrid} style={{ marginTop: "var(--space-lg)" }}>
           <div className={styles.card}>
@@ -289,11 +287,9 @@ export function ScheduleSection() {
       aria-labelledby="schedule-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Schedule</span>
         <h2 id="schedule-title" className={styles.sectionTitle}>
-          Event Schedule
+          Schedule
         </h2>
-        <div className={styles.divider} />
         {hasSchedule ? (
           <div>
             {eventConfig.schedule.map((day, i) => (
@@ -349,11 +345,9 @@ export function VenueSection() {
       aria-labelledby="venue-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Venue</span>
         <h2 id="venue-title" className={styles.sectionTitle}>
-          Location &amp; Venue
+          Venue
         </h2>
-        <div className={styles.divider} />
         {hasVenue ? (
           <div className={styles.card}>
             <p className={styles.cardDesc}>{eventConfig.venue}</p>
@@ -385,11 +379,9 @@ export function FAQSection() {
       aria-labelledby="faq-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>FAQ</span>
         <h2 id="faq-title" className={styles.sectionTitle}>
-          Frequently Asked Questions
+          FAQ
         </h2>
-        <div className={styles.divider} />
         {hasFaq ? (
           <div
             style={{
@@ -459,15 +451,9 @@ export function ContactSection() {
       aria-labelledby="contact-title"
     >
       <div className={styles.inner}>
-        <span className={styles.sectionLabel}>Connect</span>
         <h2 id="contact-title" className={styles.sectionTitle}>
-          Get in Touch // Coordination Desk
+          Contact
         </h2>
-        <div className={styles.divider} />
-        <p className={styles.sectionSubtitle}>
-          Have inquiries regarding tracks, team registrations, or campus access?
-          Reach out to our symposium student coordinators and event desk directly.
-        </p>
 
         {/* Desktop 2-column layout: Left = Google Map (45%), Right = ONE single contact card (55%) */}
         <div className={styles.contactLayout}>

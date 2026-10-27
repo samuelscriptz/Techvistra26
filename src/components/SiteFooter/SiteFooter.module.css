@@ -3,7 +3,7 @@
 .footer {
   border-top: 1px solid rgba(205, 172, 104, 0.35);
   padding: var(--space-2xl) var(--gutter) var(--space-lg);
-  background: var(--bg-surface-alt);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }

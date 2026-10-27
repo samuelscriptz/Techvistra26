@@ -38,14 +38,9 @@ export default function TechnicalPartners() {
       onPointerLeave={hidePointerGlow}
     >
       <div className={styles.inner}>
-        
         <h2 id="technical-partners-title" className={styles.title}>
           Technical Partners
         </h2>
-        <div className={styles.divider} />
-        <p className={styles.subtitle}>
-          Working together to make innovation happen.
-        </p>
       </div>
 
       <div className={styles.marquee} aria-label="Technical partners">

@@ -6,7 +6,7 @@
   overflow: hidden;
   isolation: isolate;
   padding: var(--space-2xl) 0;
-  background: var(--bg-surface-alt);
+  background: transparent;
 }
 
 .section::before {
@@ -50,13 +50,19 @@
 }
 
 .title {
-  margin-bottom: var(--space-sm);
-  background: linear-gradient(135deg, #1d1f21 0%, #5f5b55 100%);
-  background-clip: text;
-  color: var(--color-dark-grey);
-  font-size: var(--fs-h2);
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(48px, 8.5vw, 136px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.08) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .divider {

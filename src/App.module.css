@@ -1,0 +1,31 @@
+/* App.module.css — Continuous WaveMesh background container */
+
+.contentWrap {
+  position: relative;
+  width: 100%;
+  background: #d4d6cc;
+}
+
+.waveBackground {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  margin-bottom: -100vh;
+  margin-bottom: -100dvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.waveCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+.contentInner {
+  position: relative;
+  z-index: 1;
+}

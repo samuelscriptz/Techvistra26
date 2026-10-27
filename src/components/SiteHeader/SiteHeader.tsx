@@ -3,7 +3,7 @@ import PillNav, { type PillNavItem } from "../PillNav/PillNav";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
 import styles from "./SiteHeader.module.css";
 
-const SECTION_IDS = ["home", "about", "gallery", "program", "schedule", "venue", "faq", "contact", "register"];
+const SECTION_IDS = ["home", "about", "gallery", "events", "schedule", "venue", "faq", "contact", "register"];
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +42,7 @@ export default function SiteHeader() {
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
     { label: "Gallery", href: "#gallery" },
-    { label: "Program", href: "#program" },
+    { label: "Events", href: "#events" },
     { label: "Schedule", href: "#schedule" },
     { label: "Venue", href: "#venue" },
     { label: "FAQ", href: "#faq" },

@@ -5,7 +5,7 @@
   padding: var(--space-3xl) var(--gutter);
   text-align: center;
   overflow: hidden;
-  background: var(--bg-surface-alt);
+  background: transparent;
 }
 
 /* Subtle ambient gold glow behind the CTA */
