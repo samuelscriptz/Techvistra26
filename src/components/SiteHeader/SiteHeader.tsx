@@ -10,7 +10,6 @@ const SECTION_IDS = [
   "schedule",
   "faq",
   "contact",
-  "register",
 ];
 
 export default function SiteHeader() {
@@ -20,37 +19,52 @@ export default function SiteHeader() {
 
   useEffect(() => {
     const onScroll = () => {
-      const heroScrollPos = window.scrollY;
       const aboutEl = document.getElementById("about");
-
-      // We are on hero when:
-      // 1. #about hasn't reached the viewport top yet (rect.top > 80)
-      // 2. OR scrollPos is within the pinned hero scroll distance (~1100px desktop, ~800px mobile)
-      const heroThreshold = window.innerWidth <= 768 ? 840 : 1140;
       const onHero = aboutEl
         ? aboutEl.getBoundingClientRect().top > 80
-        : heroScrollPos < heroThreshold;
+        : window.scrollY < (window.innerWidth <= 768 ? 840 : 1140);
 
       setIsHero(onHero);
 
-      // Dynamically track active section for PillNav indicator
-      const scrollPos = window.scrollY + 200;
-      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
-        const id = SECTION_IDS[i];
+      const marker = Math.min(window.innerHeight * 0.32, 240);
+      let currentId = "home";
+
+      for (const id of SECTION_IDS) {
         const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          if (scrollPos >= top) {
-            setActiveHref(`#${id}`);
-            return;
-          }
+        if (el && el.getBoundingClientRect().top <= marker) {
+          currentId = id;
         }
       }
-      setActiveHref("#home");
+
+      setActiveHref(`#${currentId}`);
+    };
+
+    const onHashChange = () => {
+      const id = window.location.hash.replace(/^#/, "");
+      if (SECTION_IDS.includes(id)) {
+        setActiveHref(`#${id}`);
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("hashchange", onHashChange);
+    onScroll();
+
+    const initialId = window.location.hash.replace(/^#/, "");
+    const initialHashFrame = window.requestAnimationFrame(() => {
+      if (SECTION_IDS.includes(initialId)) {
+        setActiveHref(`#${initialId}`);
+        document.getElementById(initialId)?.scrollIntoView({ behavior: "auto", block: "start" });
+      }
+      onScroll();
+    });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("hashchange", onHashChange);
+      window.cancelAnimationFrame(initialHashFrame);
+    };
   }, []);
 
   const navItems: PillNavItem[] = [
@@ -67,13 +81,19 @@ export default function SiteHeader() {
     if (!href) return;
     setActiveHref(href);
     const targetId = href.replace(/^#/, "");
+
+    if (window.location.hash !== href) {
+      window.history.pushState(null, "", href);
+    }
+
     if (targetId === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
+
     const el = document.getElementById(targetId);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
