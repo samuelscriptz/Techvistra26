@@ -8,7 +8,6 @@ const SECTION_IDS = [
   "gallery",
   "events",
   "schedule",
-  "venue",
   "faq",
   "contact",
   "register",
@@ -21,7 +20,7 @@ export default function SiteHeader() {
 
   useEffect(() => {
     const onScroll = () => {
-      const scrollPos = window.scrollY;
+      const heroScrollPos = window.scrollY;
       const aboutEl = document.getElementById("about");
 
       // We are on hero when:
@@ -30,7 +29,7 @@ export default function SiteHeader() {
       const heroThreshold = window.innerWidth <= 768 ? 840 : 1140;
       const onHero = aboutEl
         ? aboutEl.getBoundingClientRect().top > 80
-        : scrollPos < heroThreshold;
+        : heroScrollPos < heroThreshold;
 
       setIsHero(onHero);
 
@@ -51,17 +50,7 @@ export default function SiteHeader() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-<<<<<<< HEAD
     return () => window.removeEventListener("scroll", onScroll);
-=======
-    window.addEventListener("resize", onScroll, { passive: true });
-    window.addEventListener("hashchange", syncActiveHref);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      window.removeEventListener("hashchange", syncActiveHref);
-    };
->>>>>>> b39d014513d5c80caf7fda7aa007031e3d4b0086
   }, []);
 
   const navItems: PillNavItem[] = [
@@ -70,7 +59,6 @@ export default function SiteHeader() {
     { label: "Gallery", href: "#gallery" },
     { label: "Events", href: "#events" },
     { label: "Schedule", href: "#schedule" },
-    { label: "Venue", href: "#venue" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#contact" },
   ];

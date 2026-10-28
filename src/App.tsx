@@ -5,7 +5,6 @@ import TechnicalPartners from "./components/TechnicalPartners/TechnicalPartners"
 import {
   AboutSection,
   ScheduleSection,
-  VenueSection,
   FAQSection,
   ContactSection,
 } from "./components/sections/ContentSections";
@@ -46,7 +45,6 @@ export default function App() {
             <GallerySection />
             <EventSection />
             <ScheduleSection />
-            <VenueSection />
             <FAQSection />
             <ContactSection />
           </div>

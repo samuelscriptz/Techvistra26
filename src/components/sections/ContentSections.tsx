@@ -315,40 +315,6 @@ export function ScheduleSection() {
   );
 }
 
-export function VenueSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useSectionReveal(sectionRef);
-  const hasVenue = !isPlaceholder(eventConfig.venue);
-
-  return (
-    <section
-      ref={sectionRef}
-      id="venue"
-      className={styles.section}
-      aria-labelledby="venue-title"
-    >
-      <div className={styles.inner}>
-        <h2 id="venue-title" className={styles.sectionTitle}>
-          Venue
-        </h2>
-        {hasVenue ? (
-          <div className={styles.card}>
-            <p className={styles.cardDesc}>{eventConfig.venue}</p>
-          </div>
-        ) : (
-          <div className={styles.placeholderCard}>
-            <div className={styles.placeholderIcon}>📍</div>
-            <p className={styles.placeholderText}>
-              Venue details, directions, and access information will be
-              announced by the organizers.
-            </p>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
 export function FAQSection() {
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
