@@ -20,40 +20,27 @@ export default function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const syncActiveHref = () => {
-      const hash = window.location.hash;
-      if (hash && SECTION_IDS.includes(hash.slice(1))) {
-        setActiveHref(hash);
-      }
-    };
-
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
 
-      // Select the section nearest the header marker instead of the last section that has merely passed it.
-      const marker = 220;
-      let currentHref = "#home";
-      let nearestDistance = Number.POSITIVE_INFINITY;
-      for (const id of SECTION_IDS) {
+      // Dynamically track active section for PillNav indicator
+      const scrollPos = window.scrollY + 200;
+      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
+        const id = SECTION_IDS[i];
         const el = document.getElementById(id);
-        if (!el) continue;
-        const distance = Math.abs(el.getBoundingClientRect().top - marker);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          currentHref = `#${id}`;
+        if (el) {
+          const top = el.offsetTop;
+          if (scrollPos >= top) {
+            setActiveHref(`#${id}`);
+            return;
+          }
         }
       }
-      setActiveHref(currentHref);
+      setActiveHref("#home");
     };
 
-    syncActiveHref();
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("hashchange", syncActiveHref);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("hashchange", syncActiveHref);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const navItems: PillNavItem[] = [
