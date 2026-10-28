@@ -6,33 +6,39 @@
   left: 0;
   right: 0;
   z-index: var(--z-header);
-  padding: 16px var(--gutter);
-  transition: background var(--transition-base), box-shadow var(--transition-base), padding var(--transition-base);
+  padding: 18px 0;
+  background: transparent;
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 
 .header.scrolled {
-  background: rgba(232, 227, 221, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 4px 20px rgba(29, 31, 33, 0.08), 0 1px 0 rgba(205, 172, 104, 0.4);
-  padding: 10px var(--gutter);
+  background: rgba(212, 214, 204, 0.52);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(205, 172, 104, 0.28);
+  box-shadow: 0 4px 20px rgba(29, 31, 33, 0.06);
+  padding: 10px 0;
   pointer-events: auto;
 }
 
 .inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 clamp(16px, 3.5vw, 48px);
   display: flex;
   align-items: center;
   justify-content: center; /* Mathematical centering */
   position: relative;
-  width: 100%;
 }
 
 .brand {
   position: absolute;
-  left: 0;
+  left: clamp(16px, 3.5vw, 48px);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -59,12 +65,90 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   pointer-events: auto;
+}
+
+/* ============================================================
+   1. Bold Nav (Hero Mode: Floating Plain Bold Text)
+   ============================================================ */
+.boldNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 1.8vw, 32px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.boldNavActive {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.boldNavHidden {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  filter: blur(4px);
+  pointer-events: none;
+  position: absolute;
+}
+
+.boldNavLink {
+  font-family: var(--font-display, "Space Grotesk", system-ui, sans-serif);
+  font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  padding: 6px 2px;
+  white-space: nowrap;
+  transition: color 0.22s ease, text-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.boldNavLink:hover {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.boldNavLinkActive {
+  color: #e5c178;
+  font-weight: 800;
+  text-shadow: 0 0 16px rgba(205, 172, 104, 0.7), 0 0 32px rgba(205, 172, 104, 0.35);
+}
+
+/* ============================================================
+   2. PillNav (Scrolled Mode)
+   ============================================================ */
+.pillNavWrapper {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillNavActive {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.pillNavHidden {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  filter: blur(4px);
+  pointer-events: none;
+  position: absolute;
 }
 
 .headerRight {
   position: absolute;
-  right: 0;
+  right: clamp(16px, 3.5vw, 48px);
   display: flex;
   align-items: center;
   z-index: 10;
@@ -78,6 +162,7 @@
 @media (max-width: 960px) {
   .inner {
     justify-content: space-between;
+    padding: 0 16px;
   }
 
   .brand {
@@ -86,6 +171,19 @@
 
   .navWrapper {
     margin-left: auto;
+  }
+
+  .boldNav {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    max-width: calc(100vw - 120px);
+    gap: 16px;
+    padding: 4px 6px;
+  }
+
+  .boldNav::-webkit-scrollbar {
+    display: none;
   }
 
   .headerRight {

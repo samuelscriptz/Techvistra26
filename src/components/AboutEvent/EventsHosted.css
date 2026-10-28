@@ -7,27 +7,44 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   position: relative; /* tall: its height is set inline from the item count */
-  font-family: "Manrope", system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 15% 15%, rgba(205, 172, 104, 0.18), transparent 28%),
-    radial-gradient(circle at 80% 76%, rgba(8, 38, 90, 0.12), transparent 28%),
-    linear-gradient(180deg, #f7f2ec 0%, #efe7dd 100%);
+  font-family: var(--font-body, "Manrope", system-ui, sans-serif);
+  background: transparent;
   color: #050b1a;
-  border-top: 1px solid rgba(104, 90, 70, 0.12);
-  border-bottom: 1px solid rgba(104, 90, 70, 0.12);
+  border-top: none;
+  border-bottom: none;
+}
+
+.events::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90vw, 800px);
+  height: 450px;
+  background: radial-gradient(
+    circle,
+    rgba(205, 172, 104, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 /* pinned while the cards appear one by one */
 .events__sticky {
   position: sticky;
   top: 0;
-  height: 110vh;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(20px, 4vh, 40px);
-  padding: 72px 20px 32px;
+  gap: clamp(12px, 2.2vh, 24px);
+  padding: clamp(64px, 8.5vh, 92px) 20px clamp(16px, 2.5vh, 32px);
+  overflow: hidden;
+  background: transparent;
 }
 
 /* scroll-driven reveal: --r (0 → 1) is written by useScrollSequence */
@@ -39,31 +56,39 @@
 }
 [data-reveal][data-ready="true"] { pointer-events: auto; }
 .events__heading {
-  margin: 0;
-  font-size: clamp(2.1rem, 4vw, 3.6rem);
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 1;
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(56px, 10vw, 150px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.08) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .events__intro {
-  margin: -8px 0 0;
+  margin: 0 auto;
   max-width: 66ch;
   text-align: center;
-  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
   line-height: 1.55;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: #1d2433;
+  color: var(--text-secondary, #444746);
 }
 
 /* ---------- Bento grid ---------- */
 .events__grid {
-  width: min(820px, 100%);
+  width: min(840px, 100%);
   display: grid;
   grid-template-columns: 1.18fr 1fr;
-  grid-template-rows: repeat(5, clamp(54px, min(8.4vw, 10.5vh), 98px));
-  gap: 14px;
+  grid-template-rows: repeat(5, clamp(48px, min(8vw, 9vh), 86px));
+  gap: clamp(10px, 1.2vh, 14px);
 }
 .event-slot--tech      { grid-column: 1; grid-row: 1 / span 3; }
 .event-slot--workshops { grid-column: 2; grid-row: 1 / span 2; }
@@ -82,6 +107,7 @@
 
   position: relative;
   height: 100%;
+  border: 1px solid rgba(205, 172, 104, 0.3);
   border-radius: 18px;
   color: #fff;
   cursor: pointer;
@@ -89,9 +115,12 @@
   transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
   will-change: transform;
   box-shadow: 0 10px 24px -14px rgba(2, 13, 29, 0.35);
-  transition: box-shadow 0.4s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
 }
 .event-card[data-hover="true"] {
+  border-color: rgba(205, 172, 104, 0.65);
   box-shadow: 0 30px 50px -18px rgba(2, 13, 29, 0.55);
 }
 .event-card--dark { background: var(--navy-dark); }
@@ -196,13 +225,13 @@
   .events__sticky {
     height: auto;
     min-height: 100vh;
-    padding: 56px 16px 40px;
+    padding: 64px 16px 40px;
     gap: 16px;
   }
 
   .events__heading {
-    font-size: clamp(2.3rem, 12vw, 3.5rem);
-    line-height: 0.98;
+    font-size: clamp(44px, 11vw, 76px);
+    line-height: 0.95;
   }
 
   .events__intro {
