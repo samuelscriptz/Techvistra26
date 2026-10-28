@@ -41,9 +41,9 @@ export default function App() {
 
           <div className={styles.contentInner}>
             <AboutSection />
+            <EventSection />
             <TechnicalPartners />
             <GallerySection />
-            <EventSection />
             <ScheduleSection />
             <FAQSection />
             <ContactSection />
