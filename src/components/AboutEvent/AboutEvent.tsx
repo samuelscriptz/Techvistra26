@@ -24,7 +24,8 @@ export default function AboutEvent({
 }: AboutEventProps) {
   return (
     <EventsHosted
-      heading="About the Event"
+      id="about"
+      heading="ABOUT"
       intro={intro}
       events={items}
       scrollPerItem={scrollPerItem}

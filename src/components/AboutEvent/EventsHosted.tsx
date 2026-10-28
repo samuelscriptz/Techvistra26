@@ -94,6 +94,7 @@ function EventCard({ item, index }: EventCardProps) {
 }
 
 interface EventsHostedProps {
+  id?: string;
   heading?: string;
   /** Optional short paragraph shown under the heading. */
   intro?: string;
@@ -103,7 +104,8 @@ interface EventsHostedProps {
 }
 
 export default function EventsHosted({
-  heading = "Events Hosted",
+  id = "about",
+  heading = "ABOUT",
   intro,
   events = DEFAULT_EVENTS,
   scrollPerItem = 100,
@@ -113,20 +115,21 @@ export default function EventsHosted({
 
   return (
     <section
+      id={id}
       ref={sectionRef}
-      id="about"
       className="events"
+      aria-labelledby="about-title"
       style={{ height: `${120 + itemCount * scrollPerItem}vh` }}
     >
       <div className="events__sticky">
-      <h2 className="events__heading">{heading}</h2>
-      {intro && <p className="events__intro" data-reveal>{intro}</p>}
+        <h2 id="about-title" className="events__heading">{heading}</h2>
+        {intro && <p className="events__intro" data-reveal>{intro}</p>}
 
-      <div className="events__grid" data-reveal>
-        {events.map((item, i) => (
-          <EventCard key={item.id} item={item} index={i} />
-        ))}
-      </div>
+        <div className="events__grid" data-reveal>
+          {events.map((item, i) => (
+            <EventCard key={item.id} item={item} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   );
