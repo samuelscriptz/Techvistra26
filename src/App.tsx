@@ -4,7 +4,6 @@ import Hero from "./components/Hero/Hero";
 import TechnicalPartners from "./components/TechnicalPartners/TechnicalPartners";
 import {
   AboutSection,
-  ProgramSection,
   ScheduleSection,
   VenueSection,
   FAQSection,
@@ -45,7 +44,6 @@ export default function App() {
             <AboutSection />
             <TechnicalPartners />
             <GallerySection />
-            <ProgramSection />
             <EventSection />
             <ScheduleSection />
             <VenueSection />
