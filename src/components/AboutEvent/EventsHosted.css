@@ -95,7 +95,12 @@
 .event-slot--hack      { grid-column: 1; grid-row: 4 / span 2; }
 .event-slot--dept      { grid-column: 2; grid-row: 3 / span 3; }
 
-/* Entrance is scroll-driven — see [data-reveal] above. */
+.event-slot[data-reveal-direction="left"] {
+  transform: translateX(calc((1 - var(--r)) * -56px)) scale(calc(0.9 + 0.1 * var(--r)));
+}
+.event-slot[data-reveal-direction="right"] {
+  transform: translateX(calc((1 - var(--r)) * 56px)) scale(calc(0.9 + 0.1 * var(--r)));
+}
 
 /* ---------- Card ---------- */
 .event-card {
@@ -223,6 +228,7 @@
 
 @media (max-width: 720px) {
   .events__sticky {
+    top: 0;
     height: auto;
     min-height: 100vh;
     padding: 64px 16px 40px;
@@ -282,7 +288,8 @@
 @media (prefers-reduced-motion: reduce) {
   .events { height: auto !important; }
   .events__sticky { position: static; height: auto; padding: 96px 20px 80px; }
-  [data-reveal] { opacity: 1; transform: none; pointer-events: auto; }
+  [data-reveal],
+  .event-slot[data-reveal-direction] { opacity: 1; transform: none; pointer-events: auto; }
   .event-card { transform: none; }
   .event-card__dot { animation: none !important; }
 }

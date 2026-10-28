@@ -80,7 +80,7 @@
 .marquee {
   position: relative;
   z-index: 1;
-  width: 50%;
+  width: 90%;
   margin: 0 auto;
   overflow: hidden;
   padding: 10px 0 16px;
