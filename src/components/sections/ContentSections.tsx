@@ -389,9 +389,6 @@ export function FAQSection() {
                   className={styles.faqQuestion}
                   aria-expanded={isActive}
                 >
-                  <span className={styles.faqNumber} aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <span className={styles.faqIcon} aria-hidden="true">
                     <Icon size={20} />
                   </span>

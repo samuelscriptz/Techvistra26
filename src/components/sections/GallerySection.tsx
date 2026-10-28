@@ -90,6 +90,20 @@ export default function GallerySection() {
 
     const sizeStageToGallery = () => {
       const visibleFrames = frames.filter((frame) => frame.getClientRects().length > 0);
+      if (window.innerWidth <= 768) {
+        const mobileFrame = visibleFrames.find((frame) => frame.classList.contains(styles.galleryFrameMobile));
+        if (mobileFrame) {
+          const columnHeight = Math.max(
+            0,
+            ...Array.from(mobileFrame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`))
+              .map((column) => column.scrollHeight)
+          );
+          const scrollDistance = Math.max(0, columnHeight - mobileFrame.clientHeight);
+          stage.style.height = `${mobileFrame.clientHeight + scrollDistance + 80}px`;
+        }
+        return;
+      }
+
       const frameHeight = Math.max(
         0,
         ...visibleFrames.map((frame) => frame.getBoundingClientRect().height)
@@ -120,6 +134,7 @@ export default function GallerySection() {
     }
 
     const init = async () => {
+      const isMobile = window.innerWidth <= 768;
       const { default: gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       gsap.registerPlugin(ScrollTrigger);
@@ -128,11 +143,17 @@ export default function GallerySection() {
         sizeStageToGallery();
 
         frames.forEach((frame) => {
+          const isMobileFrame = frame.classList.contains(styles.galleryFrameMobile);
+          if (isMobile !== isMobileFrame || frame.getClientRects().length === 0) return;
+
           gsap.fromTo(
             frame,
-            { rotateX: 12, scale: 0.94 },
+            isMobile
+              ? { rotateX: 14, rotateZ: -2.8, scale: 0.92 }
+              : { rotateX: 12, scale: 0.94 },
             {
               rotateX: 0,
+              rotateZ: isMobile ? 0.8 : 0,
               scale: 1,
               ease: "none",
               scrollTrigger: {
@@ -147,7 +168,7 @@ export default function GallerySection() {
           const columns = Array.from(
             frame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`)
           );
-          columns.forEach((column) => {
+          columns.forEach((column, columnIndex) => {
             gsap.fromTo(
               column,
               { y: 0 },
@@ -163,6 +184,19 @@ export default function GallerySection() {
                 },
               }
             );
+
+            if (isMobile) {
+              gsap.to(column, {
+                x: columnIndex === 0 ? -3 : 3,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: stage,
+                  start: "top top",
+                  end: "bottom bottom",
+                  scrub: 1,
+                },
+              });
+            }
           });
         });
       }, stage);
@@ -170,10 +204,13 @@ export default function GallerySection() {
       ScrollTrigger.refresh();
     };
 
+    let resizeFrame = 0;
     const onResize = () => {
-      sizeStageToGallery();
-      void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-        ScrollTrigger.refresh();
+      window.cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(() => {
+        ctx?.revert();
+        ctx = undefined;
+        void init();
       });
     };
 
@@ -181,6 +218,7 @@ export default function GallerySection() {
     void init();
     return () => {
       window.removeEventListener("resize", onResize);
+      window.cancelAnimationFrame(resizeFrame);
       ctx?.revert();
       stage.style.removeProperty("height");
     };
