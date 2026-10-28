@@ -3,7 +3,12 @@
 .contentWrap {
   position: relative;
   width: 100%;
-  background: #d4d6cc;
+  background:
+    radial-gradient(ellipse at 48% 20%, rgba(255, 250, 241, 0.7), transparent 50%),
+    radial-gradient(ellipse at 8% 60%, rgba(210, 169, 104, 0.2), transparent 35%),
+    radial-gradient(ellipse at 92% 80%, rgba(192, 139, 62, 0.16), transparent 35%),
+    linear-gradient(115deg, #e8dccb 0%, #f6ecde 42%, #eee0cc 100%);
+  background-color: #f6ecde;
 }
 
 .waveBackground {

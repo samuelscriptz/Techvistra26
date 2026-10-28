@@ -34,7 +34,7 @@ export default function App() {
         <div className={styles.contentWrap}>
           <div className={styles.waveBackground} aria-hidden="true">
             <WaveMesh
-              colors={["#d4d6cc", "#1d1f21", "#cdac68"]}
+              colors={["transparent", "#1d1f21", "#cdac68"]}
               crests={true}
               className={styles.waveCanvas}
             />
