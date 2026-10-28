@@ -8,26 +8,22 @@
 
   position: relative; /* tall: its height is set inline from the item count */
   font-family: "Manrope", system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 15% 15%, rgba(205, 172, 104, 0.18), transparent 28%),
-    radial-gradient(circle at 80% 76%, rgba(8, 38, 90, 0.12), transparent 28%),
-    linear-gradient(180deg, #f7f2ec 0%, #efe7dd 100%);
+  background: transparent;
   color: #050b1a;
-  border-top: 1px solid rgba(104, 90, 70, 0.12);
-  border-bottom: 1px solid rgba(104, 90, 70, 0.12);
 }
 
 /* pinned while the cards appear one by one */
 .events__sticky {
   position: sticky;
-  top: 0;
-  height: 110vh;
+  top: 76px;
+  height: calc(100vh - 76px);
+  height: calc(100dvh - 76px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(20px, 4vh, 40px);
-  padding: 72px 20px 32px;
+  gap: clamp(12px, 2vh, 20px);
+  padding: 12px 20px;
 }
 
 /* scroll-driven reveal: --r (0 → 1) is written by useScrollSequence */
@@ -40,10 +36,17 @@
 [data-reveal][data-ready="true"] { pointer-events: auto; }
 .events__heading {
   margin: 0;
-  font-size: clamp(2.1rem, 4vw, 3.6rem);
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 1;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.45) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .events__intro {
@@ -62,7 +65,7 @@
   width: min(820px, 100%);
   display: grid;
   grid-template-columns: 1.18fr 1fr;
-  grid-template-rows: repeat(5, clamp(54px, min(8.4vw, 10.5vh), 98px));
+  grid-template-rows: repeat(5, clamp(52px, min(8.4vw, 8.5vh), 82px));
   gap: 14px;
 }
 .event-slot--tech      { grid-column: 1; grid-row: 1 / span 3; }
@@ -70,7 +73,12 @@
 .event-slot--hack      { grid-column: 1; grid-row: 4 / span 2; }
 .event-slot--dept      { grid-column: 2; grid-row: 3 / span 3; }
 
-/* Entrance is scroll-driven — see [data-reveal] above. */
+.event-slot[data-reveal-direction="left"] {
+  transform: translateX(calc((1 - var(--r)) * -56px)) scale(calc(0.9 + 0.1 * var(--r)));
+}
+.event-slot[data-reveal-direction="right"] {
+  transform: translateX(calc((1 - var(--r)) * 56px)) scale(calc(0.9 + 0.1 * var(--r)));
+}
 
 /* ---------- Card ---------- */
 .event-card {
@@ -194,6 +202,7 @@
 
 @media (max-width: 720px) {
   .events__sticky {
+    top: 0;
     height: auto;
     min-height: 100vh;
     padding: 56px 16px 40px;
@@ -201,7 +210,7 @@
   }
 
   .events__heading {
-    font-size: clamp(2.3rem, 12vw, 3.5rem);
+    font-size: clamp(2.3rem, 10vw, 3.5rem);
     line-height: 0.98;
   }
 
@@ -253,7 +262,8 @@
 @media (prefers-reduced-motion: reduce) {
   .events { height: auto !important; }
   .events__sticky { position: static; height: auto; padding: 96px 20px 80px; }
-  [data-reveal] { opacity: 1; transform: none; pointer-events: auto; }
+  [data-reveal],
+  .event-slot[data-reveal-direction] { opacity: 1; transform: none; pointer-events: auto; }
   .event-card { transform: none; }
   .event-card__dot { animation: none !important; }
 }

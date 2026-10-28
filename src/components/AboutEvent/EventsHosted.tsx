@@ -58,6 +58,7 @@ function EventCard({ item, index }: EventCardProps) {
     <div
       className={`event-slot event-slot--${item.area}`}
       data-reveal
+      data-reveal-direction={index % 2 === 0 ? "left" : "right"}
     >
       <article ref={tiltRef} className={`event-card event-card--${item.tone}`}>
         {/* Clipped background layer (kept separate so content can pop in 3D) */}
@@ -105,7 +106,7 @@ export default function EventsHosted({
   heading = "Events Hosted",
   intro,
   events = DEFAULT_EVENTS,
-  scrollPerItem = 70,
+  scrollPerItem = 100,
 }: EventsHostedProps) {
   const itemCount = events.length + (intro ? 1 : 0);
   const sectionRef = useScrollSequence<HTMLElement>({ itemCount });
@@ -113,6 +114,7 @@ export default function EventsHosted({
   return (
     <section
       ref={sectionRef}
+      id="about"
       className="events"
       style={{ height: `${120 + itemCount * scrollPerItem}vh` }}
     >

@@ -49,10 +49,15 @@
 
 .title {
   margin-bottom: var(--space-sm);
-  background: linear-gradient(135deg, #1d1f21 0%, #8a7350 100%);
+  background: linear-gradient(to bottom, #1c1c18 0%, rgba(28, 28, 24, 0.45) 100%);
   background-clip: text;
   color: transparent;
-  font-size: var(--fs-h2);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -76,7 +81,7 @@
 .marquee {
   position: relative;
   z-index: 1;
-  width: 50%;
+  width: 90%;
   margin: 0 auto;
   overflow: hidden;
   padding: 10px 0 16px;
