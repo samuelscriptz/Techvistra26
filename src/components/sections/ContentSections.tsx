@@ -1,10 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
+  CircleHelp,
   ExternalLink,
+  FileText,
+  IndianRupee,
+  Laptop,
   Mail,
   MapPin,
+  Plus,
   Phone,
+  Trophy,
   UserRound,
   Users,
 } from "lucide-react";
@@ -346,56 +352,95 @@ export function VenueSection() {
 export function FAQSection() {
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
-  const hasFaq = eventConfig.faq.length > 0;
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const faqIcons = [Users, FileText, IndianRupee, Laptop, Trophy];
 
   return (
     <section
       ref={sectionRef}
       id="faq"
-      className={styles.sectionAlt}
-      aria-labelledby="faq-title"
+      className={styles.faqSection}
+      aria-labelledby="faq-heading"
     >
-      <div className={styles.inner}>
-        <h2 id="faq-title" className={styles.sectionTitle}>
-          FAQ
-        </h2>
-        {hasFaq ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-sm)",
-            }}
-          >
-            {eventConfig.faq.map((item, i) => (
-              <details key={i} className={styles.card}>
-                <summary
-                  style={{
-                    cursor: "pointer",
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 600,
-                    listStyle: "none",
-                  }}
+      <div className={styles.faqDecorations} aria-hidden="true">
+        <span className={`${styles.faqDecoration} ${styles.faqLeftRing}`} />
+        <span className={`${styles.faqDecoration} ${styles.faqLeftOrb}`} />
+        <span className={`${styles.faqDecoration} ${styles.faqCenterOrb}`} />
+        <span className={`${styles.faqDecoration} ${styles.faqRightOrb}`} />
+        <span className={`${styles.faqDecoration} ${styles.faqRightRing}`} />
+        <span className={`${styles.faqDecoration} ${styles.faqBottomRing}`} />
+      </div>
+      <div className={styles.faqInner}>
+        <div className={styles.faqIntro}>
+          <span className={styles.faqEyebrow}>Techvistra '26 / Q-Vortex</span>
+          <h2 id="faq-heading" className={styles.faqTitle}>
+            FAQ
+          </h2>
+          <h3 className={styles.faqSubtitle}>
+            Everything
+            <br />
+            You <span>Need to Know</span>
+          </h3>
+          <p className={styles.faqDescription}>
+            Explore answers to frequently asked questions about TechVistra '26
+            – Q-Vortex.
+          </p>
+          {!isPlaceholder(eventConfig.contactEmail) && (
+            <a
+              className={styles.faqContact}
+              href={`mailto:${eventConfig.contactEmail}`}
+            >
+              Still have a question?
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+          )}
+        </div>
+
+        <div className={styles.faqList}>
+          {eventConfig.faq.map((item, i) => {
+            const Icon = faqIcons[i] ?? CircleHelp;
+            const isActive = activeFaq === i;
+
+            return (
+              <article
+                className={`${styles.faqItem} ${isActive ? styles.faqItemActive : ""}`}
+                key={item.question}
+                onPointerEnter={() => setActiveFaq(i)}
+                onPointerLeave={(event) => {
+                  if (!event.currentTarget.contains(document.activeElement)) {
+                    setActiveFaq(null);
+                  }
+                }}
+                onFocus={() => setActiveFaq(i)}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) {
+                    setActiveFaq(null);
+                  }
+                }}
+              >
+                <button
+                  type="button"
+                  className={styles.faqQuestion}
+                  aria-expanded={isActive}
                 >
-                  {item.question}
-                </summary>
-                <p
-                  className={styles.cardDesc}
-                  style={{ marginTop: "var(--space-sm)" }}
-                >
-                  {item.answer}
-                </p>
-              </details>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.placeholderCard}>
-            <div className={styles.placeholderIcon}>❓</div>
-            <p className={styles.placeholderText}>
-              FAQs will be added once confirmed by the organizers.
-            </p>
-          </div>
-        )}
+                  <span className={styles.faqNumber} aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className={styles.faqIcon} aria-hidden="true">
+                    <Icon size={20} />
+                  </span>
+                  <span className={styles.faqQuestionText}>{item.question}</span>
+                  <Plus
+                    className={styles.faqExpandIcon}
+                    size={20}
+                    aria-hidden="true"
+                  />
+                </button>
+                <div className={styles.faqAnswer}>{item.answer}</div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

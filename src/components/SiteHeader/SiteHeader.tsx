@@ -6,7 +6,6 @@ const SECTION_IDS = [
   "home",
   "about",
   "gallery",
-  "program",
   "events",
   "schedule",
   "venue",
@@ -21,6 +20,13 @@ export default function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const syncActiveHref = () => {
+      const hash = window.location.hash;
+      if (hash && SECTION_IDS.includes(hash.slice(1))) {
+        setActiveHref(hash);
+      }
+    };
+
     const onScroll = () => {
       const scrollPos = window.scrollY;
       const aboutEl = document.getElementById("about");
@@ -35,28 +41,31 @@ export default function SiteHeader() {
 
       setIsHero(onHero);
 
-      // Dynamically track active section for indicator
-      const navScrollPos = scrollPos + 200;
-      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
-        const id = SECTION_IDS[i];
+      // Select the section nearest the header marker instead of the last section that has merely passed it.
+      const marker = 220;
+      let currentHref = "#home";
+      let nearestDistance = Number.POSITIVE_INFINITY;
+      for (const id of SECTION_IDS) {
         const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          if (navScrollPos >= top) {
-            setActiveHref(`#${id}`);
-            return;
-          }
+        if (!el) continue;
+        const distance = Math.abs(el.getBoundingClientRect().top - marker);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          currentHref = `#${id}`;
         }
       }
-      setActiveHref("#home");
+      setActiveHref(currentHref);
     };
 
+    syncActiveHref();
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
-    onScroll();
+    window.addEventListener("hashchange", syncActiveHref);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      window.removeEventListener("hashchange", syncActiveHref);
     };
   }, []);
 
@@ -64,7 +73,6 @@ export default function SiteHeader() {
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
     { label: "Gallery", href: "#gallery" },
-    { label: "Program", href: "#program" },
     { label: "Events", href: "#events" },
     { label: "Schedule", href: "#schedule" },
     { label: "Venue", href: "#venue" },
