@@ -7,9 +7,9 @@ interface UseScrollSequenceOptions {
   lead?: number;
   /** Fraction of the scroll distance left at the end after the last item finishes. */
   tail?: number;
-  /** How much each item's window overlaps the next (0 = strictly one after another). */
+  /** Fraction of an item's animation that overlaps with the next item (0–0.9). */
   overlap?: number;
-  /** 0–1 smoothing per frame (lower = floatier). */
+  /** 0–1 smoothing per frame (higher = more responsive, lower = floatier). */
   smoothing?: number;
 }
 
@@ -17,17 +17,14 @@ const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
 /**
- * Scroll-linked sequence. Put the hook's ref on a TALL section that contains a
- * `position: sticky; height: 100vh` child. Each descendant marked `data-reveal`
- * gets a CSS variable `--r` (0 → 1) driven by scroll position, one after another,
- * and `data-ready="true"` once it is fully shown. Scrolling back reverses it.
+ * Scroll-linked sequence with mathematically aligned windows and smooth interpolation.
  */
 export function useScrollSequence<T extends HTMLElement = HTMLElement>({
   itemCount,
-  lead = 0.04,
-  tail = 0.1,
-  overlap = 0.3,
-  smoothing = 0.16,
+  lead = 0.02,
+  tail = 0.04,
+  overlap = 0.45,
+  smoothing = 0.26,
 }: UseScrollSequenceOptions) {
   const ref = useRef<T>(null);
 
@@ -46,7 +43,7 @@ export function useScrollSequence<T extends HTMLElement = HTMLElement>({
     const apply = (i: number) => {
       const el = items[i];
       el.style.setProperty("--r", easeOutCubic(current[i]).toFixed(4));
-      el.dataset.ready = String(current[i] > 0.97);
+      el.dataset.ready = String(current[i] > 0.95);
     };
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -57,14 +54,22 @@ export function useScrollSequence<T extends HTMLElement = HTMLElement>({
       return;
     }
 
+    // Mathematically exact window calculations:
+    // Item 0 starts at lead, item n-1 finishes precisely at 1 - tail.
+    // Each item has duration `windowSize`, and consecutive items are spaced by `step`.
+    const available = Math.max(0.1, 1 - lead - tail);
+    const safeOverlap = Math.min(0.85, Math.max(0, overlap));
+    const denom = 1 + (n - 1) * (1 - safeOverlap);
+    const windowSize = available / denom;
+    const step = windowSize * (1 - safeOverlap);
+
     const measure = () => {
       const rect = root.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
       const p = travel > 0 ? clamp01(-rect.top / travel) : 1;
-      const step = (1 - lead - tail) / n;
-      const window_ = step * (1 + overlap);
       for (let i = 0; i < n; i++) {
-        target[i] = clamp01((p - (lead + i * step)) / window_);
+        const start = lead + i * step;
+        target[i] = clamp01((p - start) / windowSize);
       }
     };
 

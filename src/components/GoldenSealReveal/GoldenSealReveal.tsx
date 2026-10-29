@@ -417,6 +417,77 @@ export default function GoldenSealReveal({ children }: GoldenSealRevealProps) {
             />
             <div className={styles.vignette} />
             <div className={styles.glowEdge} />
+
+            {/* Cybernetic Holographic Graphic - Left Sector (Pure Motion Graphics, Zero Text/Pill) */}
+            <div className={styles.cyberGraphicLeft} aria-hidden="true">
+              <svg
+                className={styles.graphicSvg}
+                viewBox="0 0 200 200"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Outer Rotating Calibration Ring */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="92"
+                  stroke="rgba(205, 172, 104, 0.45)"
+                  strokeWidth="1.2"
+                  strokeDasharray="4 8"
+                  className={styles.spinClockwiseSlow}
+                />
+                {/* Segmented Quantum Shield Arc */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="80"
+                  stroke="rgba(255, 230, 163, 0.8)"
+                  strokeWidth="2.2"
+                  strokeDasharray="32 16 64 22"
+                  strokeLinecap="round"
+                  className={styles.spinCounterFast}
+                />
+                {/* Cardinal Axis Crosshairs */}
+                <line x1="8" y1="100" x2="192" y2="100" stroke="rgba(205, 172, 104, 0.38)" strokeWidth="1" strokeDasharray="3 6" />
+                <line x1="100" y1="8" x2="100" y2="192" stroke="rgba(205, 172, 104, 0.38)" strokeWidth="1" strokeDasharray="3 6" />
+                {/* Diagonal Sub-Sensors */}
+                <line x1="34" y1="34" x2="166" y2="166" stroke="rgba(205, 172, 104, 0.25)" strokeWidth="0.8" strokeDasharray="2 4" />
+                <line x1="166" y1="34" x2="34" y2="166" stroke="rgba(205, 172, 104, 0.25)" strokeWidth="0.8" strokeDasharray="2 4" />
+                {/* Inner Astrolabe Track with Orbiting Nodes */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="56"
+                  stroke="rgba(205, 172, 104, 0.65)"
+                  strokeWidth="1.6"
+                  strokeDasharray="14 8"
+                  className={styles.spinClockwiseMed}
+                />
+                <circle cx="100" cy="44" r="3.5" fill="#ffffff" className={styles.spinClockwiseMedOrigin} />
+                <circle cx="100" cy="156" r="2.5" fill="#ffe08a" className={styles.spinClockwiseMedOrigin} />
+                <circle cx="44" cy="100" r="2.5" fill="#ffe08a" className={styles.spinClockwiseMedOrigin} />
+                <circle cx="156" cy="100" r="3.5" fill="#ffffff" className={styles.spinClockwiseMedOrigin} />
+                {/* Central Diamond Core Resonator */}
+                <polygon
+                  points="100,72 128,100 100,128 72,100"
+                  stroke="rgba(255, 255, 255, 0.85)"
+                  strokeWidth="1.5"
+                  fill="rgba(205, 172, 104, 0.08)"
+                  className={styles.spinCounterSlow}
+                />
+                <circle cx="100" cy="100" r="6" fill="#cdac68" className={styles.corePulse} />
+              </svg>
+              <div className={styles.graphicGlowPulse} />
+            </div>
+
+            {/* Floating Golden Quantum Motes Left */}
+            <div className={styles.starMotesField}>
+              <span className={styles.starMote} style={{ top: "25%", left: "15%", animationDelay: "0.2s", animationDuration: "5s" }} />
+              <span className={styles.starMote} style={{ top: "60%", left: "22%", animationDelay: "1.5s", animationDuration: "6.5s" }} />
+              <span className={styles.starMote} style={{ top: "78%", left: "35%", animationDelay: "0.8s", animationDuration: "4.8s" }} />
+              <span className={styles.starMote} style={{ top: "42%", left: "40%", animationDelay: "2.1s", animationDuration: "7s" }} />
+              <span className={styles.starMote} style={{ top: "15%", left: "30%", animationDelay: "3.2s", animationDuration: "5.5s" }} />
+            </div>
           </div>
           {/* Dynamic edge bevel & shadow visible only during the split */}
           <div ref={splitEdgeLeftRef} className={styles.splitEdgeLeft} />
@@ -433,14 +504,96 @@ export default function GoldenSealReveal({ children }: GoldenSealRevealProps) {
             />
             <div className={styles.vignette} />
             <div className={styles.glowEdge} />
+
+            {/* Cybernetic Holographic Graphic - Right Sector (Pure Motion Graphics, Zero Text/Pill) */}
+            <div className={styles.cyberGraphicRight} aria-hidden="true">
+              <svg
+                className={styles.graphicSvg}
+                viewBox="0 0 200 200"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Outer Rotating Tri-Track */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="92"
+                  stroke="rgba(205, 172, 104, 0.4)"
+                  strokeWidth="1.2"
+                  strokeDasharray="18 10 36 8"
+                  className={styles.spinCounterSlow}
+                />
+                {/* Precision Dial Ticks Arc */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="82"
+                  stroke="rgba(255, 230, 163, 0.7)"
+                  strokeWidth="2.5"
+                  strokeDasharray="2 6"
+                  className={styles.spinClockwiseFast}
+                />
+                {/* Diagonal Quantum Sensor Rays */}
+                <line x1="32" y1="32" x2="168" y2="168" stroke="rgba(205, 172, 104, 0.35)" strokeWidth="1" strokeDasharray="4 4" />
+                <line x1="168" y1="32" x2="32" y2="168" stroke="rgba(205, 172, 104, 0.35)" strokeWidth="1" strokeDasharray="4 4" />
+                {/* Cardinal Axis Markers */}
+                <line x1="14" y1="100" x2="186" y2="100" stroke="rgba(205, 172, 104, 0.25)" strokeWidth="0.8" />
+                <line x1="100" y1="14" x2="100" y2="186" stroke="rgba(205, 172, 104, 0.25)" strokeWidth="0.8" />
+                {/* Intersecting Orbital Rings */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="58"
+                  stroke="rgba(205, 172, 104, 0.8)"
+                  strokeWidth="1.8"
+                  strokeDasharray="24 12 48 10"
+                  className={styles.spinClockwiseMed}
+                />
+                <circle cx="158" cy="100" r="3.5" fill="#ffffff" className={styles.spinClockwiseMedOrigin} />
+                <circle cx="42" cy="100" r="2.5" fill="#cdac68" className={styles.spinClockwiseMedOrigin} />
+                <circle cx="100" cy="42" r="2.5" fill="#ffe08a" className={styles.spinClockwiseMedOrigin} />
+                <circle cx="100" cy="158" r="3.5" fill="#ffffff" className={styles.spinClockwiseMedOrigin} />
+                {/* Concentric Quantum Resonance Hex Ring */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="34"
+                  stroke="rgba(255, 255, 255, 0.8)"
+                  strokeWidth="1.4"
+                  strokeDasharray="8 4"
+                  className={styles.spinCounterFast}
+                />
+                <circle cx="100" cy="100" r="7" fill="#ffe08a" className={styles.corePulse} />
+              </svg>
+              <div className={styles.graphicGlowPulse} />
+            </div>
+
+            {/* Floating Golden Quantum Motes Right */}
+            <div className={styles.starMotesField}>
+              <span className={styles.starMote} style={{ top: "30%", right: "18%", animationDelay: "0.5s", animationDuration: "5.8s" }} />
+              <span className={styles.starMote} style={{ top: "65%", right: "25%", animationDelay: "1.2s", animationDuration: "4.5s" }} />
+              <span className={styles.starMote} style={{ top: "82%", right: "32%", animationDelay: "2.4s", animationDuration: "6.2s" }} />
+              <span className={styles.starMote} style={{ top: "20%", right: "38%", animationDelay: "1.8s", animationDuration: "7.2s" }} />
+              <span className={styles.starMote} style={{ top: "50%", right: "12%", animationDelay: "3.0s", animationDuration: "5.2s" }} />
+            </div>
           </div>
           {/* Dynamic edge bevel & shadow visible only during the split */}
           <div ref={splitEdgeRightRef} className={styles.splitEdgeRight} />
         </div>
 
-        {/* Center Quantum Seal Medallion in the Vortex Eye */}
+        {/* Ambient Horizontal Laser Scanning Beam */}
+        <div className={styles.laserScanline} />
+
+        {/* Center Quantum Seal Medallion in the Vortex Eye with Concentric Astrolabe Rings */}
         <div ref={centerSealRef} className={styles.centerSealCrest}>
           <div className={styles.sealRingOuter} />
+          <div className={styles.sealRingMiddle} />
+          <div className={styles.sealRingInner}>
+            <span className={styles.sealOrbiter1} />
+            <span className={styles.sealOrbiter2} />
+          </div>
+          <div className={styles.sealPulseRipple} />
+
           <span className={styles.sealCoreGlyph}>Q</span>
           <span className={styles.sealSubtitle}>Techvistra '26</span>
         </div>
