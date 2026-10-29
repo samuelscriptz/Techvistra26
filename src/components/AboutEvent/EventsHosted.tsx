@@ -108,10 +108,16 @@ export default function EventsHosted({
   heading = "ABOUT",
   intro,
   events = DEFAULT_EVENTS,
-  scrollPerItem = 100,
+  scrollPerItem = 30,
 }: EventsHostedProps) {
   const itemCount = events.length + (intro ? 1 : 0);
-  const sectionRef = useScrollSequence<HTMLElement>({ itemCount });
+  const sectionRef = useScrollSequence<HTMLElement>({
+    itemCount,
+    lead: 0.02,
+    tail: 0.04,
+    overlap: 0.45,
+    smoothing: 0.26,
+  });
 
   return (
     <section
@@ -119,13 +125,13 @@ export default function EventsHosted({
       ref={sectionRef}
       className="events"
       aria-labelledby="about-title"
-      style={{ height: `${120 + itemCount * scrollPerItem}vh` }}
+      style={{ height: `${100 + itemCount * scrollPerItem}vh` }}
     >
       <div className="events__sticky">
         <h2 id="about-title" className="events__heading">{heading}</h2>
         {intro && <p className="events__intro" data-reveal>{intro}</p>}
 
-        <div className="events__grid" data-reveal>
+        <div className="events__grid">
           {events.map((item, i) => (
             <EventCard key={item.id} item={item} index={i} />
           ))}

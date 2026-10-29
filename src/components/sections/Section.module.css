@@ -251,31 +251,15 @@
   min-height: 570px;
   padding: clamp(4rem, 7vw, 6rem) var(--gutter);
   color: #171614;
-  background:
-    radial-gradient(ellipse at 48% 48%, rgba(255, 250, 241, 0.7), transparent 50%),
-    radial-gradient(ellipse at 8% 85%, rgba(210, 169, 104, 0.2), transparent 33%),
-    radial-gradient(ellipse at 100% 75%, rgba(192, 139, 62, 0.16), transparent 30%),
-    transparent;
+  background: transparent;
 }
 
 .faqSection::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(95, 78, 50, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(95, 78, 50, 0.025) 1px, transparent 1px);
-  background-size: 64px 64px;
-  content: "";
-  pointer-events: none;
+  display: none;
 }
 
 .faqDecorations {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
+  display: none;
 }
 
 .faqDecoration {
@@ -658,9 +642,7 @@
 .contactSection {
   position: relative;
   padding: 0 0 0.25rem;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(205, 172, 104, 0.12), transparent 52%),
-    var(--bg-surface-alt);
+  background: transparent;
 }
 
 .contactRevealStage {
@@ -675,16 +657,7 @@
 }
 
 .contactRevealStage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(to right, rgba(95, 91, 85, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(95, 91, 85, 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
-  pointer-events: none;
+  display: none;
 }
 
 .revealPrompt,

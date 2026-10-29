@@ -51,8 +51,9 @@
 [data-reveal] {
   --r: 0;
   opacity: var(--r);
-  transform: translateY(calc((1 - var(--r)) * 56px)) scale(calc(0.9 + 0.1 * var(--r)));
+  transform: translateY(calc((1 - var(--r)) * 36px)) scale(calc(0.94 + 0.06 * var(--r)));
   pointer-events: none;
+  will-change: transform, opacity;
 }
 [data-reveal][data-ready="true"] { pointer-events: auto; }
 .events__heading {
@@ -96,10 +97,16 @@
 .event-slot--dept      { grid-column: 2; grid-row: 3 / span 3; }
 
 .event-slot[data-reveal-direction="left"] {
-  transform: translateX(calc((1 - var(--r)) * -56px)) scale(calc(0.9 + 0.1 * var(--r)));
+  transform: translate3d(calc((1 - var(--r)) * -32px), calc((1 - var(--r)) * 24px), 0)
+    rotateZ(calc((1 - var(--r)) * -1.2deg))
+    scale(calc(0.94 + 0.06 * var(--r)));
+  will-change: transform, opacity;
 }
 .event-slot[data-reveal-direction="right"] {
-  transform: translateX(calc((1 - var(--r)) * 56px)) scale(calc(0.9 + 0.1 * var(--r)));
+  transform: translate3d(calc((1 - var(--r)) * 32px), calc((1 - var(--r)) * 24px), 0)
+    rotateZ(calc((1 - var(--r)) * 1.2deg))
+    scale(calc(0.94 + 0.06 * var(--r)));
+  will-change: transform, opacity;
 }
 
 /* ---------- Card ---------- */
@@ -247,12 +254,25 @@
 }
 
 @media (max-width: 720px) {
+  .events {
+    height: auto !important;
+  }
+
   .events__sticky {
+    position: relative;
     top: 0;
     height: auto;
-    min-height: 100vh;
+    min-height: auto;
     padding: 64px 16px 40px;
     gap: 16px;
+    overflow: visible;
+  }
+
+  .events [data-reveal],
+  .event-slot[data-reveal-direction] {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
   }
 
   .events__heading {

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { LayoutGrid } from "lucide-react";
+import AllEventsModal from "./AllEventsModal";
 import styles from "./EventSection.module.css";
 
 // ---------------------------------------------------------------------------
@@ -19,31 +21,136 @@ export interface EventTab {
   items: EventItem[];
 }
 
-const IMG = "https://framerusercontent.com/images/";
-const IMAGES = [
-  "N7Y4BH5eKgVbSmG1yTRK9i0GUUQ.jpg?width=736&height=1308",
-  "MiW6JiHcCDZ1LyaDXTG4hychXQs.jpg?width=1080&height=1438",
-  "TaZp9mBPNQ337Ni3gNXA4UrX7BY.jpg?width=736&height=1308",
-  "Xx6FqPaPHfQhhl49IX1ncHL48vw.jpg?width=736&height=977",
-  "n2GvvsAaCN0wfzq8V8CuCaqPqmo.jpg?width=816&height=1456",
-  "3JSsmNTZ7ENPQPIrzQAbjRCNDw.jpg?width=1200&height=2141",
-  "c4I4sAxTGlzETJTTbBc2JFFSsaw.jpg?width=735&height=761",
-  "pGTHvY23mIKlxKFELGXoKJe0at0.jpg?width=1080&height=1350",
-].map((f) => IMG + f);
-
-// imageIdx = which of the 8 images each card uses (swap in your own images later)
-const makeItems = (slug: string, label: string, imageIdx: number[]): EventItem[] =>
-  imageIdx.map((im, i) => ({
-    id: i + 1,
-    title: `${label} ${i + 1}`,
-    image: IMAGES[im],
-    regUrl: `register.html?event=${slug}-${i + 1}`,
-  }));
-
 export const EVENT_TABS: EventTab[] = [
-  { key: "senior-technical", label: "Senior Technical Events", short: "Senior Tech", items: makeItems("senior-technical", "Senior Technical", [0, 1, 2, 3, 4]) },
-  { key: "senior-non-technical", label: "Senior Non-Technical Events", short: "Senior Non-Tech", items: makeItems("senior-non-technical", "Senior Non-Technical", [5, 6, 7, 0, 1]) },
-  { key: "junior", label: "Junior Events", short: "Junior", items: makeItems("junior", "Junior", [0, 1, 2, 3, 4, 5, 6, 7]) },
+  {
+    key: "senior-technical",
+    label: "Senior Technical Events",
+    short: "Senior Tech",
+    items: [
+      {
+        id: 1,
+        title: "Data Heist",
+        image: "/event-title-posters/Data Heist.png",
+        regUrl: "register.html?event=data-heist",
+      },
+      {
+        id: 2,
+        title: "Algorithm Auction",
+        image: "/event-title-posters/Algorithm Auction.png",
+        regUrl: "register.html?event=algorithm-auction",
+      },
+      {
+        id: 3,
+        title: "Black Box",
+        image: "/event-title-posters/Black Box.png",
+        regUrl: "register.html?event=black-box",
+      },
+      {
+        id: 4,
+        title: "Risk or Reason",
+        image: "/event-title-posters/Risk or Reason.png",
+        regUrl: "register.html?event=risk-or-reason",
+      },
+      {
+        id: 5,
+        title: "Viz Showdown",
+        image: "/event-title-posters/Viz Showdown.png",
+        regUrl: "register.html?event=viz-showdown",
+      },
+    ],
+  },
+  {
+    key: "senior-non-technical",
+    label: "Senior Non-Technical Events",
+    short: "Senior Non-Tech",
+    items: [
+      {
+        id: 1,
+        title: "Survey Feud",
+        image: "/event-title-posters/Survey Feud.png",
+        regUrl: "register.html?event=survey-feud",
+      },
+      {
+        id: 2,
+        title: "Throw n Know",
+        image: "/event-title-posters/Throw N' Know.png",
+        regUrl: "register.html?event=throw-n-know",
+      },
+      {
+        id: 3,
+        title: "Crack the Four",
+        image: "/event-title-posters/Crack the 4.png",
+        regUrl: "register.html?event=crack-the-four",
+      },
+      {
+        id: 4,
+        title: "Mock Parliament",
+        image: "/event-title-posters/Mock Parliment.png",
+        regUrl: "register.html?event=mock-parliament",
+      },
+      {
+        id: 5,
+        title: "Solo spotlight",
+        image: "/event-title-posters/Solo Spotlight.png",
+        regUrl: "register.html?event=solo-spotlight",
+      },
+    ],
+  },
+  {
+    key: "junior",
+    label: "Junior Events",
+    short: "Junior",
+    items: [
+      {
+        id: 1,
+        title: "Cyber Escape",
+        image: "/event-title-posters/Cyber Escape.png",
+        regUrl: "register.html?event=cyber-escape",
+      },
+      {
+        id: 2,
+        title: "Pixel Paradox",
+        image: "/event-title-posters/Pixel Paradox.png",
+        regUrl: "register.html?event=pixel-paradox",
+      },
+      {
+        id: 3,
+        title: "Prompt Master",
+        image: "/event-title-posters/Prompt Master.png",
+        regUrl: "register.html?event=prompt-master",
+      },
+      {
+        id: 4,
+        title: "Code Relay",
+        image: "/event-title-posters/Code Relay.png",
+        regUrl: "register.html?event=code-relay",
+      },
+      {
+        id: 5,
+        title: "Blind Art",
+        image: "/event-title-posters/Blind Art.png",
+        regUrl: "register.html?event=blind-art",
+      },
+      {
+        id: 6,
+        title: "Hidden Secret",
+        image: "/event-title-posters/Hidden Secret.png",
+        regUrl: "register.html?event=hidden-secret",
+      },
+      {
+        id: 7,
+        title: "Mission Impossible",
+        image: "/event-title-posters/Mission Impossible.png",
+        regUrl: "register.html?event=mission-impossible",
+      },
+      {
+        id: 8,
+        title: "Guess the Sound",
+        image: "/event-title-posters/Guess the Sound.png",
+        regUrl: "register.html?event=guess-the-sound",
+      },
+    ],
+  },
 ];
 
 // How much page scroll it takes to move from one card to the next (in % of screen height).
@@ -71,10 +178,10 @@ const K_MOBILE = {
   oR: [1, 0.8, 0.6, 0.5, 0.3], oL: [1, 0.8, 0.6, 0.5, 0.3],
 };
 
-const ACTIVE_W = 150;
-const ACTIVE_H = 267;
+const ACTIVE_W = 186; // A4 aspect ratio (1 : 1.414 / 210x297)
+const ACTIVE_H = 263;
 const CARD_SCALE = 1.3; // must match the 1.3 used in the CSS (.card width/height)
-const MOBILE_REF_W = 320; // on mobile, the front card is ~61% of the screen width
+const MOBILE_REF_W = 340; // on mobile, front A4 card has comfortable side margins
 const TITLE_SPACE = 52; // px kept free under the front card for its title (mobile sizing)
 
 const lerp = (arr: number[], a: number): number => {
@@ -98,6 +205,17 @@ function useMediaQuery(query: string): boolean {
 export default function EventSection() {
   const [tab, setTab] = useState(0);
   const [active, setActive] = useState(0);
+  const [allEventsOpen, setAllEventsOpen] = useState(false);
+
+  const handleSelectEventFromModal = (targetTab: number, targetIdx: number) => {
+    setAllEventsOpen(false);
+    if (targetTab !== tab) {
+      setTab(targetTab);
+    }
+    setTimeout(() => {
+      goTo(targetIdx);
+    }, 120);
+  };
   const items = EVENT_TABS[tab].items;
   const mobile = useMediaQuery("(max-width: 768px)");
 
@@ -314,21 +432,33 @@ export default function EventSection() {
       <div ref={stickyRef} className={styles.sticky}>
         <div className={styles.top}>
           <h2 className={styles.heading}>Events</h2>
-          <div className={styles.tabs} role="tablist" aria-label="Event categories">
-            {EVENT_TABS.map((t, i) => (
-              <button
-                key={t.key}
-                type="button"
-                role="tab"
-                aria-selected={i === tab}
-                aria-label={t.label}
-                className={`${styles.tab} ${i === tab ? styles.tabActive : ""}`}
-                onClick={() => selectTab(i)}
-              >
-                <span className={styles.tabFull}>{t.label}</span>
-                <span className={styles.tabShort}>{t.short}</span>
-              </button>
-            ))}
+          <div className={styles.tabBarWrapper}>
+            <div className={styles.tabs} role="tablist" aria-label="Event categories">
+              {EVENT_TABS.map((t, i) => (
+                <button
+                  key={t.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === tab}
+                  aria-label={t.label}
+                  className={`${styles.tab} ${i === tab ? styles.tabActive : ""}`}
+                  onClick={() => selectTab(i)}
+                >
+                  <span className={styles.tabFull}>{t.label}</span>
+                  <span className={styles.tabShort}>{t.short}</span>
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className={styles.viewAllBtn}
+              onClick={() => setAllEventsOpen(true)}
+              aria-label="View all events"
+            >
+              <span>View all events</span>
+              <LayoutGrid size={14} aria-hidden="true" />
+            </button>
           </div>
         </div>
 
@@ -383,6 +513,12 @@ export default function EventSection() {
           </button>
         </div>
       </div>
+      <AllEventsModal
+        isOpen={allEventsOpen}
+        onClose={() => setAllEventsOpen(false)}
+        tabs={EVENT_TABS}
+        onSelectEvent={handleSelectEventFromModal}
+      />
     </section>
   );
 }
