@@ -255,7 +255,7 @@
     radial-gradient(ellipse at 48% 48%, rgba(255, 250, 241, 0.7), transparent 50%),
     radial-gradient(ellipse at 8% 85%, rgba(210, 169, 104, 0.2), transparent 33%),
     radial-gradient(ellipse at 100% 75%, rgba(192, 139, 62, 0.16), transparent 30%),
-    linear-gradient(115deg, #e8dccb 0%, #f6ecde 42%, #eee0cc 100%);
+    transparent;
 }
 
 .faqSection::before {

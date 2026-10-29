@@ -14,9 +14,9 @@
   --color-white: #ffffff;             /* Crisp pure white for cards */
 
   /* —— Semantic aliases (Bright experience) —— */
-  --bg-primary: #e8e3dd;
+  --bg-primary: #f6ecde;
   --bg-surface: #ffffff;
-  --bg-surface-alt: #ded8cf;
+  --bg-surface-alt: #eee0cc;
   --bg-card: rgba(255, 255, 255, 0.92);
   --bg-card-hover: #ffffff;
 
@@ -117,7 +117,10 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
   line-height: 1.15;
@@ -154,6 +157,7 @@ ol {
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -210,13 +214,114 @@ ol {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-grey-light);
   border-radius: var(--radius-full);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Custom Cursors (Arrow & Hand)
+   ========================================================================== */
+
+:root {
+  --cursor-arrow: url("/cursors/cosmic-voidblade.png") 0 0, auto;
+  --cursor-hand: url("/cursors/cosmic-hand.png") 14 1, pointer;
+}
+
+/* Global base cursor */
+html,
+body {
+  cursor: var(--cursor-arrow);
+}
+
+/* Ensure all default elements inherit the arrow cursor */
+*,
+*::before,
+*::after {
+  cursor: inherit;
+}
+
+/* All interactive and clickable elements show the hand cursor */
+a,
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"],
+select,
+label,
+summary,
+[tabindex]:not([tabindex="-1"]),
+.cursor-pointer,
+.event-card,
+.star-border-btn,
+.pill,
+.reg,
+.tab,
+[style*="cursor: pointer"],
+[style*="cursor:pointer"],
+/* Ensure all child elements inside interactive containers also show hand cursor */
+a *,
+button *,
+[role="button"] *,
+label *,
+summary *,
+.cursor-pointer *,
+.event-card *,
+.star-border-btn *,
+.pill *,
+.reg *,
+.tab * {
+  cursor: var(--cursor-hand) !important;
+}
+
+/* Text selection cursor for text inputs and editable areas */
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+textarea,
+[contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* Disabled states */
+button:disabled,
+button[disabled],
+input:disabled,
+input[disabled],
+[aria-disabled="true"],
+.disabled,
+[style*="cursor: not-allowed"],
+[style*="cursor:not-allowed"] {
+  cursor: not-allowed !important;
+}
+
+button:disabled *,
+button[disabled] *,
+[aria-disabled="true"] * {
+  cursor: not-allowed !important;
+}
+
+/* Draggable elements retain grab/grabbing */
+[style*="cursor: grab"],
+[style*="cursor:grab"],
+.stage {
+  cursor: grab !important;
+}
+
+[style*="cursor: grabbing"],
+[style*="cursor:grabbing"],
+.stage.drag,
+.stage:active {
+  cursor: grabbing !important;
 }

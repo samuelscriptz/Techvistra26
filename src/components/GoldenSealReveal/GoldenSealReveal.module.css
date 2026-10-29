@@ -1,4 +1,4 @@
-/* GoldenSealReveal.module.css — Luxury Aerospace Gold Seal & Rocket Launch Reveal */
+/* GoldenSealReveal.module.css — Luxury Golden Vortex Page Split Transition */
 
 .pinWrapper {
   position: relative;
@@ -6,20 +6,47 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: var(--bg-primary, #e8e3dd);
+  background: var(--bg-primary, #f6ecde);
   z-index: 1;
 }
 
+/* ============================================================
+   Underlying Hero Section (Stationary, Emerging from Center)
+   ============================================================ */
 .heroSlot {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+/* Portal bloom flare behind opening panels */
+.portalFlare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 90vh;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(205, 172, 104, 0.55) 35%,
+    rgba(205, 172, 104, 0.15) 60%,
+    transparent 80%
+  );
+  filter: blur(30px);
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity, transform;
 }
 
 /* ============================================================
-   The Gold Seal Curtain Overlay
+   The Two-Panel Golden Vortex Split Curtain Overlay
    ============================================================ */
 .overlay {
   position: absolute;
@@ -32,566 +59,373 @@
   user-select: none;
 }
 
-/* ============================================================
-   Split Panels (Left & Right)
-   50.3% width gives subpixel overlap preventing any center gap.
-   Zero mix-blend-mode: pure hardware-accelerated transforms for 60fps.
-   Luxury alloy gradient incorporating #e8e3dd, #a5a098, #5f5b55, #cdac68, #1d1f21.
-   ============================================================ */
+/* Left & Right Physical Vault Doors
+   50.1% width gives subpixel overlap preventing hairline gap without casting shadows when closed.
+*/
 .panelLeft,
 .panelRight {
   position: absolute;
   top: 0;
   bottom: 0;
   height: 100%;
-  width: 50.3%;
+  width: 50.1%;
   overflow: hidden;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   z-index: 10;
-  background: 
-    radial-gradient(ellipse 90% 60% at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 75%),
-    linear-gradient(
-      135deg,
-      #1d1f21 0%,
-      #5f5b55 8%,
-      #a5a098 18%,
-      #cdac68 32%,
-      #e8e3dd 45%,
-      #ffffff 52%,
-      #e8e3dd 58%,
-      #cdac68 70%,
-      #a5a098 84%,
-      #5f5b55 94%,
-      #1d1f21 100%
-    );
+  background: var(--bg-primary, #f6ecde);
 }
 
 .panelLeft {
   left: 0;
-  border-right: 2px solid #cdac68;
-  box-shadow: 15px 0 45px rgba(29, 31, 33, 0.35),
-    inset -8px 0 24px rgba(255, 255, 255, 0.6);
 }
 
 .panelRight {
   right: 0;
-  border-left: 2px solid #cdac68;
-  box-shadow: -15px 0 45px rgba(29, 31, 33, 0.35),
-    inset 8px 0 24px rgba(255, 255, 255, 0.6);
 }
 
-/* Precision Quantum Circuit Line Etchings (Zero blend mode, subtle opacity) */
-.circuitGrid {
+/* Dynamic Edge Bevels & Shadows — Only visible during split, 0 opacity when closed */
+.splitEdgeLeft,
+.splitEdgeRight {
   position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 50% 50%, transparent 55%, rgba(205, 172, 104, 0.22) 56%, transparent 58%),
-    radial-gradient(circle at 50% 50%, transparent 75%, rgba(255, 255, 255, 0.2) 76%, transparent 77.5%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 54px 54px, 54px 54px;
-  opacity: 0.65;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 15;
+  will-change: opacity;
+}
+
+.splitEdgeLeft {
+  right: 0;
+  border-right: 2.5px solid rgba(205, 172, 104, 0.95);
+  background: linear-gradient(to left, rgba(29, 31, 33, 0.35), transparent);
+  box-shadow: 15px 0 35px rgba(29, 31, 33, 0.45);
+}
+
+.splitEdgeRight {
+  left: 0;
+  border-left: 2.5px solid rgba(205, 172, 104, 0.95);
+  background: linear-gradient(to right, rgba(29, 31, 33, 0.35), transparent);
+  box-shadow: -15px 0 35px rgba(29, 31, 33, 0.45);
+}
+
+/* Inner viewports anchored to left: 0 and right: 0 with exact JS pixel width */
+.panelInnerLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--seal-width, 100vw);
+  height: 100vh;
+  height: 100dvh;
   pointer-events: none;
 }
 
-/* Micro-Brushed Damascus Grain Texture */
-.brushedSheen {
+.panelInnerRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--seal-width, 100vw);
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+}
+
+.vortexImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vignette {
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    125deg,
-    rgba(255, 255, 255, 0.08) 0px,
-    rgba(255, 255, 255, 0.08) 1px,
-    transparent 1px,
-    transparent 4px
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 85% 75% at 50% 50%,
+    transparent 55%,
+    rgba(205, 172, 104, 0.12) 80%,
+    rgba(29, 31, 33, 0.18) 100%
   );
-  opacity: 0.8;
-  pointer-events: none;
 }
 
-/* Dynamic Molten Gold Shimmer Wave */
-.moltenGoldWave {
+.glowEdge {
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(ellipse 90% 60% at 50% 30%, rgba(255, 255, 255, 0.25) 0%, transparent 70%),
-    radial-gradient(ellipse 75% 65% at 30% 70%, rgba(205, 172, 104, 0.2) 0%, transparent 65%),
-    linear-gradient(
-      125deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.15) 30%,
-      rgba(232, 227, 221, 0.25) 45%,
-      rgba(205, 172, 104, 0.2) 55%,
-      transparent 75%
-    );
-  background-size: 200% 200%;
-  animation: moltenSheen 10s infinite ease-in-out alternate;
   pointer-events: none;
-  z-index: 2;
+  box-shadow: inset 0 0 80px rgba(205, 172, 104, 0.2);
 }
 
-@keyframes moltenSheen {
-  0% {
-    background-position: 0% 0%;
+/* ============================================================
+   Center Seal Medallion in the Vortex Eye
+   ============================================================ */
+.centerSealCrest {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(150px, 19vw, 220px);
+  height: clamp(150px, 19vw, 220px);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 28;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(23, 22, 20, 0.92) 0%,
+    rgba(29, 31, 33, 0.96) 65%,
+    rgba(205, 172, 104, 0.3) 100%
+  );
+  border: 2px solid rgba(205, 172, 104, 0.8);
+  box-shadow: 0 0 40px rgba(205, 172, 104, 0.45),
+    inset 0 0 25px rgba(205, 172, 104, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  will-change: transform, opacity;
+}
+
+.sealRingOuter {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px dashed rgba(205, 172, 104, 0.65);
+  animation: rotateSealRing 24s linear infinite;
+  pointer-events: none;
+}
+
+.sealCoreGlyph {
+  font-family: var(--font-heading, "Orbitron", sans-serif);
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: #cdac68;
+  text-shadow: 0 0 20px rgba(205, 172, 104, 0.85), 0 0 35px #ffffff;
+}
+
+.sealSubtitle {
+  font-family: var(--font-heading, "Space Grotesk", sans-serif);
+  font-size: clamp(0.55rem, 0.75vw, 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
+}
+
+@keyframes rotateSealRing {
+  from {
+    transform: rotate(0deg);
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 50% 100%;
+  to {
+    transform: rotate(360deg);
   }
 }
 
 /* ============================================================
-   Luminous Vertical Seam System & Rocket Craft
+   Center Seam & Quantum Lightning Incision Crack System
    ============================================================ */
 .seamContainer {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 40px;
-  height: 100%;
-  z-index: 30;
-  pointer-events: none;
   transform: translateX(-50%);
-  overflow: visible;
+  width: 180px;
+  z-index: 26;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: opacity, transform;
 }
 
-/* Incision Laser Seam trailing upward from the rocket */
+.seamGlow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 70px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(205, 172, 104, 0.8) 45%,
+    transparent 75%
+  );
+  filter: blur(14px);
+  opacity: 0.7;
+  will-change: transform, opacity;
+}
+
 .seamLine {
   position: absolute;
+  top: 0;
   bottom: 0;
-  left: 50%;
-  width: 5px;
-  height: 100%;
-  transform: translateX(-50%);
+  width: 3.5px;
   background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #e8e3dd 25%,
-    #cdac68 60%,
-    #ffffff 100%
+    to bottom,
+    transparent 0%,
+    #cdac68 15%,
+    #ffffff 50%,
+    #cdac68 85%,
+    transparent 100%
   );
-  box-shadow: 0 0 14px 3px #ffffff, 0 0 28px 6px #cdac68,
-    0 0 50px 12px rgba(205, 172, 104, 0.7);
-  transform-origin: bottom center;
+  box-shadow: 0 0 14px #ffffff, 0 0 28px #cdac68;
   will-change: transform;
 }
 
-/* Wide Gold Atmospheric Glow (uses pure gradient aura for zero blur cost) */
-.seamGlow {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 70px;
-  height: 100%;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(205, 172, 104, 0.35) 25%,
-    rgba(255, 255, 255, 0.9) 50%,
-    rgba(205, 172, 104, 0.35) 75%,
-    transparent 100%
-  );
-  transform-origin: bottom center;
-  will-change: transform, opacity;
-}
-
-/* Shock diamonds & trailing particles wake */
-.shockTrail {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  height: 100%;
-  transform: translateX(-50%);
-  background: repeating-linear-gradient(
-    180deg,
-    #ffffff 0px,
-    #ffffff 8px,
-    transparent 8px,
-    transparent 20px
-  );
-  opacity: 0.75;
-  transform-origin: bottom center;
-}
-
-/* ============================================================
-   The Aerospace Rocket Entity
-   Docked firmly at bottom (bottom: 12px), travels upward with GSAP 'y'
-   ============================================================ */
-.rocketContainer {
-  position: absolute;
-  left: 50%;
-  bottom: 12px;
-  width: 72px;
-  height: 110px;
-  transform: translateX(-50%);
-  z-index: 45;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  will-change: transform, opacity;
-  box-shadow: 0 0 30px rgba(205, 172, 104, 0.7);
-  border-radius: 999px;
-}
-
-/* Nose cone incision laser dot */
-.noseConeGlow {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 14px 5px #ffffff, 0 0 25px 8px #cdac68;
-  animation: nosePulse 1s infinite alternate ease-in-out;
-}
-
-@keyframes nosePulse {
-  0% {
-    transform: translateX(-50%) scale(0.9);
-    opacity: 0.85;
-  }
-  100% {
-    transform: translateX(-50%) scale(1.3);
-    opacity: 1;
-  }
-}
-
-.rocketSvg {
-  width: 58px;
-  height: 86px;
-  display: block;
-}
-
-/* ============================================================
-   Ion Thruster Plasma Plume (trailing down behind rocket)
-   ============================================================ */
-.thrusterPlume {
-  position: absolute;
-  top: 76px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 65px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-}
-
-/* Intense white-hot inner thrust core */
-.plasmaCore {
+.lightningSvg {
   position: absolute;
   top: 0;
-  width: 8px;
-  height: 48px;
-  border-radius: 50% 50% 80% 80%;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #e8e3dd 30%,
-    #cdac68 70%,
-    transparent 100%
-  );
-  box-shadow: 0 0 12px 3px #ffffff, 0 0 20px 5px #cdac68;
-  animation: coreFlicker 0.15s infinite alternate ease-in-out;
-}
-
-/* Outer golden envelope */
-.plasmaEnvelope {
-  position: absolute;
-  top: 2px;
-  width: 24px;
-  height: 65px;
-  border-radius: 40% 40% 80% 80%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(232, 227, 221, 0.8) 25%,
-    rgba(205, 172, 104, 0.6) 60%,
-    transparent 100%
-  );
-  animation: plumeSpread 0.2s infinite alternate ease-in-out;
-}
-
-@keyframes coreFlicker {
-  0% {
-    transform: scaleY(0.92) scaleX(0.96);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scaleY(1.08) scaleX(1.04);
-    opacity: 1;
-  }
-}
-
-@keyframes plumeSpread {
-  0% {
-    transform: scaleY(0.9) scaleX(0.95);
-  }
-  100% {
-    transform: scaleY(1.12) scaleX(1.08);
-  }
-}
-
-/* ============================================================
-   Apogee Severance Burst at Top Apex
-   Fires when rocket reaches top before panels split
-   ============================================================ */
-.apogeeBurst {
-  position: absolute;
-  top: 0;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 140px;
-  height: 140px;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 100%;
+  filter: drop-shadow(0 0 12px #ffffff) drop-shadow(0 0 25px #cdac68);
   will-change: transform, opacity;
 }
 
-.burstRing {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 4px solid #ffffff;
-  box-shadow: 0 0 30px #ffffff, 0 0 60px #cdac68, 0 0 90px rgba(205, 172, 104, 0.6);
-}
-
-.burstFlare {
+/* ============================================================
+   Supersonic Severance Burst Shockwave System
+   ============================================================ */
+.burstShockwave {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 260px;
-  height: 6px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    #ffffff 50%,
-    transparent 100%
-  );
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 25px 6px #ffffff;
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shockwaveRing1 {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 50px rgba(205, 172, 104, 0.9),
+    inset 0 0 35px rgba(255, 255, 255, 0.85);
+}
+
+.shockwaveRing2 {
+  position: absolute;
+  inset: -25px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(205, 172, 104, 0.85);
+  box-shadow: 0 0 35px rgba(205, 172, 104, 0.7);
+}
+
+.shockwaveFlash {
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(205, 172, 104, 0.8) 50%,
+    transparent 75%
+  );
+  filter: blur(8px);
 }
 
 /* ============================================================
-   Center Seal Emblem / Medallion (Palette & Bright Theme)
+   Scroll to Crack & Unseal Prompt
    ============================================================ */
-.crest {
+.prompt {
   position: absolute;
-  top: 48%;
+  bottom: clamp(28px, 6vh, 64px);
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  z-index: 25;
+  gap: 10px;
+  z-index: 30;
   pointer-events: none;
+  text-align: center;
   will-change: transform, opacity;
 }
 
-.crestMedallion {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(
-    circle at 35% 35%,
-    #ffffff 0%,
-    #e8e3dd 25%,
-    #cdac68 60%,
-    #a5a098 85%,
-    #5f5b55 100%
-  );
-  border: 3.5px solid #ffffff;
-  box-shadow: 0 14px 40px rgba(29, 31, 33, 0.35),
-    0 0 50px rgba(205, 172, 104, 0.7),
-    inset 0 3px 8px #ffffff,
-    inset 0 -5px 10px rgba(95, 91, 85, 0.6);
-}
-
-.starBorderRing {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(205, 172, 104, 0.8);
-  animation: orbitRotate 22s infinite linear;
-}
-
-@keyframes orbitRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.crestInnerRing {
-  width: 104px;
-  height: 104px;
-  border-radius: 50%;
-  border: 2px solid #cdac68;
-  background: radial-gradient(
-    circle at 50% 50%,
-    #ffffff 0%,
-    #e8e3dd 85%,
-    #ded8cf 100%
-  );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 2px 6px rgba(29, 31, 33, 0.08), 0 0 14px rgba(205, 172, 104, 0.4);
-  padding: 6px;
-}
-
-.quantumGlyph {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center;
-  width: 100%;
-}
-
-.glyphTop {
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 0.52rem;
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  color: #cdac68;
-  display: block;
-}
-
-.crestCore {
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 2.2rem;
-  font-weight: 900;
-  line-height: 1;
-  color: #1d1f21;
-  text-shadow: 0 0 15px rgba(205, 172, 104, 0.6);
-  display: block;
-}
-
-.glyphBottom {
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.26em;
-  color: #cdac68;
-  display: block;
-}
-
-.crestPrompt {
+.badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 0.86rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  background: rgba(232, 227, 221, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 10px 24px;
-  border-radius: 9999px;
-  border: 1.5px solid #cdac68;
-  box-shadow: 0 10px 30px rgba(29, 31, 33, 0.14), 0 0 25px rgba(205, 172, 104, 0.35);
-  animation: promptFloat 2.4s infinite ease-in-out;
+  padding: 8px 22px;
+  border-radius: var(--radius-full, 9999px);
+  background: rgba(23, 22, 20, 0.78);
+  border: 1px solid rgba(205, 172, 104, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(205, 172, 104, 0.25);
 }
 
-.launchIcon {
-  color: #cdac68;
-  font-size: 0.8rem;
-  animation: launchArrow 1.2s infinite ease-in-out;
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gold, #cdac68);
+  box-shadow: 0 0 10px #cdac68;
+  animation: pulseGlow 2s ease-in-out infinite;
 }
 
-@keyframes launchArrow {
-  0%, 100% {
+.scrollArrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(205, 172, 104, 0.95);
+  animation: bounceSlow 2.2s infinite ease-in-out;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    box-shadow: 0 0 14px #ffffff, 0 0 20px #cdac68;
+  }
+}
+
+@keyframes bounceSlow {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(6px);
   }
 }
 
-@keyframes promptFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(4px);
-  }
-}
-
-/* ============================================================
-   Reduced Motion Accessibility
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-  .crestPrompt {
-    animation: none;
-  }
-  .starBorderRing {
-    animation: none;
-  }
-  .plasmaCore {
-    animation: none;
-  }
-  .plasmaEnvelope {
-    animation: none;
-  }
-}
-
-/* ============================================================
-   Mobile Ergonomics
-   ============================================================ */
 @media (max-width: 768px) {
-  .crestMedallion {
-    width: 110px;
-    height: 110px;
+  .prompt {
+    bottom: clamp(20px, 4.5vh, 48px);
   }
-  .crestInnerRing {
-    width: 82px;
-    height: 82px;
+
+  .badge {
+    padding: 6px 18px;
+    font-size: 0.75rem;
   }
-  .crestCore {
-    font-size: 1.7rem;
+
+  .seamContainer {
+    width: 130px;
   }
-  .glyphTop, .glyphBottom {
-    font-size: 0.44rem;
-  }
-  .crestPrompt {
-    font-size: 0.74rem;
-    padding: 8px 18px;
-    letter-spacing: 0.12em;
-  }
-  .rocketContainer {
-    width: 56px;
-    height: 85px;
-    bottom: 8px;
-  }
-  .rocketSvg {
-    width: 44px;
-    height: 66px;
-  }
-  .seamGlow {
-    width: 50px;
-  }
-  .seamLine {
-    width: 4px;
+
+  .lightningSvg {
+    width: 90px;
   }
 }

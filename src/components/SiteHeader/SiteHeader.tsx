@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { Menu, X } from "lucide-react";
 import PillNav, { type PillNavItem } from "../PillNav/PillNav";
 import styles from "./SiteHeader.module.css";
 
 const SECTION_IDS = [
   "home",
   "about",
-  "gallery",
   "events",
-  "schedule",
+  "technical-partners",
+  "gallery",
+  // "schedule",
   "faq",
   "contact",
 ];
@@ -15,7 +17,19 @@ const SECTION_IDS = [
 export default function SiteHeader() {
   const [isHero, setIsHero] = useState(true);
   const [activeHref, setActiveHref] = useState("#home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -70,15 +84,17 @@ export default function SiteHeader() {
   const navItems: PillNavItem[] = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
-    { label: "Gallery", href: "#gallery" },
     { label: "Events", href: "#events" },
-    { label: "Schedule", href: "#schedule" },
+    { label: "Technical Partners", href: "#technical-partners" },
+    { label: "Gallery", href: "#gallery" },
+    // { label: "Schedule", href: "#schedule" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#contact" },
   ];
 
   const handleNavClick = (href?: string) => {
     if (!href) return;
+    setMobileMenuOpen(false);
     setActiveHref(href);
     const targetId = href.replace(/^#/, "");
 
@@ -100,7 +116,7 @@ export default function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className={`${styles.header} ${!isHero ? styles.scrolled : ""}`}
+      className={`${styles.header} ${!isHero ? styles.scrolled : ""} ${mobileMenuOpen ? styles.menuOpen : ""}`}
       role="banner"
     >
       <div className={styles.inner}>
@@ -162,12 +178,46 @@ export default function SiteHeader() {
               textColor="#1d1f21"
               highlightColor="#cdac68"
               highlightTextColor="#ffffff"
-              collapse="auto"
+              collapse="never"
               intro={false}
               ariaLabel="Symposium navigation"
             />
           </div>
         </div>
+
+        <button
+          type="button"
+          className={styles.mobileMenuToggle}
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
+          {mobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
+
+        {mobileMenuOpen && (
+          <nav
+            id="mobile-navigation"
+            className={styles.mobileMenu}
+            aria-label="Mobile navigation"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`${styles.mobileMenuLink} ${activeHref === item.href ? styles.mobileMenuLinkActive : ""}`}
+                aria-current={activeHref === item.href ? "page" : undefined}
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleNavClick(item.href);
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        )}
 
         <div className={styles.headerRight} aria-hidden="true" />
       </div>
