@@ -168,7 +168,8 @@
     display: grid;
     width: min(88%, 540px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    transform-origin: center top;
+    transform: none;
+    transform-origin: center center;
   }
 
   .galleryColumn,

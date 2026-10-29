@@ -149,11 +149,12 @@ export default function GallerySection() {
           gsap.fromTo(
             frame,
             isMobile
-              ? { rotateX: 14, rotateZ: -2.8, scale: 0.92 }
-              : { rotateX: 12, scale: 0.94 },
+              ? { rotateX: 14, rotateY: 0, rotateZ: 0, scale: 0.94 }
+              : { rotateX: 12, rotateY: 0, rotateZ: 0, scale: 0.94 },
             {
               rotateX: 0,
-              rotateZ: isMobile ? 0.8 : 0,
+              rotateY: 0,
+              rotateZ: 0,
               scale: 1,
               ease: "none",
               scrollTrigger: {
@@ -168,7 +169,7 @@ export default function GallerySection() {
           const columns = Array.from(
             frame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`)
           );
-          columns.forEach((column, columnIndex) => {
+          columns.forEach((column) => {
             gsap.fromTo(
               column,
               { y: 0 },
@@ -185,18 +186,6 @@ export default function GallerySection() {
               }
             );
 
-            if (isMobile) {
-              gsap.to(column, {
-                x: columnIndex === 0 ? -3 : 3,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: stage,
-                  start: "top top",
-                  end: "bottom bottom",
-                  scrub: 1,
-                },
-              });
-            }
           });
         });
       }, stage);
