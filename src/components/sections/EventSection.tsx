@@ -19,6 +19,7 @@ export interface EventTab {
   items: EventItem[];
 }
 
+// Default placeholder images from Framer CDN (used until replaced with real posters)
 const IMG = "https://framerusercontent.com/images/";
 const IMAGES = [
   "N7Y4BH5eKgVbSmG1yTRK9i0GUUQ.jpg?width=736&height=1308",
@@ -31,19 +32,51 @@ const IMAGES = [
   "pGTHvY23mIKlxKFELGXoKJe0at0.jpg?width=1080&height=1350",
 ].map((f) => IMG + f);
 
-// imageIdx = which of the 8 images each card uses (swap in your own images later)
-const makeItems = (slug: string, label: string, imageIdx: number[]): EventItem[] =>
-  imageIdx.map((im, i) => ({
-    id: i + 1,
-    title: `${label} ${i + 1}`,
-    image: IMAGES[im],
-    regUrl: `register.html?event=${slug}-${i + 1}`,
-  }));
+// ---------------------------------------------------------------------------
+// EVENTS DATA:
+// To add or update an event poster manually:
+// 1. Put your image in the `public/` directory (e.g. `public/my-event.jpeg`).
+// 2. Set `image: "/my-event.jpeg"`.
+// 3. Set `title: "Your Event Title"`.
+// 4. Set `regUrl: "your-registration-link-or-form-url"`.
+// ---------------------------------------------------------------------------
+
+const SENIOR_TECHNICAL_EVENTS: EventItem[] = [
+  { id: 1, title: "Senior Technical 1", image: IMAGES[0], regUrl: "register.html?event=senior-technical-1" },
+  { id: 2, title: "Senior Technical 2", image: IMAGES[1], regUrl: "register.html?event=senior-technical-2" },
+  { id: 3, title: "Senior Technical 3", image: IMAGES[2], regUrl: "register.html?event=senior-technical-3" },
+  { id: 4, title: "Senior Technical 4", image: IMAGES[3], regUrl: "register.html?event=senior-technical-4" },
+  { id: 5, title: "Senior Technical 5", image: IMAGES[4], regUrl: "register.html?event=senior-technical-5" },
+];
+
+const SENIOR_NON_TECHNICAL_EVENTS: EventItem[] = [
+  { id: 1, title: "Senior Non-Technical 1", image: IMAGES[5], regUrl: "register.html?event=senior-non-technical-1" },
+  { id: 2, title: "Senior Non-Technical 2", image: IMAGES[6], regUrl: "register.html?event=senior-non-technical-2" },
+  { id: 3, title: "Senior Non-Technical 3", image: IMAGES[7], regUrl: "register.html?event=senior-non-technical-3" },
+  { id: 4, title: "Senior Non-Technical 4", image: IMAGES[0], regUrl: "register.html?event=senior-non-technical-4" },
+  { id: 5, title: "Senior Non-Technical 5", image: IMAGES[1], regUrl: "register.html?event=senior-non-technical-5" },
+];
+
+const JUNIOR_EVENTS: EventItem[] = [
+  {
+    id: 1,
+    title: "Pixel Paradox",
+    image: "/pixel paradox.jpeg",
+    regUrl: "register.html?event=pixel-paradox",
+  },
+  { id: 2, title: "Junior Event 2", image: IMAGES[1], regUrl: "register.html?event=junior-2" },
+  { id: 3, title: "Junior Event 3", image: IMAGES[2], regUrl: "register.html?event=junior-3" },
+  { id: 4, title: "Junior Event 4", image: IMAGES[3], regUrl: "register.html?event=junior-4" },
+  { id: 5, title: "Junior Event 5", image: IMAGES[4], regUrl: "register.html?event=junior-5" },
+  { id: 6, title: "Junior Event 6", image: IMAGES[5], regUrl: "register.html?event=junior-6" },
+  { id: 7, title: "Junior Event 7", image: IMAGES[6], regUrl: "register.html?event=junior-7" },
+  { id: 8, title: "Junior Event 8", image: IMAGES[7], regUrl: "register.html?event=junior-8" },
+];
 
 export const EVENT_TABS: EventTab[] = [
-  { key: "senior-technical", label: "Senior Technical Events", short: "Senior Tech", items: makeItems("senior-technical", "Senior Technical", [0, 1, 2, 3, 4]) },
-  { key: "senior-non-technical", label: "Senior Non-Technical Events", short: "Senior Non-Tech", items: makeItems("senior-non-technical", "Senior Non-Technical", [5, 6, 7, 0, 1]) },
-  { key: "junior", label: "Junior Events", short: "Junior", items: makeItems("junior", "Junior", [0, 1, 2, 3, 4, 5, 6, 7]) },
+  { key: "senior-technical", label: "Senior Technical Events", short: "Senior Tech", items: SENIOR_TECHNICAL_EVENTS },
+  { key: "senior-non-technical", label: "Senior Non-Technical Events", short: "Senior Non-Tech", items: SENIOR_NON_TECHNICAL_EVENTS },
+  { key: "junior", label: "Junior Events", short: "Junior", items: JUNIOR_EVENTS },
 ];
 
 // How much page scroll it takes to move from one card to the next (in % of screen height).

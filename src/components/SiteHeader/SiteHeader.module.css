@@ -36,36 +36,70 @@
 .inner {
   width: 100%;
   max-width: 100%;
-  padding: 0 clamp(16px, 3.5vw, 48px);
+  padding: 0 clamp(16px, 2.5vw, 40px);
   display: flex;
   align-items: center;
   justify-content: center; /* Mathematical centering */
   position: relative;
+  min-height: clamp(54px, 7.8vh, 72px);
 }
 
-.brand {
+.universityBrand {
   position: absolute;
-  left: clamp(16px, 3.5vw, 48px);
+  left: clamp(16px, 2.5vw, 40px);
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
   z-index: 10;
   pointer-events: auto;
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  transition: transform var(--transition-fast), filter var(--transition-fast);
 }
 
-.brand:hover {
-  opacity: 0.95;
-  transform: translateY(-1px);
+.universityBrand:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter: drop-shadow(0 0 20px rgba(205, 172, 104, 0.8));
 }
 
-.brandLogo {
-  height: 42px;
+.universityLogo {
+  height: clamp(54px, 7.8vh, 72px);
   width: auto;
-  max-width: 170px;
+  max-width: clamp(220px, 26vw, 320px);
   object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(205, 172, 104, 0.4));
+  display: block;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 16px rgba(205, 172, 104, 0.5));
+}
+
+.headerRight {
+  position: absolute;
+  right: clamp(16px, 2.5vw, 40px);
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.techvistraBrand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  pointer-events: auto;
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+
+.techvistraBrand:hover {
+  transform: translateY(-2px) scale(1.06);
+  filter: drop-shadow(0 0 26px rgba(205, 172, 104, 1));
+}
+
+.techvistraNavLogo {
+  height: clamp(56px, 8vh, 76px);
+  width: auto;
+  max-width: clamp(160px, 20vw, 240px);
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 4px 20px rgba(205, 172, 104, 0.9))
+    drop-shadow(0 4px 20px rgba(0, 0, 0, 0.6));
 }
 
 .navWrapper {
@@ -178,10 +212,27 @@
   .inner {
     justify-content: space-between;
     padding: 0 16px;
+    gap: 12px;
   }
 
-  .brand {
+  .universityBrand {
     position: static;
+  }
+
+  .universityLogo {
+    height: 48px;
+    max-width: clamp(190px, 25vw, 260px);
+  }
+
+  .headerRight {
+    position: static;
+    display: flex;
+    align-items: center;
+  }
+
+  .techvistraNavLogo {
+    height: 54px;
+    max-width: 170px;
   }
 
   .navWrapper {
@@ -192,7 +243,7 @@
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    max-width: calc(100vw - 120px);
+    max-width: calc(100vw - 260px);
     gap: 16px;
     padding: 4px 6px;
   }
@@ -200,24 +251,33 @@
   .boldNav::-webkit-scrollbar {
     display: none;
   }
-
-  .headerRight {
-    display: none;
-  }
 }
 
 @media (max-width: 720px) {
   .header {
-    padding: 12px 0;
+    padding: 10px 0;
   }
 
   .inner {
-    min-height: 42px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
   }
 
-  .brandLogo {
+  .universityBrand {
+    position: static;
+  }
+
+  .universityLogo {
     height: 38px;
-    max-width: 150px;
+    max-width: 175px;
+  }
+
+  .techvistraNavLogo {
+    height: 46px;
+    max-width: 130px;
   }
 
   .navWrapper {
