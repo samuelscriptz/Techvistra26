@@ -29,3 +29,15 @@
   position: relative;
   z-index: 1;
 }
+
+/* Dark text for the light background */
+.contentInner h1,
+.contentInner h2,
+.contentInner h3 {
+  color: #1d1f21;
+}
+
+.contentInner p,
+.contentInner li {
+  color: #3a3b3d;
+}
