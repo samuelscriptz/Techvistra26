@@ -4,68 +4,68 @@ import styles from "./GallerySection.module.css";
 const galleryColumns = [
   [
     {
-      src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image1.JPG",
       alt: "Students collaborating around a laptop",
-      caption: "Ideas take shape",
+      // caption: "Ideas take shape",
     },
     {
-      src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image2.JPG",
       alt: "Team sharing ideas around a table",
-      caption: "Built together",
+      // caption: "Built together",
     },
     {
-      src: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image3.JPG",
       alt: "Close-up of a circuit board",
-      caption: "Into the details",
+      // caption: "Into the details",
     },
     {
-      src: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image4.JPG",
       alt: "A group working together in a bright studio",
-      caption: "One shared vision",
+      // caption: "One shared vision",
     },
   ],
   [
     {
-      src: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image5.JPG",
       alt: "Audience attending a conference",
-      caption: "A room full of possibility",
+      // caption: "A room full of possibility",
     },
     {
-      src: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image6.JPG",
       alt: "Immersive digital art installation",
-      caption: "Think beyond",
+      // caption: "Think beyond",
     },
     {
-      src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image7.JPG",
       alt: "Collaborators working together at computers",
-      caption: "Make it happen",
+      // caption: "Make it happen",
     },
     {
-      src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image8.JPG",
       alt: "Colorful retro technology and electronics",
-      caption: "Curiosity in action",
+      // caption: "Curiosity in action",
     },
   ],
   [
     {
-      src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image9.jpeg",
       alt: "A team collaborating around a table",
-      caption: "Stronger as a team",
+      // caption: "Stronger as a team",
     },
     {
-      src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image10.jpeg",
       alt: "Professionals collaborating in a modern workspace",
-      caption: "Where work meets wonder",
+      // caption: "Where work meets wonder",
     },
     {
-      src: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image11.jpeg",
       alt: "Laptop displaying a colorful digital interface",
-      caption: "A glimpse of what’s next",
+      // caption: "A glimpse of what’s next",
     },
     {
-      src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=85",
+      src: "/Gallery%20images/image12.jpeg",
       alt: "Team meeting in a sunlit conference room",
-      caption: "The next big idea",
+      // caption: "The next big idea",
     },
   ],
 ];
@@ -246,7 +246,7 @@ export default function GallerySection() {
                       loading="lazy"
                     />
                     <figcaption className={styles.caption}>
-                      {image.caption}
+                      {/* {image.caption} */}
                     </figcaption>
                   </figure>
                 ))}

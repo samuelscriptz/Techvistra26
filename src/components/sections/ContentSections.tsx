@@ -510,7 +510,6 @@ export function ContactSection() {
     >
       <div ref={revealStageRef} className={styles.contactRevealStage}>
         <div className={styles.revealPrompt}>
-          <span className={styles.revealPromptText}>Scroll down to reveal</span>
           <span className={styles.revealLine} aria-hidden="true">
             <span className={styles.revealLineIndicator} />
           </span>
