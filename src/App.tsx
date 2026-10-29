@@ -14,7 +14,7 @@ import EventSection from "./components/sections/EventSection";
 import GallerySection from "./components/sections/GallerySection";
 import WaveMesh from "./components/WaveMesh/WaveMesh";
 import styles from "./App.module.css";
-
+import ScheduleSection from "./components/ScheduleSection/ScheduleSection";
 export default function App() {
   return (
     <>
@@ -46,7 +46,7 @@ export default function App() {
             <EventSection />
             <TechnicalPartners />
             <GallerySection />
-            {/* <ScheduleSection /> */}
+            <ScheduleSection/>
             <FAQSection />
             <ContactSection />
           </div>

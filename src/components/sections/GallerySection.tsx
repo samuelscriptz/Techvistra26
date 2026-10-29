@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./GallerySection.module.css";
 
 const galleryColumns = [
@@ -231,9 +232,11 @@ export default function GallerySection() {
       aria-labelledby="gallery-title"
     >
       <div className={styles.inner}>
-        <h2 id="gallery-title" className={styles.sectionTitle}>
-          Gallery
-        </h2>
+        <SectionTitle
+          id="gallery-title"
+          title="Gallery"
+          className={styles.sectionTitle}
+        />
       </div>
 
       <div ref={stageRef} className={styles.stage}>

@@ -1,4 +1,5 @@
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, type CSSProperties, type ReactNode } from "react";
+import SectionTitle from "../SectionTitle/SectionTitle";
 import { useScrollSequence } from "./hooks/useScrollSequence";
 import { useTilt } from "./hooks/useTilt";
 import "./EventsHosted.css";
@@ -12,7 +13,7 @@ export interface EventItem {
   title: string;
   /** Small label above the title. Defaults to "Event 01". */
   eyebrow?: string;
-  description: string;
+  description: ReactNode;
   area: Area;
   tone: Tone;
 }
@@ -117,12 +118,16 @@ export default function EventsHosted({
     <section
       id={id}
       ref={sectionRef}
-      className="events"
+      className="events-hosted"
       aria-labelledby="about-title"
       style={{ height: `${120 + itemCount * scrollPerItem}vh` }}
     >
       <div className="events__sticky">
-        <h2 id="about-title" className="events__heading">{heading}</h2>
+        <SectionTitle
+          id="about-title"
+          title={heading}
+          className="events__heading"
+        />
         {intro && <p className="events__intro" data-reveal>{intro}</p>}
 
         <div className="events__grid" data-reveal>

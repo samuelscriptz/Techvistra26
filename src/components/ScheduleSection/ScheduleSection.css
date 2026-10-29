@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap");
+
+.sched {
+  --cream: #f6eddc;
+  --cream-2: #efe2cb;
+  --gold: #c9ad62;
+  --gold-deep: #a9822f;
+  --gold-soft: #f6ecd2;
+  --ink: #16140f;
+  --muted: #6b655a;
+  --card: #fffdf9;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 9vw, 7rem) 1.25rem;
+  /* no background of its own: your site's default background shows through */
+  background: transparent;
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+/* Dotted backdrop that drifts slowly as the section scrolls past */
+.sched__dots {
+  position: absolute;
+  inset: -12% 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(169, 130, 47, 0.5) 1.2px, transparent 1.7px);
+  background-size: 18px 18px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 65%, transparent);
+  opacity: 0.45;
+  transform: translateY(calc((var(--p, 0) - 0.5) * -90px));
+  display: none; /* your site already has its own dotted background */
+}
+
+.sched__inner {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sched__title {
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  font: 700 clamp(3.5rem, 12vw, 9.5rem) / 1.05 "Space Grotesk", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Category filter */
+.pills {
+  display: flex;
+  gap: 0.25rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 3.5rem;
+  padding: 4px;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 2px 12px rgba(90, 65, 20, 0.15);
+}
+.pill {
+  border: 0;
+  background: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  font: 600 0.85rem "Inter", system-ui, sans-serif;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, transform 0.2s;
+}
+.pill:hover { background: var(--gold-soft); }
+.pill:active { transform: scale(0.96); }
+.pill[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.sched button:focus-visible { outline: 3px solid var(--gold-deep); outline-offset: 2px; }
+
+/* Day blocks */
+.day { margin-bottom: 4rem; }
+.day__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+  font: 700 clamp(1.4rem, 3vw, 1.9rem) / 1.2 "Space Grotesk", system-ui, sans-serif;
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.day__title.is-in { opacity: 1; transform: none; }
+.day__title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s var(--ease) 0.2s;
+}
+.day__title.is-in::after { transform: scaleX(1); }
+
+/* Timeline of cards; the gold line fills as you scroll */
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.9rem;
+  display: grid;
+  gap: 1rem;
+  position: relative;
+}
+.cards::before,
+.cards::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 2px;
+}
+.cards::before { background: rgba(169, 130, 47, 0.25); }
+.cards::after {
+  background: var(--gold-deep);
+  transform: scaleY(var(--prog, 0));
+  transform-origin: top;
+}
+
+.card {
+  position: relative;
+  padding: 1.2rem 1.5rem 1rem;
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px -12px rgba(90, 65, 20, 0.35);
+  opacity: 0;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.card.is-in {
+  opacity: 1;
+  animation: rise 0.75s var(--ease) var(--d, 0ms) backwards;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(32px); }
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 30px -14px rgba(90, 65, 20, 0.45);
+}
+/* gold bar that grows on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--gold);
+  transform: scaleY(0);
+  transition: transform 0.35s var(--ease);
+}
+.card:hover::before { transform: scaleY(1); }
+/* dot on the timeline line */
+.card::after {
+  content: "";
+  position: absolute;
+  left: -1.9rem;
+  top: 1.45rem;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--gold-deep);
+  transition: background-color 0.3s, transform 0.3s var(--ease);
+}
+.card:hover::after { transform: scale(1.3); }
+/* ring fills with gold once the scroll line has reached it */
+.card.is-reached::after { background: var(--gold-deep); animation: pop 0.45s var(--ease); }
+@keyframes pop {
+  50% { transform: scale(1.6); }
+}
+
+.card__head { display: flex; align-items: center; gap: 0.75rem; }
+.card__time { font-weight: 600; font-size: 1.05rem; color: var(--gold-deep); }
+.card__level {
+  margin-left: auto;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.card__level[data-level="Senior"] { background: var(--ink); color: #fff; }
+.card__level[data-level="Junior"] { background: var(--gold-soft); color: #7a5a14; border: 1px solid var(--gold); }
+
+.events {
+  list-style: none;
+  margin: 0.6rem -0.5rem 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.15rem;
+}
+.event {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  transition: background-color 0.25s, transform 0.25s var(--ease);
+}
+.event:hover { background: var(--gold-soft); transform: translateX(5px); }
+.event h4 { margin: 0; font: 700 1.05rem / 1.3 "Space Grotesk", system-ui, sans-serif; }
+.event__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.65rem;
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.tag {
+  padding: 0.05rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.tag[data-kind="tech"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.tag[data-kind="non"] { background: var(--gold-soft); border-color: var(--gold-deep); color: #7a5a14; }
+.venue { display: inline-flex; align-items: center; gap: 0.3rem; }
+.venue.is-tbc { font-style: italic; }
+
+.sched__empty {
+  padding: 2rem;
+  text-align: center;
+  background: var(--card);
+  border-radius: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .pill { padding: 0.45rem 0.8rem; font-size: 0.8rem; }
+  .card { padding: 1rem 1.1rem 0.8rem; }
+  .events { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sched *, .sched *::before, .sched *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .sched__title { transform: none; }
+  .sched__title .section-title-animated__glyph,
+  .day__title,
+  .card { opacity: 1; transform: none; }
+  .day__title::after { transform: scaleX(1); }
+  .cards::after { transform: scaleY(1); }
+  .card::after { background: var(--gold-deep); }
+}

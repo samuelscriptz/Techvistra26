@@ -9,7 +9,7 @@ const SECTION_IDS = [
   "events",
   "technical-partners",
   "gallery",
-  // "schedule",
+  "schedule",
   "faq",
   "contact",
 ];
@@ -87,7 +87,7 @@ export default function SiteHeader() {
     { label: "Events", href: "#events" },
     { label: "Technical Partners", href: "#technical-partners" },
     { label: "Gallery", href: "#gallery" },
-    // { label: "Schedule", href: "#schedule" },
+    { label: "Schedule", href: "#schedule" },
     { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#contact" },
   ];

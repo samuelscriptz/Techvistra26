@@ -1,4 +1,5 @@
 import styles from "./TechnicalPartners.module.css";
+import SectionTitle from "../SectionTitle/SectionTitle";
 
 const PARTNERS = [
   { name: "Armoured Vehicles Nigam Limited", image: "/avnl_logo.png" },
@@ -18,9 +19,11 @@ export default function TechnicalPartners() {
       aria-labelledby="technical-partners-title"
     >
       <div className={styles.inner}>
-        <h2 id="technical-partners-title" className={styles.title}>
-          Technical Partners
-        </h2>
+        <SectionTitle
+          id="technical-partners-title"
+          title="Technical Partners"
+          className={styles.title}
+        />
       </div>
 
       <div className={styles.marquee} aria-label="Technical partners">

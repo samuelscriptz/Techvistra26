@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ExternalLink } from "lucide-react";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
+import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./RegistrationCTA.module.css";
 
 export default function RegistrationCTA() {
@@ -99,9 +100,11 @@ export default function RegistrationCTA() {
     >
       <div className={styles.inner}>
         <span className={styles.label}>Register</span>
-        <h2 id="register-title" className={styles.title}>
-          Be Part of {eventConfig.name}
-        </h2>
+        <SectionTitle
+          id="register-title"
+          title={`Be Part of ${eventConfig.name}`}
+          className={styles.title}
+        />
         <p className={styles.identity}>
           {eventConfig.edition} · {eventConfig.descriptor} ·{" "}
           {eventConfig.organizer}

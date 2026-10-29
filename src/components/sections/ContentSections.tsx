@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import {
   ArrowUpRight,
   CircleHelp,
@@ -15,8 +15,32 @@ import {
   Users,
 } from "lucide-react";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
+import SectionTitle from "../SectionTitle/SectionTitle";
 import AboutEvent from "../AboutEvent/AboutEvent";
+import {
+  dayLabels,
+  schedule,
+  TBC,
+  type Category,
+  type Level,
+} from "../ScheduleSection/scheduleData";
 import styles from "./Section.module.css";
+import "../ScheduleSection/ScheduleSection.css";
+
+type ScheduleFilter = "All" | Category;
+
+const SCHEDULE_LEVELS: Level[] = ["Junior", "Senior"];
+const SCHEDULE_FILTERS: ScheduleFilter[] = ["All", "Technical", "Non-Technical"];
+
+const scheduleTimeToMinutes = (time: string) => {
+  const [hm, period] = time.split(" ");
+  const [hours, minutes] = hm.split(":").map(Number);
+  return ((hours % 12) + (period === "PM" ? 12 : 0)) * 60 + minutes;
+};
+
+const scheduleCss = (
+  vars: Record<string, string | number>
+) => vars as CSSProperties;
 
 // ============================================================================
 // 🔗 FACEBOOK URL: PASTE YOUR FACEBOOK LINK HERE LATER
@@ -210,6 +234,235 @@ export function AboutSection() {
   return <AboutEvent />;
 }
 
+export function ScheduleSection() {
+  const [filter, setFilter] = useState<ScheduleFilter>("All");
+  const rootRef = useRef<HTMLElement>(null);
+
+  const days = useMemo(() => {
+    const all = SCHEDULE_LEVELS.flatMap((level) =>
+      schedule[level].flatMap((day) =>
+        day.slots.map((slot) => ({ ...slot, level, day: day.day }))
+      )
+    );
+    const dayNumbers = Array.from(new Set(all.map((card) => card.day))).sort(
+      (a, b) => a - b
+    );
+
+    return dayNumbers.map((day) => ({
+      day,
+      cards: all
+        .filter((card) => card.day === day)
+        .sort(
+          (a, b) =>
+            scheduleTimeToMinutes(a.start) - scheduleTimeToMinutes(b.start) ||
+            a.level.localeCompare(b.level)
+        ),
+    }));
+  }, []);
+
+  const visible = useMemo(
+    () =>
+      days
+        .map(({ day, cards }) => ({
+          day,
+          cards: cards
+            .map((card) => ({
+              ...card,
+              events: card.events.filter(
+                (event) => filter === "All" || event.category === filter
+              ),
+            }))
+            .filter((card) => card.events.length > 0),
+        }))
+        .filter((day) => day.cards.length > 0),
+    [days, filter]
+  );
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const elements = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-in)")
+    );
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("is-in"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+    );
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [filter]);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    let animationFrame = 0;
+    const clamp = (value: number) => Math.min(1, Math.max(0, value));
+    const update = () => {
+      animationFrame = 0;
+      const viewportHeight = window.innerHeight;
+      const sectionRect = root.getBoundingClientRect();
+      root.style.setProperty(
+        "--p",
+        String(
+          clamp(
+            (viewportHeight - sectionRect.top) /
+              (viewportHeight + sectionRect.height)
+          )
+        )
+      );
+
+      root.querySelectorAll<HTMLElement>(".cards").forEach((cards) => {
+        const cardsRect = cards.getBoundingClientRect();
+        const anchor =
+          viewportHeight * 0.65 +
+          viewportHeight *
+            0.35 *
+            clamp(
+              (viewportHeight * 1.35 - cardsRect.bottom) /
+                (viewportHeight * 0.35)
+            );
+        const progress = clamp((anchor - cardsRect.top) / cardsRect.height);
+        cards.style.setProperty("--prog", progress.toFixed(3));
+        const fillY = cardsRect.top + progress * cardsRect.height;
+
+        cards.querySelectorAll<HTMLElement>(".card").forEach((card) => {
+          card.classList.toggle(
+            "is-reached",
+            card.getBoundingClientRect().top + 24 <= fillY
+          );
+        });
+      });
+    };
+    const scheduleUpdate = () => {
+      if (!animationFrame) animationFrame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, [filter]);
+
+  return (
+    <section
+      ref={rootRef}
+      className="sched"
+      id="schedule"
+      aria-labelledby="schedule-title"
+    >
+      <div className="sched__dots" aria-hidden="true" />
+      <div className="sched__inner">
+        <SectionTitle
+          id="schedule-title"
+          title="SCHEDULE"
+          className="sched__title"
+        />
+
+        <div className="pills" role="group" aria-label="Filter by category">
+          {SCHEDULE_FILTERS.map((category) => (
+            <button
+              key={category}
+              className="pill"
+              aria-pressed={filter === category}
+              onClick={() => setFilter(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {visible.length === 0 && (
+          <p className="sched__empty">No events match this filter.</p>
+        )}
+
+        <div key={filter}>
+          {visible.map(({ day, cards }) => (
+            <div className="day" key={day}>
+              <h3 className="day__title" data-reveal>
+                {dayLabels[day] ?? `Day ${day}`}
+              </h3>
+              <ol className="cards">
+                {cards.map((card, index) => (
+                  <li
+                    className="card"
+                    data-reveal
+                    key={`${card.level}-${card.start}`}
+                    style={scheduleCss({
+                      "--d": `${Math.min(index, 4) * 70}ms`,
+                    })}
+                  >
+                    <div className="card__head">
+                      <span className="card__time">
+                        {card.start} – {card.end}
+                      </span>
+                      <span className="card__level" data-level={card.level}>
+                        {card.level}
+                      </span>
+                    </div>
+                    <ul className="events">
+                      {card.events.map((event) => (
+                        <li className="event" key={event.name}>
+                          <h4>{event.name}</h4>
+                          <div className="event__meta">
+                            <span
+                              className="tag"
+                              data-kind={
+                                event.category === "Technical" ? "tech" : "non"
+                              }
+                            >
+                              {event.category}
+                            </span>
+                            <span
+                              className={`venue${event.venue === TBC ? " is-tbc" : ""}`}
+                            >
+                              <svg
+                                viewBox="0 0 16 16"
+                                width="13"
+                                height="13"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M8 1.5a4.5 4.5 0 0 0-4.5 4.5C3.5 9.5 8 14.5 8 14.5s4.5-5 4.5-8.5A4.5 4.5 0 0 0 8 1.5Zm0 6.2a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4Z"
+                                  fill="currentColor"
+                                />
+                              </svg>
+                              {event.venue}
+                            </span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function ProgramSection() {
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
@@ -224,9 +477,11 @@ export function ProgramSection() {
     >
       <div className={styles.inner}>
         <span className={styles.sectionLabel}>Program</span>
-        <h2 id="program-title" className={styles.sectionTitle}>
-          Tracks &amp; Experiences
-        </h2>
+        <SectionTitle
+          id="program-title"
+          title="Tracks & Experiences"
+          className={styles.sectionTitle}
+        />
         <div className={styles.divider} />
         {hasTracks ? (
           <div className={styles.cardGrid}>
@@ -249,64 +504,6 @@ export function ProgramSection() {
             </p>
             <p className={styles.placeholderNote}>
               Check back soon for the full program lineup.
-            </p>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-export function ScheduleSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useSectionReveal(sectionRef);
-  const hasSchedule = eventConfig.schedule.length > 0;
-
-  return (
-    <section
-      ref={sectionRef}
-      id="schedule"
-      className={styles.sectionAlt}
-      aria-labelledby="schedule-title"
-    >
-      <div className={styles.inner}>
-        <h2 id="schedule-title" className={styles.sectionTitle}>
-          Schedule
-        </h2>
-        {hasSchedule ? (
-          <div>
-            {eventConfig.schedule.map((day, i) => (
-              <div key={i} style={{ marginBottom: "var(--space-lg)" }}>
-                <h3 className={styles.cardTitle}>{day.day}</h3>
-                {day.events.map((evt, j) => (
-                  <div
-                    key={j}
-                    className={styles.card}
-                    style={{ marginTop: "var(--space-sm)" }}
-                  >
-                    <span
-                      style={{
-                        color: "var(--accent-primary)",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {evt.time}
-                    </span>
-                    <h4 style={{ marginTop: 4 }}>{evt.title}</h4>
-                    {evt.description && (
-                      <p className={styles.cardDesc}>{evt.description}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.placeholderCard}>
-            <div className={styles.placeholderIcon}>📅</div>
-            <p className={styles.placeholderText}>
-              The detailed schedule will be published once finalized by the
-              organizers.
             </p>
           </div>
         )}
@@ -339,9 +536,11 @@ export function FAQSection() {
       <div className={styles.faqInner}>
         <div className={styles.faqIntro}>
           <span className={styles.faqEyebrow}>Techvistra '26 / Q-Vortex</span>
-          <h2 id="faq-heading" className={styles.faqTitle}>
-            FAQ
-          </h2>
+          <SectionTitle
+            id="faq-heading"
+            title="FAQ"
+            className={styles.faqTitle}
+          />
           <h3 className={styles.faqSubtitle}>
             Everything
             <br />
@@ -519,9 +718,11 @@ export function ContactSection() {
           <p className={styles.revealEyebrow}>
             {eventConfig.edition} <span aria-hidden="true">/</span> Q-Vortex
           </p>
-          <h2 id="contact-title" className={styles.contactHeroTitle}>
-            Ready to Connect?
-          </h2>
+          <SectionTitle
+            id="contact-title"
+            title="Ready to Connect?"
+            className={styles.contactHeroTitle}
+          />
           <p className={styles.revealDescription}>
             Be part of TechVistra Q-Vortex. Reach out to our event coordinators
             for symposium and campus information.

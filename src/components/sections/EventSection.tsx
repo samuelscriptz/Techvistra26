@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./EventSection.module.css";
 
 // ---------------------------------------------------------------------------
@@ -313,7 +314,7 @@ export default function EventSection() {
     >
       <div ref={stickyRef} className={styles.sticky}>
         <div className={styles.top}>
-          <h2 className={styles.heading}>Events</h2>
+          <SectionTitle title="Events" id="events-title" className={styles.heading} />
           <div className={styles.tabs} role="tablist" aria-label="Event categories">
             {EVENT_TABS.map((t, i) => (
               <button
