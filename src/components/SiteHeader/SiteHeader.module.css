@@ -17,12 +17,19 @@
 }
 
 .header.scrolled {
-  background: rgba(212, 214, 204, 0.52);
+  background: rgba(246, 236, 222, 0.75);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(205, 172, 104, 0.28);
   box-shadow: 0 4px 20px rgba(29, 31, 33, 0.06);
   padding: 10px 0;
+  pointer-events: auto;
+}
+
+.header.menuOpen {
+  background: rgba(212, 214, 204, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   pointer-events: auto;
 }
 
@@ -155,6 +162,14 @@
   pointer-events: auto;
 }
 
+.mobileMenuToggle {
+  display: none;
+}
+
+.mobileMenu {
+  display: none;
+}
+
 /* ============================================================
    Responsive
    ============================================================ */
@@ -188,5 +203,90 @@
 
   .headerRight {
     display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .header {
+    padding: 12px 0;
+  }
+
+  .inner {
+    min-height: 42px;
+  }
+
+  .brandLogo {
+    height: 38px;
+    max-width: 150px;
+  }
+
+  .navWrapper {
+    display: none;
+  }
+
+  .mobileMenuToggle {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border: 1px solid rgba(205, 172, 104, 0.55);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #1d1f21;
+    box-shadow: 0 8px 22px rgba(29, 31, 33, 0.16);
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobileMenuToggle svg {
+    width: 23px;
+    height: 23px;
+    stroke-width: 2.25;
+  }
+
+  .mobileMenuToggle:focus-visible {
+    outline: 2px solid #cdac68;
+    outline-offset: 3px;
+  }
+
+  .mobileMenu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: calc(100dvh - 90px);
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid rgba(205, 172, 104, 0.45);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 18px 48px rgba(29, 31, 33, 0.2);
+    pointer-events: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobileMenuLink {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 12px;
+    color: #343631;
+    font-family: var(--font-display, "Space Grotesk", system-ui, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .mobileMenuLink:hover,
+  .mobileMenuLinkActive {
+    background: rgba(205, 172, 104, 0.2);
+    color: #1d1f21;
   }
 }

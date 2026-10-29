@@ -23,7 +23,7 @@ const NEAR = 0.35,
   FAR = 3.4;
 
 export function WaveMesh({
-  colors = ["#d4d6cc", "#1d1f21", "#cdac68"],
+  colors = ["#f6ecde", "#1d1f21", "#cdac68"],
   crests = true,
   className = "",
   children,
@@ -225,7 +225,10 @@ export function WaveMesh({
         overflow: "hidden",
         width: "100%",
         height: "100%",
-        background: `radial-gradient(120% 60% at 50% 30%, rgba(${dotR}, ${dotG}, ${dotB}, 0.06), transparent 60%), ${colors[0]}`,
+        background:
+          colors[0] === "transparent"
+            ? "transparent"
+            : `radial-gradient(120% 60% at 50% 30%, rgba(${dotR}, ${dotG}, ${dotB}, 0.05), transparent 60%), ${colors[0]}`,
       }}
     >
       {children && (

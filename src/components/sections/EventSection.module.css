@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   padding: 0 16px;
   pointer-events: none;
 }
@@ -42,8 +42,8 @@
   white-space: nowrap;
   font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
   font-weight: 900;
-  font-size: clamp(40px, 6vw, 96px);
-  line-height: 0.9;
+  font-size: clamp(34px, 4.5vw, 68px);
+  line-height: 0.92;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   /* top-to-bottom gradient fill */
@@ -60,26 +60,26 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: 6px;
+  padding: 5px 6px;
   background: #ffffff;
   border-radius: 999px;
-  box-shadow: 
-    0 16px 40px -8px rgba(0, 0, 0, 0.14),
-    0 4px 12px rgba(0, 0, 0, 0.05),
+  box-shadow:
+    0 12px 30px -6px rgba(0, 0, 0, 0.12),
+    0 3px 8px rgba(0, 0, 0, 0.04),
     inset 0 1px 1px rgba(255, 255, 255, 1);
   border: 1px solid rgba(255, 255, 255, 0.9);
   pointer-events: auto;
-  max-width: min(95vw, 920px);
+  max-width: min(95vw, 780px);
 }
 
 .tab {
   position: relative;
   font-family: var(--font-display, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-  font-size: clamp(14px, 1.15vw, 17px);
-  font-weight: 700;
+  font-size: clamp(12px, 0.95vw, 14px);
+  font-weight: 600;
   letter-spacing: -0.01em;
-  padding: clamp(12px, 1.5vh, 16px) clamp(22px, 2.2vw, 34px);
+  padding: clamp(7px, 1vh, 9px) clamp(16px, 1.5vw, 22px);
   border-radius: 999px;
   border: none;
   background: transparent;
@@ -89,6 +89,7 @@
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tab:hover {
@@ -98,7 +99,7 @@
 .tab.tabActive {
   background: #141413;
   color: #ffffff;
-  box-shadow: 
+  box-shadow:
     0 5px 16px rgba(0, 0, 0, 0.38),
     0 2px 4px rgba(0, 0, 0, 0.22);
 }
@@ -108,46 +109,28 @@
   color: #ffffff;
 }
 
-@media (max-width: 768px) {
-  .tabs {
-    padding: 6px 8px;
-    gap: 6px;
-    max-width: 96vw;
-  }
-  .tab {
-    font-size: 13.5px;
-    padding: 11px 18px;
-  }
+/* Full label on desktop, short label on mobile (switched in the media query below). */
+.tabShort {
+  display: none;
 }
 
-@media (max-width: 580px) {
-  .tabs {
-    padding: 5px;
-    gap: 4px;
-    overflow-x: auto;
-    max-width: 95vw;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .tabs::-webkit-scrollbar {
-    display: none;
-  }
-  .tab {
-    font-size: 12.5px;
-    padding: 9px 14px;
-  }
-}
+/* ------------------------------------------------------------------ */
+/* Cards                                                               */
+/* ------------------------------------------------------------------ */
 
 .stage {
+  --shift: 10px;
+  /* lifts the card + title group slightly so it looks centred in the stage */
   position: absolute;
-  inset: calc(var(--events-nav-offset, 76px) + 125px) 0 0 0;
-  /* leaves room for title + large segmented pill */
+  /* top: room for title + tabs. bottom: room for the arrow buttons */
+  inset: calc(var(--events-nav-offset, 76px) + 120px) 0 84px 0;
   z-index: 1;
   perspective: 1300px;
   perspective-origin: 50% 50%;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 .stage.drag {
@@ -157,17 +140,23 @@
 .card {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(50% - var(--shift, 30px));
   width: calc(var(--w) * 1.3);
   height: calc(var(--h) * 1.3);
   margin: calc(var(--h) * -0.65) 0 0 calc(var(--w) * -0.65);
+  will-change: transform, opacity;
+}
+
+/* The picture. (overflow hidden lives here so the title below the card is never clipped.) */
+.media {
+  position: absolute;
+  inset: 0;
   border-radius: 14px;
   overflow: hidden;
-  will-change: transform, opacity;
   box-shadow: 0 24px 40px -12px rgba(40, 40, 30, 0.35);
 }
 
-.card img {
+.media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -176,20 +165,42 @@
   -webkit-user-drag: none;
 }
 
+/* Event title: a child of the card, so it moves / tilts / fades / scales with it. */
+.title {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 140%;
+  margin-top: calc(12px * var(--u, 1));
+  text-align: center;
+  font-family: var(--font-display, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-weight: 800;
+  font-size: max(14px, calc(12px * var(--u, 1)));
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #1c1c18;
+  text-wrap: balance;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .reg {
   position: absolute;
   left: 50%;
-  bottom: 7%;
+  bottom: 8%;
   transform: translateX(-50%);
   white-space: nowrap;
-  font: 600 calc(11px * var(--u, 1)) / 1 system-ui, -apple-system, sans-serif;
+  font: 600 calc(9.5px * var(--u, 1)) / 1 system-ui, -apple-system, sans-serif;
   letter-spacing: 0.02em;
-  padding: calc(9px * var(--u, 1)) calc(18px * var(--u, 1));
+  padding: calc(6.5px * var(--u, 1)) calc(14px * var(--u, 1));
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   color: #1c1c18;
   text-decoration: none;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
@@ -197,4 +208,171 @@
 .reg:hover {
   background: #fff;
   transform: translateX(-50%) scale(1.06);
+}
+
+/* ------------------------------------------------------------------ */
+/* Arrow controls (below the cards)                                    */
+/* ------------------------------------------------------------------ */
+
+.controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+}
+
+.arrow {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #141413;
+  cursor: pointer;
+  box-shadow:
+    0 12px 28px -8px rgba(0, 0, 0, 0.18),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: background 0.22s, color 0.22s, transform 0.22s, opacity 0.22s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.arrow:hover:not(:disabled) {
+  background: #141413;
+  color: #ffffff;
+  transform: scale(1.07);
+}
+
+.arrow:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.arrow:focus-visible,
+.tab:focus-visible {
+  outline: 2px solid #141413;
+  outline-offset: 3px;
+}
+
+.counter {
+  min-width: 56px;
+  text-align: center;
+  font-family: var(--font-display, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #838c99;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.counterNow {
+  color: #1c1c18;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tablet                                                              */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .tab {
+    padding: 7px 14px;
+    font-size: 12.5px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile                                                              */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+  .top {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .heading {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+
+  /* One neat row of three equal-looking pills, with the short labels. */
+  .tabs {
+    display: flex;
+    width: min(94vw, 420px);
+    max-width: 94vw;
+    gap: 4px;
+    padding: 4px;
+    overflow: visible;
+  }
+
+  .tab {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 7px 4px;
+    font-size: clamp(11px, 2.9vw, 13px);
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  .tabFull {
+    display: none;
+  }
+
+  .tabShort {
+    display: inline;
+  }
+
+  /* Cards: more room for the picture, less reserved above. */
+  .stage {
+    --shift: 8px;
+    inset: calc(var(--events-nav-offset, 76px) + 90px) 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0;
+    cursor: default;
+  }
+
+  .stage.drag {
+    cursor: default;
+  }
+
+  .media {
+    border-radius: 16px;
+  }
+
+  .controls {
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    gap: 16px;
+  }
+
+  .arrow {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tab {
+    padding: 10px 4px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .arrow,
+  .tab,
+  .reg {
+    transition: none;
+  }
 }

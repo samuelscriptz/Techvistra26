@@ -5,25 +5,18 @@
 
 :root {
   /* —— Color tokens (Reference Palette) —— */
-  --color-light-orange: #e8e3dd;
-  /* Warm light orange / champagne base */
-  --color-grey-light: #a5a098;
-  /* Soft mid-light grey for borders and badges */
-  --color-grey-dark: #5f5b55;
-  /* Mid-dark grey for readable secondary text */
-  --color-gold: #cdac68;
-  /* Radiant luxury gold for accents & highlights */
-  --color-gold-hover: #b89650;
-  /* Hover gold */
-  --color-dark-grey: #1d1f21;
-  /* Dark grey for primary headings and crisp text */
-  --color-white: #ffffff;
-  /* Crisp pure white for cards */
+  --color-light-orange: #e8e3dd;      /* Warm light orange / champagne base */
+  --color-grey-light: #a5a098;        /* Soft mid-light grey for borders and badges */
+  --color-grey-dark: #5f5b55;         /* Mid-dark grey for readable secondary text */
+  --color-gold: #cdac68;              /* Radiant luxury gold for accents & highlights */
+  --color-gold-hover: #b89650;        /* Hover gold */
+  --color-dark-grey: #1d1f21;         /* Dark grey for primary headings and crisp text */
+  --color-white: #ffffff;             /* Crisp pure white for cards */
 
   /* —— Semantic aliases (Bright experience) —— */
-  --bg-primary: #e8e3dd;
+  --bg-primary: #f6ecde;
   --bg-surface: #ffffff;
-  --bg-surface-alt: #ded8cf;
+  --bg-surface-alt: #eee0cc;
   --bg-card: rgba(255, 255, 255, 0.92);
   --bg-card-hover: #ffffff;
 

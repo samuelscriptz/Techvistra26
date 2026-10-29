@@ -7,7 +7,6 @@ import Hero from "./components/Hero/Hero";
 import TechnicalPartners from "./components/TechnicalPartners/TechnicalPartners";
 import {
   AboutSection,
-  ScheduleSection,
   FAQSection,
   ContactSection,
 } from "./components/sections/ContentSections";
@@ -36,7 +35,7 @@ export default function App() {
         <div className={styles.contentWrap}>
           <div className={styles.waveBackground} aria-hidden="true">
             <WaveMesh
-              colors={["#d4d6cc", "#1d1f21", "#cdac68"]}
+              colors={["transparent", "#1d1f21", "#cdac68"]}
               crests={true}
               className={styles.waveCanvas}
             />
@@ -47,7 +46,7 @@ export default function App() {
             <EventSection />
             <TechnicalPartners />
             <GallerySection />
-            <ScheduleSection />
+            {/* <ScheduleSection /> */}
             <FAQSection />
             <ContactSection />
           </div>

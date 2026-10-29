@@ -9,7 +9,7 @@ export const ABOUT_ITEMS: EventItem[] = [
 ];
 
 const INTRO =
-  "At the intersection of computational power, high-dimensional data, and human purpose. TECHVISTRA '26 brings together leading student engineers, researchers, and algorithmic pioneers from institutions across the nation to explore the quantum horizon of intelligent systems.";
+  "";
 
 interface AboutEventProps {
   items?: EventItem[];
