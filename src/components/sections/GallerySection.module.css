@@ -80,6 +80,7 @@
   min-width: 0;
   flex-direction: column;
   gap: clamp(8px, 1.4vw, 18px);
+  will-change: transform;
 }
 
 .galleryColumn:nth-child(2) {
@@ -97,6 +98,8 @@
   background: rgba(255, 255, 255, 0.95);
   box-shadow: var(--shadow-card);
   isolation: isolate;
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 180px;
 }
 
 .galleryItem::after {

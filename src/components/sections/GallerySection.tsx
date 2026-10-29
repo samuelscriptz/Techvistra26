@@ -4,66 +4,66 @@ import styles from "./GallerySection.module.css";
 const galleryColumns = [
   [
     {
-      src: "/Gallery%20images/image1.JPG",
+      src: "/Gallery%20images/optimized/image1.webp",
       alt: "Students collaborating around a laptop",
       // caption: "Ideas take shape",
     },
     {
-      src: "/Gallery%20images/image2.JPG",
+      src: "/Gallery%20images/optimized/image2.webp",
       alt: "Team sharing ideas around a table",
       // caption: "Built together",
     },
     {
-      src: "/Gallery%20images/image3.JPG",
+      src: "/Gallery%20images/optimized/image3.webp",
       alt: "Close-up of a circuit board",
       // caption: "Into the details",
     },
     {
-      src: "/Gallery%20images/image4.JPG",
+      src: "/Gallery%20images/optimized/image4.webp",
       alt: "A group working together in a bright studio",
       // caption: "One shared vision",
     },
   ],
   [
     {
-      src: "/Gallery%20images/image5.JPG",
+      src: "/Gallery%20images/optimized/image5.webp",
       alt: "Audience attending a conference",
       // caption: "A room full of possibility",
     },
     {
-      src: "/Gallery%20images/image6.JPG",
+      src: "/Gallery%20images/optimized/image6.webp",
       alt: "Immersive digital art installation",
       // caption: "Think beyond",
     },
     {
-      src: "/Gallery%20images/image7.JPG",
+      src: "/Gallery%20images/optimized/image7.webp",
       alt: "Collaborators working together at computers",
       // caption: "Make it happen",
     },
     {
-      src: "/Gallery%20images/image8.JPG",
+      src: "/Gallery%20images/optimized/image8.webp",
       alt: "Colorful retro technology and electronics",
       // caption: "Curiosity in action",
     },
   ],
   [
     {
-      src: "/Gallery%20images/image9.jpeg",
+      src: "/Gallery%20images/optimized/image9.webp",
       alt: "A team collaborating around a table",
       // caption: "Stronger as a team",
     },
     {
-      src: "/Gallery%20images/image10.jpeg",
+      src: "/Gallery%20images/optimized/image10.webp",
       alt: "Professionals collaborating in a modern workspace",
       // caption: "Where work meets wonder",
     },
     {
-      src: "/Gallery%20images/image11.jpeg",
+      src: "/Gallery%20images/optimized/image11.webp",
       alt: "Laptop displaying a colorful digital interface",
       // caption: "A glimpse of what’s next",
     },
     {
-      src: "/Gallery%20images/image12.jpeg",
+      src: "/Gallery%20images/optimized/image12.webp",
       alt: "Team meeting in a sunlit conference room",
       // caption: "The next big idea",
     },
@@ -146,26 +146,6 @@ export default function GallerySection() {
           const isMobileFrame = frame.classList.contains(styles.galleryFrameMobile);
           if (isMobile !== isMobileFrame || frame.getClientRects().length === 0) return;
 
-          gsap.fromTo(
-            frame,
-            isMobile
-              ? { rotateX: 14, rotateY: 0, rotateZ: 0, scale: 0.94 }
-              : { rotateX: 12, rotateY: 0, rotateZ: 0, scale: 0.94 },
-            {
-              rotateX: 0,
-              rotateY: 0,
-              rotateZ: 0,
-              scale: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: stage,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-              },
-            }
-          );
-
           const columns = Array.from(
             frame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`)
           );
@@ -180,7 +160,7 @@ export default function GallerySection() {
                   trigger: stage,
                   start: "top top",
                   end: "bottom bottom",
-                  scrub: 1,
+                  scrub: 0.35,
                   invalidateOnRefresh: true,
                 },
               }
@@ -244,6 +224,7 @@ export default function GallerySection() {
                       src={image.src}
                       alt={image.alt}
                       loading="lazy"
+                      decoding="async"
                     />
                     <figcaption className={styles.caption}>
                       {/* {image.caption} */}

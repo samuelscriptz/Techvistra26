@@ -490,10 +490,10 @@ export function ContactSection() {
   }, []);
 
   const coordinators = [
-    { name: "Monish P", phone: "+91 97909 49122", tel: "+919790949122" },
-    { name: "Dharshini mahalakshmi B", phone: "+91 70925 01895", tel: "+917092501895" },
-    { name: "Narmadha S", phone: "+91 80150 05125", tel: "+918015005125" },
-    { name: "Naveed Ahamed H", phone: "+91 89460 56229", tel: "+918946056229" },
+    { name: "VARSHINI", phone: "+91 93613 58642", tel: "+9193613 58642" },
+    { name: "MADHURITHA ", phone: "+91 82489 20133", tel: "+918248920133" },
+    { name: "MANASA ", phone: "+91 8985008792", tel: "+918985008792" },
+    { name: "SARVESHINI ", phone: "+91 7418362659", tel: "+917418362659" },
   ];
   const mapEmbedUrl =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.442881273934!2d80.17538227485455!3d13.069377987255146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261504145fe7d%3A0x58810f43c3a748ae!2sDr.%20M.G.R.%20Educational%20And%20Research%20Institute!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin";
