@@ -122,17 +122,17 @@ export default function SiteHeader() {
       <div className={styles.inner}>
         <a
           href="#home"
-          className={styles.brand}
-          aria-label="Techvistra Q-Vortex — back to top"
+          className={styles.universityBrand}
+          aria-label="Dr. M.G.R. Educational and Research Institute — Back to top"
           onClick={(e) => {
             e.preventDefault();
             handleNavClick("#home");
           }}
         >
           <img
-            src="/logo.png"
-            alt="Techvistra Q-Vortex"
-            className={styles.brandLogo}
+            src="/mgr_gold_emblem.png"
+            alt="Dr. M.G.R. Educational and Research Institute"
+            className={styles.universityLogo}
           />
         </a>
 
@@ -219,7 +219,23 @@ export default function SiteHeader() {
           </nav>
         )}
 
-        <div className={styles.headerRight} aria-hidden="true" />
+        <div className={styles.headerRight}>
+          <a
+            href="#home"
+            className={styles.techvistraBrand}
+            aria-label="Techvistra '26 Q-Vortex — Back to top"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#home");
+            }}
+          >
+            <img
+              src="/logo.png"
+              alt="Techvistra '26 Q-Vortex"
+              className={styles.techvistraNavLogo}
+            />
+          </a>
+        </div>
       </div>
     </header>
   );

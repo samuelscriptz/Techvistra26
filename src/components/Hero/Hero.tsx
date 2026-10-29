@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, ExternalLink } from "lucide-react";
-import StarBorderButton from "../ReactBits/StarBorderButton";
-import { eventConfig, isPlaceholder } from "../../config/eventConfig";
+import { ArrowRight } from "lucide-react";
+import Countdown from "../Countdown/Countdown";
+import { eventConfig } from "../../config/eventConfig";
 import styles from "./Hero.module.css";
 
 const VIDEO_SRC = "/hero-bg.mp4";
@@ -17,6 +17,7 @@ const LOGO_SRC = "/logo.png";
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const logoWrapperRef = useRef<HTMLDivElement>(null);
   const [videoFailed, setVideoFailed] = useState(false);
 
   // Ensure autoplay on mount
@@ -57,9 +58,57 @@ export default function Hero() {
     };
   }, []);
 
-  const regUrl = isPlaceholder(eventConfig.registrationUrl)
-    ? undefined
-    : eventConfig.registrationUrl;
+  // Interactive 3D mouse tilt on Techvistra logo
+  useEffect(() => {
+    const logoWrapper = logoWrapperRef.current;
+    if (!logoWrapper) return;
+
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+
+    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (isTouch) return;
+
+    let gsapInstance: typeof import("gsap").default | null = null;
+    import("gsap").then(({ default: gsap }) => {
+      gsapInstance = gsap;
+    });
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!gsapInstance || !logoWrapper) return;
+      const rect = logoWrapper.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
+      const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
+
+      gsapInstance.to(logoWrapper, {
+        rotateY: deltaX * 12,
+        rotateX: -deltaY * 10,
+        transformPerspective: 900,
+        duration: 0.45,
+        ease: "power2.out",
+      });
+    };
+
+    const handleMouseLeave = () => {
+      if (!gsapInstance || !logoWrapper) return;
+      gsapInstance.to(logoWrapper, {
+        rotateY: 0,
+        rotateX: 0,
+        duration: 0.8,
+        ease: "elastic.out(1, 0.4)",
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
 
   return (
     <section
@@ -99,8 +148,25 @@ export default function Hero() {
           {eventConfig.name} — {eventConfig.descriptor} — {eventConfig.organizer}
         </h1>
 
-        {/* Centered Logo */}
-        <div className={styles.logoWrapper}>
+        {/* Presenter Association & Department Header (Stylish Text, NO Pill) */}
+        <div className={styles.presenterLine}>
+          <img
+            src="/college-crest.png"
+            alt="Association of Universal Data & Intelligence"
+            className={styles.associationCrest}
+          />
+          <div className={styles.presenterText}>
+            <span className={styles.departmentName}>Department of Data Science</span>
+            <div className={styles.presentsRow}>
+              <span className={styles.presentsLine} />
+              <span className={styles.presentsTag}>PRESENTS</span>
+              <span className={styles.presentsLine} />
+            </div>
+          </div>
+        </div>
+
+        {/* Centered Logo with 3D Tilt */}
+        <div ref={logoWrapperRef} className={styles.logoWrapper}>
           <img
             src={LOGO_SRC}
             alt="Techvistra '26 — 2nd National Level Technical Symposium — Department of Data Science"
@@ -108,25 +174,38 @@ export default function Hero() {
           />
         </div>
 
-        {/* Lifted Animated ReactBits CTA Button */}
-        <div className={styles.liftedCta}>
-          <StarBorderButton
-            href={regUrl ?? "#register"}
-            color="#f59e0b"
-            speed="4.5s"
-            icon={
-              regUrl ? (
-                <ExternalLink size={18} aria-hidden="true" />
-              ) : (
-                <ChevronDown size={18} aria-hidden="true" />
-              )
-            }
-            {...(regUrl
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
+        {/* Event Date (Bold Typography, NO Pill) */}
+        <div className={styles.eventDateText}>
+          NOVEMBER 16 & 17, 2026
+        </div>
+
+        {/* Cyber-Gold Live Countdown (Front & Center!) */}
+        <Countdown targetDate="2026-11-16T09:00:00" />
+
+        {/* Sci-Fi Rectangular Register Now CTA Button (Navigates to Events) */}
+        <div className={styles.sickCtaWrap}>
+          <a
+            href="#events"
+            className={styles.sickCtaBtn}
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById("events");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+                window.history.pushState(null, "", "#events");
+              } else {
+                window.location.hash = "#events";
+              }
+            }}
           >
-            Register Now
-          </StarBorderButton>
+            <span className={styles.sickCtaGlow} aria-hidden="true" />
+            <span className={styles.sickCtaBorder} aria-hidden="true" />
+            <span className={styles.sickCtaSheen} aria-hidden="true" />
+            <span className={styles.sickCtaContent}>
+              <span className={styles.sickCtaText}>REGISTER NOW</span>
+              <ArrowRight size={20} strokeWidth={2.4} className={styles.sickCtaArrow} aria-hidden="true" />
+            </span>
+          </a>
         </div>
       </div>
     </section>
