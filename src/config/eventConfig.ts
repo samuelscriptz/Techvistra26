@@ -43,10 +43,10 @@ export const eventConfig: EventConfig = {
   edition: "Techvistra '26",
   descriptor: "2nd National Level Technical Symposium",
   organizer: "Department of Data Science",
-  registrationUrl: "[REGISTRATION_PORTAL_URL]",
+  registrationUrl: "#events",
   registrationState: "not_confirmed",
   registrationOpenDate: "[REGISTRATION_OPEN_DATE]",
-  eventDates: "[EVENT DATES TBC]",
+  eventDates: "November 16 & 17, 2026",
   venue:
     "Dr. MGR Educational and Research Institute, Poonamallee High Rd, Vishwas Nagar, Maduravoyal, Chennai, Tamil Nadu - 600095",
   contactEmail: "techvistra@drmgrdu.ac.in",
