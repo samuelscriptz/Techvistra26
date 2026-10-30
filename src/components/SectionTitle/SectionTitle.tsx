@@ -24,6 +24,7 @@ export default function SectionTitle({
     let observer: IntersectionObserver | undefined;
 
     const reveal = () => heading.classList.add("is-in");
+    const revealFrame = window.requestAnimationFrame(reveal);
     if (reducedMotion || !("IntersectionObserver" in window)) {
       reveal();
     } else {
@@ -68,6 +69,7 @@ export default function SectionTitle({
     }
 
     return () => {
+      window.cancelAnimationFrame(revealFrame);
       observer?.disconnect();
       window.removeEventListener("scroll", scheduleParallaxUpdate);
       window.removeEventListener("resize", scheduleParallaxUpdate);
