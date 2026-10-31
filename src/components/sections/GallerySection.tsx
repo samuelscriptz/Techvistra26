@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./GallerySection.module.css";
 
@@ -79,6 +80,41 @@ const mobileGalleryColumns = [
 
 export default function GallerySection() {
   const stageRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const lightboxTitleId = useId();
+
+  useEffect(() => {
+    if (selectedImageIndex === null) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedImageIndex(null);
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setSelectedImageIndex((current) =>
+          current === null
+            ? null
+            : (current - 1 + galleryImages.length) % galleryImages.length
+        );
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setSelectedImageIndex((current) =>
+          current === null ? null : (current + 1) % galleryImages.length
+        );
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImageIndex]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -92,14 +128,20 @@ export default function GallerySection() {
     const sizeStageToGallery = () => {
       const visibleFrames = frames.filter((frame) => frame.getClientRects().length > 0);
       if (window.innerWidth <= 768) {
-        const mobileFrame = visibleFrames.find((frame) => frame.classList.contains(styles.galleryFrameMobile));
+        const mobileFrame = visibleFrames.find((frame) =>
+          frame.classList.contains(styles.galleryFrameMobile)
+        );
         if (mobileFrame) {
           const columnHeight = Math.max(
             0,
-            ...Array.from(mobileFrame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`))
-              .map((column) => column.scrollHeight)
+            ...Array.from(
+              mobileFrame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`)
+            ).map((column) => column.scrollHeight)
           );
-          const scrollDistance = Math.max(0, columnHeight - mobileFrame.clientHeight);
+          const scrollDistance = Math.max(
+            0,
+            columnHeight - mobileFrame.clientHeight
+          );
           stage.style.height = `${mobileFrame.clientHeight + scrollDistance + 80}px`;
         }
         return;
@@ -120,7 +162,8 @@ export default function GallerySection() {
       const stickyTop = Math.max(
         0,
         ...visibleFrames.map(
-          (frame) => Number.parseFloat(window.getComputedStyle(frame).top) || 0
+          (frame) =>
+            Number.parseFloat(window.getComputedStyle(frame).top) || 0
         )
       );
       stage.style.height = `${frameHeight + maxColumnScroll + stickyTop}px`;
@@ -144,29 +187,55 @@ export default function GallerySection() {
         sizeStageToGallery();
 
         frames.forEach((frame) => {
-          const isMobileFrame = frame.classList.contains(styles.galleryFrameMobile);
-          if (isMobile !== isMobileFrame || frame.getClientRects().length === 0) return;
+          const isMobileFrame = frame.classList.contains(
+            styles.galleryFrameMobile
+          );
+          if (
+            isMobile !== isMobileFrame ||
+            frame.getClientRects().length === 0
+          ) {
+            return;
+          }
 
           const columns = Array.from(
             frame.querySelectorAll<HTMLElement>(`.${styles.galleryColumn}`)
           );
-          columns.forEach((column) => {
-            gsap.fromTo(
-              column,
-              { y: 0 },
-              {
-                y: () => -Math.max(0, column.scrollHeight - frame.clientHeight),
-                ease: "none",
-                scrollTrigger: {
-                  trigger: stage,
-                  start: "top top",
-                  end: "bottom bottom",
-                  scrub: 0.35,
-                  invalidateOnRefresh: true,
-                },
-              }
-            );
 
+          gsap.fromTo(
+            frame,
+            {
+              rotateX: isMobileFrame ? 0 : 10,
+              scale: isMobileFrame ? 1 : 0.98,
+              y: isMobileFrame ? 18 : 28,
+            },
+            {
+              rotateX: isMobileFrame ? 0 : 7,
+              scale: 1,
+              y: 0,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: stage,
+                start: "top bottom",
+                end: "top top",
+                scrub: 1.2,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+
+          columns.forEach((column) => {
+            gsap.to(column, {
+              y: () =>
+                -Math.max(0, column.scrollHeight - frame.clientHeight),
+              ease: "none",
+              scrollTrigger: {
+                trigger: stage,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.1,
+                invalidateOnRefresh: true,
+              },
+            });
           });
         });
       }, stage);
@@ -220,25 +289,108 @@ export default function GallerySection() {
                 className={styles.galleryColumn}
                 key={`gallery-column-${columnIndex}`}
               >
-                {column.map((image) => (
-                  <figure className={styles.galleryItem} key={image.src}>
-                    <img
-                      className={styles.galleryImage}
-                      src={image.src}
-                      alt={image.alt}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <figcaption className={styles.caption}>
-                      {/* {image.caption} */}
-                    </figcaption>
-                  </figure>
-                ))}
+                {column.map((image) => {
+                  const imageIndex = galleryImages.findIndex(
+                    (galleryImage) => galleryImage.src === image.src
+                  );
+
+                  return (
+                    <figure className={styles.galleryItem} key={image.src}>
+                      <button
+                        type="button"
+                        className={styles.galleryButton}
+                        onClick={() => setSelectedImageIndex(imageIndex)}
+                        aria-label={`Open enlarged image: ${image.alt}`}
+                      >
+                        <img
+                          className={styles.galleryImage}
+                          src={image.src}
+                          alt={image.alt}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <figcaption className={styles.caption}>
+                          {/* {image.caption} */}
+                        </figcaption>
+                      </button>
+                    </figure>
+                  );
+                })}
               </div>
             ))}
           </div>
         ))}
       </div>
+
+      {selectedImageIndex !== null && (
+        <div
+          className={styles.lightboxBackdrop}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={lightboxTitleId}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSelectedImageIndex(null);
+            }
+          }}
+        >
+          <h2 id={lightboxTitleId} className={styles.lightboxTitle}>
+            {galleryImages[selectedImageIndex].alt}
+          </h2>
+
+          <button
+            ref={closeButtonRef}
+            type="button"
+            className={styles.lightboxClose}
+            onClick={() => setSelectedImageIndex(null)}
+            aria-label="Close image preview"
+          >
+            <X size={22} aria-hidden="true" />
+          </button>
+
+          <div className={styles.lightboxContent}>
+            <button
+              type="button"
+              className={`${styles.lightboxArrow} ${styles.lightboxArrowPrevious}`}
+              onClick={() =>
+                setSelectedImageIndex(
+                  (selectedImageIndex - 1 + galleryImages.length) %
+                    galleryImages.length
+                )
+              }
+              aria-label="View previous image"
+            >
+              <ChevronLeft size={28} aria-hidden="true" />
+            </button>
+
+            <figure className={styles.lightboxFigure}>
+              <img
+                className={styles.lightboxImage}
+                src={galleryImages[selectedImageIndex].src}
+                alt={galleryImages[selectedImageIndex].alt}
+                decoding="async"
+              />
+            </figure>
+
+            <button
+              type="button"
+              className={`${styles.lightboxArrow} ${styles.lightboxArrowNext}`}
+              onClick={() =>
+                setSelectedImageIndex(
+                  (selectedImageIndex + 1) % galleryImages.length
+                )
+              }
+              aria-label="View next image"
+            >
+              <ChevronRight size={28} aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className={styles.lightboxCounter} aria-live="polite">
+            {selectedImageIndex + 1} / {galleryImages.length}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
