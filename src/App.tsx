@@ -46,9 +46,9 @@ export default function App() {
             <AboutSection />
             <EventSection />
             <TechnicalPartners />
-            <GallerySection />
             <ScheduleSection />
             <FAQSection />
+            <GallerySection />
             {/* <CoreTeam /> */}
             <ContactSection />
           </div>
