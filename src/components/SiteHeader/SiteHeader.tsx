@@ -85,7 +85,7 @@ export default function SiteHeader() {
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
     { label: "Events", href: "#events" },
-    { label: "Technical Partners", href: "#technical-partners" },
+    // { label: "Technical Partners", href: "#technical-partners" },
     { label: "Schedule", href: "#schedule" },
     { label: "FAQ", href: "#faq" },
     { label: "Gallery", href: "#gallery" },
