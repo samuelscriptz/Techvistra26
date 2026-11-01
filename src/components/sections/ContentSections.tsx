@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { eventConfig, isPlaceholder } from "../../config/eventConfig";
 import SectionTitle from "../SectionTitle/SectionTitle";
-import AboutEvent from "../AboutEvent/AboutEvent";
+import About from "../AboutEvent/About";
 import {
   dayLabels,
   schedule,
@@ -231,7 +231,7 @@ function useSectionReveal(ref: React.RefObject<HTMLElement | null>) {
 }
 
 export function AboutSection() {
-  return <AboutEvent />;
+  return <About />;
 }
 
 export function ScheduleSection() {

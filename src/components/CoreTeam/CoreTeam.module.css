@@ -1,0 +1,712 @@
+/* ==========================================================================
+   Core of TechVistra '26 Section Styles
+   ========================================================================== */
+
+.section {
+  position: relative;
+  width: 100%;
+  padding: clamp(60px, 9vh, 120px) var(--gutter, 20px);
+  background: transparent;
+  color: #f3f4f6;
+  overflow: hidden;
+}
+
+.ambientGlow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(85vw, 900px);
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(205, 172, 104, 0.14) 0%,
+      rgba(165, 160, 152, 0.05) 50%,
+      transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin: 0 auto clamp(16px, 3vw, 28px);
+  text-align: center;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(48px, 8.5vw, 110px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.sectionSubtitle {
+  max-width: 700px;
+  margin: 0 auto clamp(40px, 6vh, 72px);
+  color: var(--text-secondary, #9ca3af);
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   Scroll reveal (enter on scroll in, fade back out on scroll away)
+   Uses the individual `translate` property so it never fights with the
+   hover `transform` on cards.
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    translate 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms);
+}
+
+.isVisible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ==========================================================================
+   Tier headers & containers
+   ========================================================================== */
+
+.tierBlock {
+  margin-bottom: clamp(48px, 8vh, 88px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tierBlock:last-child {
+  margin-bottom: 0;
+}
+
+/* Label flanked by thin lines so each tier reads as its own chapter */
+.tierHead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: clamp(20px, 3vh, 32px);
+}
+
+.tierHead::before,
+.tierHead::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to var(--dir, right), transparent, rgba(205, 172, 104, 0.35));
+}
+
+.tierHead::after {
+  --dir: left;
+}
+
+.tierLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(205, 172, 104, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #cdac68;
+  white-space: nowrap;
+}
+
+/* Tier 1: HOD */
+.hodRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.hodCard {
+  width: min(290px, 88vw);
+  border-color: rgba(205, 172, 104, 0.55);
+  box-shadow:
+    0 20px 48px -12px rgba(0, 0, 0, 0.65),
+    0 0 24px rgba(205, 172, 104, 0.16);
+}
+
+/* Tier 2: Faculty (4 in a row on desktop) */
+.facultyRow {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 2.5vw, 28px);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.facultyCard {
+  width: min(235px, 85vw);
+}
+
+/* Tier 3: Student coordinators (6 per row on desktop = 5 clean rows of 6) */
+.coordinatorsGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(12px, 1.5vw, 18px);
+  width: 100%;
+}
+
+/* ==========================================================================
+   Committee filter tabs
+   ========================================================================== */
+
+.tabsWrap {
+  width: 100%;
+  margin-bottom: clamp(24px, 4vh, 36px);
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.tab:hover {
+  border-color: rgba(205, 172, 104, 0.5);
+  color: #ffffff;
+}
+
+.tab:focus-visible,
+.memberCard:focus-visible,
+.closeButton:focus-visible {
+  outline: 2px solid #cdac68;
+  outline-offset: 3px;
+}
+
+.tabActive {
+  background: #cdac68;
+  border-color: #cdac68;
+  color: #14120c;
+}
+
+.tabActive:hover {
+  color: #14120c;
+}
+
+.tabCount {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.tabActive .tabCount {
+  background: rgba(20, 18, 12, 0.16);
+}
+
+/* ==========================================================================
+   Member card
+   ========================================================================== */
+
+.memberCard {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #121215;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  /* reveal transitions (with stagger) + hover transitions (no delay) */
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    translate 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.memberCard:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(205, 172, 104, 0.7);
+  box-shadow:
+    0 20px 42px -10px rgba(0, 0, 0, 0.65),
+    0 0 24px rgba(205, 172, 104, 0.25);
+}
+
+/* Black & white by default, colour on hover */
+.memberImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: grayscale(100%) contrast(1.05);
+  transition:
+    filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.memberCard:hover .memberImage,
+.memberCard:focus-visible .memberImage {
+  filter: grayscale(0%) contrast(1);
+  transform: scale(1.05);
+}
+
+/* Fallback when a photo is missing or fails to load */
+.initials {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #1d1c22 0%, #101013 100%);
+  color: #cdac68;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+/* Text overlay is always visible */
+.cardOverlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 36px 14px 14px;
+  background: linear-gradient(to top,
+      rgba(10, 10, 14, 0.95) 0%,
+      rgba(10, 10, 14, 0.78) 50%,
+      rgba(10, 10, 14, 0.3) 80%,
+      transparent 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.cardRole {
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #cdac68;
+  line-height: 1.2;
+}
+
+.cardName {
+  margin: 0;
+  font-family: var(--font-display, system-ui, -apple-system, sans-serif);
+  font-size: clamp(14px, 1.1vw, 16px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.cardCommittee {
+  margin-top: 2px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Compact variant for the 30 student coordinators: just role + name */
+.compact {
+  border-radius: 14px;
+}
+
+.compact .cardOverlay {
+  padding: 28px 11px 11px;
+}
+
+.compact .cardRole {
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.compact .cardName {
+  font-size: clamp(12.5px, 1vw, 14px);
+}
+
+/* "View" hint on hover */
+.viewBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(14, 14, 18, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+}
+
+.memberCard:hover .viewBadge,
+.memberCard:focus-visible .viewBadge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Detail pop-up modal (left: photo, right: details)
+   ========================================================================== */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(8, 8, 12, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 32px);
+  animation: fadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  background: linear-gradient(170deg, rgba(28, 28, 33, 0.98) 0%, rgba(18, 18, 22, 0.98) 100%);
+  border: 1.5px solid rgba(205, 172, 104, 0.3);
+  border-radius: 24px;
+  box-shadow:
+    0 32px 80px -12px rgba(0, 0, 0, 0.8),
+    0 0 32px rgba(205, 172, 104, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.modalPhotoSide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  background: #0d0d10;
+  overflow: hidden;
+}
+
+.modalPhotoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.modalDetailsSide {
+  padding: clamp(24px, 4vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.modalEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(205, 172, 104, 0.12);
+  border: 1px solid rgba(205, 172, 104, 0.35);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #cdac68;
+}
+
+.modalNameGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modalName {
+  margin: 0;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.modalRole {
+  margin: 0;
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 600;
+  color: #cdac68;
+  letter-spacing: -0.01em;
+}
+
+.modalInfoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.infoLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.infoValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f3f4f6;
+}
+
+.modalBio {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+/* ==========================================================================
+   Responsive breakpoints
+   30 coordinators: 6 cols (5 rows) -> 5 cols (6 rows) -> 3 cols (10 rows) -> 2 cols
+   All divide evenly, so there are never orphan cards on the last row.
+   ========================================================================== */
+
+@media (max-width: 1120px) {
+  .coordinatorsGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .coordinatorsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .modal {
+    grid-template-columns: 280px 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .section {
+    padding: 60px 16px;
+  }
+
+  .coordinatorsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .facultyRow {
+    gap: 12px;
+  }
+
+  .facultyCard {
+    width: calc(50% - 6px);
+  }
+
+  /* Tabs become a single swipeable row instead of wrapping into a block */
+  .tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+    margin: 0 -16px;
+    padding-inline: 16px;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    flex: 0 0 auto;
+  }
+
+  .modal {
+    grid-template-columns: 1fr;
+    max-height: 94vh;
+    overflow-y: auto;
+  }
+
+  .modalPhotoSide {
+    min-height: 260px;
+    height: 280px;
+  }
+
+  .modalDetailsSide {
+    padding: 20px 18px 24px;
+    gap: 12px;
+  }
+
+  .modalName {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .facultyCard {
+    width: 100%;
+  }
+
+  .hodCard {
+    width: 100%;
+  }
+
+  .tierHead {
+    gap: 10px;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .reveal,
+  .memberCard,
+  .memberImage,
+  .viewBadge,
+  .closeButton,
+  .tab {
+    transition: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .modalBackdrop,
+  .modal {
+    animation: none;
+  }
+
+  .memberCard:hover {
+    transform: none;
+  }
+}

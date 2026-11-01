@@ -4,6 +4,10 @@
   transform: translateY(calc((var(--title-progress) - 0.5) * -40px));
 }
 
+.section-title-animated__line {
+  display: block;
+}
+
 .section-title-animated__letter {
   display: inline-block;
   cursor: default;
@@ -23,6 +27,21 @@
   color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.section-title-animated--gold .section-title-animated__glyph {
+  background: linear-gradient(
+    180deg,
+    #fff6d6 0%,
+    #e8bc5e 38%,
+    #c89530 72%,
+    #8e6215 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(205, 172, 104, 0.2));
 }
 
 .section-title-animated:not(.is-in) .section-title-animated__glyph {

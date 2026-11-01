@@ -5,12 +5,14 @@ interface SectionTitleProps {
   id: string;
   title: string;
   className?: string;
+  variant?: "default" | "gold";
 }
 
 export default function SectionTitle({
   id,
   title,
   className,
+  variant = "default",
 }: SectionTitleProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -77,27 +79,42 @@ export default function SectionTitle({
     };
   }, []);
 
+  const lines = title.split("\n");
+
   return (
     <h2
       ref={headingRef}
       id={id}
-      className={`section-title-animated${className ? ` ${className}` : ""}`}
-      aria-label={title}
+      className={`section-title-animated${variant === "gold" ? " section-title-animated--gold" : ""}${className ? ` ${className}` : ""}`}
+      aria-label={title.replace(/\n/g, " ")}
     >
-      {Array.from(title).map((character, index) => (
-        <span
-          key={index}
-          className="section-title-animated__letter"
-          aria-hidden="true"
-        >
+      {lines.map((line, lineIndex) => {
+        const offset = lines
+          .slice(0, lineIndex)
+          .reduce((sum, prev) => sum + prev.length, 0);
+
+        return (
           <span
-            className="section-title-animated__glyph"
-            style={{ animationDelay: `${index * 60}ms` }}
+            key={lineIndex}
+            className={lines.length > 1 ? "section-title-animated__line" : undefined}
           >
-            {character}
+            {Array.from(line).map((character, charIndex) => (
+              <span
+                key={charIndex}
+                className="section-title-animated__letter"
+                aria-hidden="true"
+              >
+                <span
+                  className="section-title-animated__glyph"
+                  style={{ animationDelay: `${(offset + charIndex) * 60}ms` }}
+                >
+                  {character}
+                </span>
+              </span>
+            ))}
           </span>
-        </span>
-      ))}
+        );
+      })}
     </h2>
   );
 }

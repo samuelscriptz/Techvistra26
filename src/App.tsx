@@ -12,6 +12,7 @@ import {
 } from "./components/sections/ContentSections";
 import EventSection from "./components/sections/EventSection";
 import GallerySection from "./components/sections/GallerySection";
+import CoreTeam from "./components/CoreTeam/CoreTeam";
 import WaveMesh from "./components/WaveMesh/WaveMesh";
 import styles from "./App.module.css";
 import ScheduleSection from "./components/ScheduleSection/ScheduleSection";
@@ -46,8 +47,9 @@ export default function App() {
             <EventSection />
             <TechnicalPartners />
             <GallerySection />
-            <ScheduleSection/>
+            <ScheduleSection />
             <FAQSection />
+            {/* <CoreTeam /> */}
             <ContactSection />
           </div>
         </div>

@@ -8,71 +8,85 @@ const galleryColumns = [
     {
       src: "/Gallery%20images/optimized/image1.webp",
       alt: "Students collaborating around a laptop",
-      // caption: "Ideas take shape",
     },
     {
       src: "/Gallery%20images/optimized/image2.webp",
       alt: "Team sharing ideas around a table",
-      // caption: "Built together",
     },
     {
       src: "/Gallery%20images/optimized/image3.webp",
       alt: "Close-up of a circuit board",
-      // caption: "Into the details",
     },
     {
       src: "/Gallery%20images/optimized/image4.webp",
       alt: "A group working together in a bright studio",
-      // caption: "One shared vision",
     },
   ],
   [
     {
       src: "/Gallery%20images/optimized/image5.webp",
       alt: "Audience attending a conference",
-      // caption: "A room full of possibility",
     },
     {
       src: "/Gallery%20images/optimized/image6.webp",
       alt: "Immersive digital art installation",
-      // caption: "Think beyond",
     },
     {
       src: "/Gallery%20images/optimized/image7.webp",
       alt: "Collaborators working together at computers",
-      // caption: "Make it happen",
     },
     {
       src: "/Gallery%20images/optimized/image8.webp",
       alt: "Colorful retro technology and electronics",
-      // caption: "Curiosity in action",
     },
   ],
   [
     {
       src: "/Gallery%20images/optimized/image9.webp",
       alt: "A team collaborating around a table",
-      // caption: "Stronger as a team",
     },
     {
       src: "/Gallery%20images/optimized/image10.webp",
       alt: "Professionals collaborating in a modern workspace",
-      // caption: "Where work meets wonder",
     },
     {
       src: "/Gallery%20images/optimized/image11.webp",
       alt: "Laptop displaying a colorful digital interface",
-      // caption: "A glimpse of what’s next",
     },
     {
       src: "/Gallery%20images/optimized/image12.webp",
       alt: "Team meeting in a sunlit conference room",
-      // caption: "The next big idea",
     },
   ],
 ];
 
+export interface GalleryMoment {
+  src: string;
+  alt: string;
+}
+
+const TECHVISTRA_26_MOMENTS: GalleryMoment[] = [
+  {
+    src: "/Gallery%20images/optimized/image1.webp",
+    alt: "TechVistra '26 Opening Ceremony",
+  },
+  {
+    src: "/Gallery%20images/optimized/image5.webp",
+    alt: "TechVistra '26 Competitive Arenas",
+  },
+  {
+    src: "/Gallery%20images/optimized/image9.webp",
+    alt: "TechVistra '26 Innovation Hackathon",
+  },
+  {
+    src: "/Gallery%20images/optimized/image11.webp",
+    alt: "TechVistra '26 Awards & Recognition",
+  },
+];
+
 const galleryImages = galleryColumns.flat();
+const allImages = [...galleryImages, ...TECHVISTRA_26_MOMENTS];
+
 const mobileGalleryColumns = [
   galleryImages.filter((_, index) => index % 2 === 0),
   galleryImages.filter((_, index) => index % 2 === 1),
@@ -99,12 +113,12 @@ export default function GallerySection() {
         setSelectedImageIndex((current) =>
           current === null
             ? null
-            : (current - 1 + galleryImages.length) % galleryImages.length
+            : (current - 1 + allImages.length) % allImages.length
         );
       } else if (event.key === "ArrowRight") {
         event.preventDefault();
         setSelectedImageIndex((current) =>
-          current === null ? null : (current + 1) % galleryImages.length
+          current === null ? null : (current + 1) % allImages.length
         );
       }
     };
@@ -149,7 +163,7 @@ export default function GallerySection() {
 
       const frameHeight = Math.max(
         0,
-        ...visibleFrames.map((frame) => frame.getBoundingClientRect().height)
+        ...visibleFrames.map((frame) => frame.offsetHeight || frame.clientHeight || frame.getBoundingClientRect().height)
       );
       const maxColumnScroll = Math.max(
         0,
@@ -166,7 +180,7 @@ export default function GallerySection() {
             Number.parseFloat(window.getComputedStyle(frame).top) || 0
         )
       );
-      stage.style.height = `${frameHeight + maxColumnScroll + stickyTop}px`;
+      stage.style.height = `${frameHeight + maxColumnScroll + stickyTop + 140}px`;
     };
 
     sizeStageToGallery();
@@ -253,6 +267,16 @@ export default function GallerySection() {
       });
     };
 
+    const handleImageLoad = () => {
+      sizeStageToGallery();
+    };
+
+    stage.querySelectorAll("img").forEach((img) => {
+      if (!img.complete) {
+        img.addEventListener("load", handleImageLoad, { once: true });
+      }
+    });
+
     window.addEventListener("resize", onResize);
     void init();
     return () => {
@@ -272,8 +296,9 @@ export default function GallerySection() {
       <div className={styles.inner}>
         <SectionTitle
           id="gallery-title"
-          title="Gallery"
+          title={"Legacy of\nTechVistra"}
           className={styles.sectionTitle}
+          variant="gold"
         />
       </div>
 
@@ -309,9 +334,7 @@ export default function GallerySection() {
                           loading="lazy"
                           decoding="async"
                         />
-                        <figcaption className={styles.caption}>
-                          {/* {image.caption} */}
-                        </figcaption>
+                        <figcaption className={styles.caption} />
                       </button>
                     </figure>
                   );
@@ -320,6 +343,49 @@ export default function GallerySection() {
             ))}
           </div>
         ))}
+      </div>
+
+      {/* TechVistra '26 Showcase Block */}
+      <div className={styles.techvistra26Block}>
+        <div className={styles.techvistra26Inner}>
+          <SectionTitle
+            id="techvistra-26-title"
+            title="TechVistra '26"
+            className={styles.techvistra26Title}
+            variant="gold"
+          />
+
+          <div className={styles.techvistra26Grid}>
+            {TECHVISTRA_26_MOMENTS.map((item, idx) => {
+              const globalIndex = galleryImages.length + idx;
+              return (
+                <div
+                  key={`techvistra26-item-${idx}`}
+                  className={styles.techvistra26Card}
+                  onClick={() => setSelectedImageIndex(globalIndex)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedImageIndex(globalIndex);
+                    }
+                  }}
+                  aria-label={`View enlarged photo: ${item.alt}`}
+                >
+                  <div className={styles.techvistra26ImageWrap}>
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className={styles.techvistra26Img}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {selectedImageIndex !== null && (
@@ -335,7 +401,7 @@ export default function GallerySection() {
           }}
         >
           <h2 id={lightboxTitleId} className={styles.lightboxTitle}>
-            {galleryImages[selectedImageIndex].alt}
+            {allImages[selectedImageIndex].alt}
           </h2>
 
           <button
@@ -354,8 +420,8 @@ export default function GallerySection() {
               className={`${styles.lightboxArrow} ${styles.lightboxArrowPrevious}`}
               onClick={() =>
                 setSelectedImageIndex(
-                  (selectedImageIndex - 1 + galleryImages.length) %
-                    galleryImages.length
+                  (selectedImageIndex - 1 + allImages.length) %
+                  allImages.length
                 )
               }
               aria-label="View previous image"
@@ -366,8 +432,8 @@ export default function GallerySection() {
             <figure className={styles.lightboxFigure}>
               <img
                 className={styles.lightboxImage}
-                src={galleryImages[selectedImageIndex].src}
-                alt={galleryImages[selectedImageIndex].alt}
+                src={allImages[selectedImageIndex].src}
+                alt={allImages[selectedImageIndex].alt}
                 decoding="async"
               />
             </figure>
@@ -377,7 +443,7 @@ export default function GallerySection() {
               className={`${styles.lightboxArrow} ${styles.lightboxArrowNext}`}
               onClick={() =>
                 setSelectedImageIndex(
-                  (selectedImageIndex + 1) % galleryImages.length
+                  (selectedImageIndex + 1) % allImages.length
                 )
               }
               aria-label="View next image"
@@ -387,7 +453,7 @@ export default function GallerySection() {
           </div>
 
           <div className={styles.lightboxCounter} aria-live="polite">
-            {selectedImageIndex + 1} / {galleryImages.length}
+            {selectedImageIndex + 1} / {allImages.length}
           </div>
         </div>
       )}
