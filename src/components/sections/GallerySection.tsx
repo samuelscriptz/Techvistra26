@@ -67,19 +67,19 @@ export interface GalleryMoment {
 
 const TECHVISTRA_26_MOMENTS: GalleryMoment[] = [
   {
-    src: "/Gallery%20images/optimized/image1.webp",
+    src: "/Gallery%20images/optimized/image13.jpeg",
     alt: "TechVistra '26 Opening Ceremony",
   },
   {
-    src: "/Gallery%20images/optimized/image5.webp",
+    src: "/Gallery%20images/optimized/image14.jpeg",
     alt: "TechVistra '26 Competitive Arenas",
   },
   {
-    src: "/Gallery%20images/optimized/image9.webp",
+    src: "/Gallery%20images/optimized/image15.jpeg",
     alt: "TechVistra '26 Innovation Hackathon",
   },
   {
-    src: "/Gallery%20images/optimized/image11.webp",
+    src: "/Gallery%20images/optimized/image16.jpeg",
     alt: "TechVistra '26 Awards & Recognition",
   },
 ];
