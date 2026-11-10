@@ -6,6 +6,7 @@ import styles from "./SiteHeader.module.css";
 const SECTION_IDS = [
   "home",
   "about",
+  "proceedings",
   "events",
   "technical-partners",
   "schedule",
@@ -84,6 +85,7 @@ export default function SiteHeader() {
   const navItems: PillNavItem[] = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
+    { label: "Messages", href: "#proceedings" },
     { label: "Events", href: "#events" },
     // { label: "Technical Partners", href: "#technical-partners" },
     { label: "Schedule", href: "#schedule" },

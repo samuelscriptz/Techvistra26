@@ -10,9 +10,9 @@ import {
   FAQSection,
   ContactSection,
 } from "./components/sections/ContentSections";
+import ProceedingsMessages from "./components/Proceedings Messages/ProceedingsMessages";
 import EventSection from "./components/sections/EventSection";
 import GallerySection from "./components/sections/GallerySection";
-import CoreTeam from "./components/CoreTeam/CoreTeam";
 import WaveMesh from "./components/WaveMesh/WaveMesh";
 import styles from "./App.module.css";
 import ScheduleSection from "./components/ScheduleSection/ScheduleSection";
@@ -44,6 +44,7 @@ export default function App() {
 
           <div className={styles.contentInner}>
             <AboutSection />
+            <ProceedingsMessages />
             <EventSection />
             <TechnicalPartners />
             <ScheduleSection />
