@@ -1,6 +1,3 @@
-// 
-
-
 import SiteHeader from "./components/SiteHeader/SiteHeader";
 import GoldenSealReveal from "./components/GoldenSealReveal/GoldenSealReveal";
 import Hero from "./components/Hero/Hero";
@@ -44,7 +41,7 @@ export default function App() {
 
           <div className={styles.contentInner}>
             <AboutSection />
-            <ProceedingsMessages />
+            {/* <ProceedingsMessages /> */}
             <EventSection />
             <TechnicalPartners />
             <ScheduleSection />
