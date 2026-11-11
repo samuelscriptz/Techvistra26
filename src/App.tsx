@@ -1,3 +1,5 @@
+
+import CoreTeam from "./components/CoreTeam/CoreTeam";
 import SiteHeader from "./components/SiteHeader/SiteHeader";
 import GoldenSealReveal from "./components/GoldenSealReveal/GoldenSealReveal";
 import Hero from "./components/Hero/Hero";
@@ -47,7 +49,7 @@ export default function App() {
             <ScheduleSection />
             <FAQSection />
             <GallerySection />
-            {/* <CoreTeam /> */}
+            <CoreTeam />
             <ContactSection />
           </div>
         </div>
