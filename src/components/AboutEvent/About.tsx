@@ -204,6 +204,7 @@ import "./about.css";
 
 const COLLEGE_CREST_SRC = "/college-crest.png";
 const COLLEGE_NAME = ""; // e.g. "Your College Name" (falls back to "the College")
+const COLLEGE_IMAGE_SRC = "/clg.webp"; // from /public/clg.webp
 
 const EVENT_LOGO_SRC = "/logo.png";
 const EVENT_FULLFORM_SRC = ""; // optional: set a path to show a full-form logo below the main logo
@@ -301,12 +302,70 @@ export default function About({ id = "about", heading = "ABOUT" }: AboutProps) {
           title={heading}
           className="about-heading"
         />
+        {/* ============================ INSTITUTION ============================ */}
+        <article className="about-college" aria-labelledby="about-college-title">
+          <figure className="about-college__media reveal reveal--logo" style={delay(0.1)}>
+            <BrandImage
+              src={COLLEGE_IMAGE_SRC}
+              alt="Dr. M.G.R. Educational and Research Institute campus"
+              fallback="Dr. M.G.R."
+              className="about-college__img"
+              fallbackClassName="about-college__fallback"
+            />
+          </figure>
 
+          <div className="about-college__content">
+            <p className="about-kicker reveal" style={delay(0.15)}>
+              <span className="about-kicker__num">01</span>
+              <span className="about-kicker__rule" aria-hidden="true" />
+              <span>The Institution</span>
+            </p>
+
+            <h3
+              id="about-college-title"
+              className="about-college__title reveal"
+              style={delay(0.25)}
+            >
+              Dr. M.G.R. Educational
+              <br />
+              <em>and Research Institute</em>
+            </h3>
+
+            <div className="about-college__body reveal" style={delay(0.35)}>
+              <p>
+                Established in 1988 as Dr. M.G.R. Engineering College, the institution
+                became a Deemed to be University in 2003 under Section 3 of the UGC
+                Act, 1956. Today it spans Engineering, Medicine, Dental Surgery,
+                Architecture, Management, Pharmacy and more.
+              </p>
+              <p>
+                Its mission is to be a resource centre for higher learning, producing
+                technically qualified, practically competent graduates for modern
+                industry, business and research organizations.
+              </p>
+            </div>
+
+            <dl className="about-facts reveal" style={delay(0.5)}>
+              <div className="about-fact">
+                <dt>Established</dt>
+                <dd>1988</dd>
+              </div>
+              <div className="about-fact">
+                <dt>Deemed University</dt>
+                <dd>2003</dd>
+              </div>
+              <div className="about-fact">
+                <dt>NAAC Grade</dt>
+                <dd>A</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
         <div className="about-split">
           {/* ============================ LEFT: DEPARTMENT ============================ */}
           <article className="about-dept" aria-labelledby="about-dept-title">
             <p className="about-kicker reveal" style={delay(0.05)}>
-              <span className="about-kicker__num">01</span>
+              <span className="about-kicker__num">02</span>
               <span className="about-kicker__rule" aria-hidden="true" />
               <span>The Department</span>
             </p>
@@ -356,11 +415,22 @@ export default function About({ id = "about", heading = "ABOUT" }: AboutProps) {
 
             <div className="about-dept__body reveal" style={delay(0.45)}>
               <p>
-                Committed to academic excellence, innovation, and practical
-                learning, the department nurtures students through research,
-                workshops, and technical events.
+                The Department of Data Science provides high-quality education to
+                undergraduate students while advancing research across the many
+                disciplines of Data Science.
+              </p>
+              <p>
+                Every programme prepares students for a wide range of real-world
+                applications, shaping capable technocrats who meet the expectations of
+                industry and stakeholders.
               </p>
             </div>
+
+            <ul className="about-points reveal" style={delay(0.55)}>
+              <li>Quality undergraduate education</li>
+              <li>Research in emerging technologies</li>
+              <li>Industry-ready skills at every level</li>
+            </ul>
 
             <a
               className="about-btn reveal"
@@ -395,7 +465,7 @@ export default function About({ id = "about", heading = "ABOUT" }: AboutProps) {
             />
 
             <p className="about-kicker reveal" style={delay(0.1)}>
-              <span className="about-kicker__num">02</span>
+              <span className="about-kicker__num">03</span>
               <span className="about-kicker__rule" aria-hidden="true" />
               <span>The Symposium · 2nd Edition</span>
             </p>
@@ -471,6 +541,7 @@ export default function About({ id = "about", heading = "ABOUT" }: AboutProps) {
             </a>
           </article>
         </div>
+
       </div>
     </section>
   );

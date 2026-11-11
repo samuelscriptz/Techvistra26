@@ -24,7 +24,7 @@
   font-family: var(--font-body, "Manrope", system-ui, sans-serif);
   background: transparent;
   color: #050b1a;
-  padding: clamp(64px, 8.5vh, 96px) clamp(16px, 4vw, 40px) clamp(56px, 8vh, 96px);
+  padding: clamp(64px, 8.5vh, 96px) clamp(16px, 3vw, 32px) clamp(56px, 8vh, 96px);
   overflow: hidden;
 }
 
@@ -48,7 +48,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1180px;
+  max-width: 1440px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -290,7 +290,7 @@
 }
 
 .about-dept__body {
-  max-width: 44ch;
+  max-width: 52ch;
   padding-left: 18px;
   border-left: 1px solid var(--gold);
 }
@@ -585,6 +585,176 @@
 }
 
 /* ==========================================================================
+   Department extras
+   ========================================================================== */
+
+.about-dept__body p+p {
+  margin-top: 12px;
+}
+
+.about-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-points li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.about-points li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+/* ==========================================================================
+   Institution
+   ========================================================================== */
+
+.about-college {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 88px);
+  align-items: center;
+  padding: clamp(32px, 4vw, 56px) clamp(24px, 4vw, 56px);
+  margin-bottom: calc(clamp(28px, 5vh, 56px) * -1);
+  border-top: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+
+.about-college__media {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+}
+
+/* Offset gold frame behind the photo */
+.about-college__media::before {
+  content: "";
+  position: absolute;
+  inset: 14px -14px -14px 14px;
+  border: 1px solid var(--gold);
+  pointer-events: none;
+}
+
+.about-college__img,
+.about-college__fallback {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--paper-tint);
+}
+
+.about-college__img {
+  object-fit: cover;
+}
+
+.about-college__fallback {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.about-college__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(18px, 2.6vh, 26px);
+}
+
+.about-college__title {
+  margin: 0;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+.about-college__title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.about-college__body {
+  max-width: 62ch;
+  padding-left: 18px;
+  border-left: 1px solid var(--gold);
+}
+
+.about-college__body p {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  line-height: 1.7;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.about-college__body p+p {
+  margin-top: 12px;
+}
+
+.about-facts {
+  width: 100%;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.about-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px clamp(10px, 1.4vw, 18px);
+}
+
+.about-fact+.about-fact {
+  border-left: 1px solid var(--line);
+}
+
+.about-fact dt {
+  order: 1;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.about-fact dd {
+  order: 2;
+  margin: 0;
+  font-family: var(--font-display, "Arial Black", Impact, system-ui, sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 
@@ -684,6 +854,16 @@
 
   .about-section .about-archive .about-archive__name {
     font-size: 0.76rem;
+  }
+
+  .about-college {
+    grid-template-columns: 1fr;
+    margin-bottom: 0;
+    padding: 36px 4px 40px;
+  }
+
+  .about-college__media::before {
+    inset: 10px -6px -10px 6px;
   }
 }
 
