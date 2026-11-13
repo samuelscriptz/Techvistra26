@@ -43,7 +43,7 @@ export default function App() {
 
           <div className={styles.contentInner}>
             <AboutSection />
-            {/* <ProceedingsMessages /> */}
+            <ProceedingsMessages />
             <EventSection />
             <TechnicalPartners />
             <ScheduleSection />
