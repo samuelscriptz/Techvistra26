@@ -679,7 +679,7 @@ const ADDITIONAL_HOD_MEMBER: TeamMember = {
   name: "Mrs. Maheswari",
   title: "Additional HOD",
   department: DEPARTMENT,
-  image: coreImg("1 maheswari.jpg"),
+  image: coreImg("1 maheswari.jpeg"),
   roleType: "additionalHod",
 };
 

@@ -570,13 +570,24 @@ export function FAQSection() {
               <article
                 className={`${styles.faqItem} ${isActive ? styles.faqItemActive : ""}`}
                 key={item.question}
-                onPointerEnter={() => setActiveFaq(i)}
+                onPointerEnter={() => {
+                  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                    setActiveFaq(i);
+                  }
+                }}
                 onPointerLeave={(event) => {
-                  if (!event.currentTarget.contains(document.activeElement)) {
+                  if (
+                    window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+                    !event.currentTarget.contains(document.activeElement)
+                  ) {
                     setActiveFaq(null);
                   }
                 }}
-                onFocus={() => setActiveFaq(i)}
+                onFocus={() => {
+                  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                    setActiveFaq(i);
+                  }
+                }}
                 onBlur={(event) => {
                   if (!event.currentTarget.contains(event.relatedTarget)) {
                     setActiveFaq(null);
@@ -587,6 +598,9 @@ export function FAQSection() {
                   type="button"
                   className={styles.faqQuestion}
                   aria-expanded={isActive}
+                  onClick={() =>
+                    setActiveFaq((currentFaq) => (currentFaq === i ? null : i))
+                  }
                 >
                   <span className={styles.faqIcon} aria-hidden="true">
                     <Icon size={20} />
