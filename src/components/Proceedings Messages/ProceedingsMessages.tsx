@@ -154,7 +154,7 @@ const messages: ProceedingsMessage[] = [
     people: ["Mr.S.Praveen Kumar", "Mrs.M.Priyanga", "Mrs.PC.Akhila"],
     images: [
       "/core/4 Praveen.jpeg",
-      "/core/3 Priyanga.png",
+      "/core/3 Priyanga.jpeg",
       "/core/2 akhila.png",
     ],
     excerpt:
