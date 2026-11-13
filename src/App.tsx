@@ -1,6 +1,3 @@
-// 
-
-
 import SiteHeader from "./components/SiteHeader/SiteHeader";
 import GoldenSealReveal from "./components/GoldenSealReveal/GoldenSealReveal";
 import Hero from "./components/Hero/Hero";
@@ -15,6 +12,7 @@ import EventSection from "./components/sections/EventSection";
 import GallerySection from "./components/sections/GallerySection";
 import WaveMesh from "./components/WaveMesh/WaveMesh";
 import styles from "./App.module.css";
+import CoreTeam from "./components/CoreTeam/CoreTeam";
 import ScheduleSection from "./components/ScheduleSection/ScheduleSection";
 export default function App() {
   return (
@@ -44,7 +42,7 @@ export default function App() {
 
           <div className={styles.contentInner}>
             <AboutSection />
-            <ProceedingsMessages />
+            {/* <ProceedingsMessages /> */}
             <EventSection />
             <TechnicalPartners />
             <ScheduleSection />
