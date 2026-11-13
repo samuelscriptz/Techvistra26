@@ -717,7 +717,7 @@ const COMMITTEES: Committee[] = [
   { id: "design", name: "Designing Committee", image: coreImg("design.png") },
   { id: "media", name: "Media Committee", image: coreImg("media.png") },
   { id: "decor", name: "Decoration Committee", image: coreImg("decor.png") },
-  { id: "events", name: "Events Coordinators", image: coreImg("events.png") },
+  { id: "events", name: "Events Coordinators", image: coreImg("events2.jpeg") },
   {
     id: "registration",
     name: "Registration & Hospitality Committee",
