@@ -676,10 +676,10 @@ const HOD_MEMBER: TeamMember = {
 
 const ADDITIONAL_HOD_MEMBER: TeamMember = {
   id: "additional-hod-1",
-  name: "Mrs. Maheswari",
+  name: "Mrs. A. Maheswari",
   title: "Additional HOD",
   department: DEPARTMENT,
-  image: coreImg("1 maheswari.jpeg"),
+  image: coreImg("1 maheswari.png"),
   roleType: "additionalHod",
 };
 
@@ -687,7 +687,7 @@ const FACULTY_MEMBERS: TeamMember[] = [
   ADDITIONAL_HOD_MEMBER,
   {
     id: "faculty-1",
-    name: "Mrs. Akhila",
+    name: "Mrs. Akhila P.C",
     title: "Faculty Coordinator",
     department: DEPARTMENT,
     image: coreImg("2 akhila.png"),
@@ -695,15 +695,15 @@ const FACULTY_MEMBERS: TeamMember[] = [
   },
   {
     id: "faculty-2",
-    name: "Mrs. Priyanga",
+    name: "Mrs. M. Priyanga",
     title: "Faculty Coordinator",
     department: DEPARTMENT,
-    image: coreImg("3 Priyanga.png"),
+    image: coreImg("3 Priyanga.jpeg"),
     roleType: "faculty",
   },
   {
     id: "faculty-3",
-    name: "Mr. Praveen Kumar",
+    name: "Mr. S. Praveen Kumar",
     title: "Faculty Coordinator",
     department: DEPARTMENT,
     image: coreImg("4 Praveen.jpeg"),
@@ -717,7 +717,7 @@ const COMMITTEES: Committee[] = [
   { id: "design", name: "Designing Committee", image: coreImg("design.png") },
   { id: "media", name: "Media Committee", image: coreImg("media.png") },
   { id: "decor", name: "Decoration Committee", image: coreImg("decor.png") },
-  { id: "events", name: "Events Coordinators", image: coreImg("events.png") },
+  { id: "events", name: "Events Coordinators", image: coreImg("events2.jpeg") },
   {
     id: "registration",
     name: "Registration & Hospitality Committee",
