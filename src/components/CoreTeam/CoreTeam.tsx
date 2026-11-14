@@ -711,7 +711,7 @@ const FACULTY_MEMBERS: TeamMember[] = [
   },
 ];
 
-/** The 8 committees, one 16:9 group photo each */
+/** The 10 committees, one 16:9 group photo each */
 const COMMITTEES: Committee[] = [
   { id: "website", name: "Website Committee", image: coreImg("website.png") },
   { id: "design", name: "Designing Committee", image: coreImg("design.png") },
@@ -729,6 +729,8 @@ const COMMITTEES: Committee[] = [
     name: "Purchase & Finance Committee",
     image: coreImg("purchase.png"),
   },
+  { id: "comparing", name: "Comparing Committee", image: coreImg("comparing.png") },
+  { id: "certificate", name: "Certificate Committee", image: coreImg("certificate.png") },
 ];
 
 // ---------------------------------------------------------------------------
